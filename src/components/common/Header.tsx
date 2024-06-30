@@ -1,15 +1,22 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
     <HeaderWrapper>
       <Content>
         <div className='logo'>
-          <h1>Quiz</h1>
+          <Link to='/'>
+            <h1>Quiz</h1>
+          </Link>
         </div>
         <div className="auth">
-          <button>JOIN</button>
-          <button>LOGIN</button>
+          <Link to='/join'>
+            <button>JOIN</button>
+          </Link>
+          <Link to='/login'>
+            <button>LOGIN</button>
+          </Link>
         </div>
       </Content>
     </HeaderWrapper>
