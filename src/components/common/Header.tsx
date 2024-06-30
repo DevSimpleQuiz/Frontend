@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Button from '../Button';
 
 const Header = () => {
   return (
@@ -12,10 +13,16 @@ const Header = () => {
         </div>
         <div className="auth">
           <Link to='/join'>
-            <button>JOIN</button>
+            <Button
+              size='short'
+              schema='normal'
+            >JOIN</Button>
           </Link>
           <Link to='/login'>
-            <button>LOGIN</button>
+            <Button
+              size='short'
+              schema='normal'
+            >LOGIN</Button>
           </Link>
         </div>
       </Content>
@@ -58,21 +65,6 @@ const Content = styled.div`
     justify-content: space-between;
     align-items: center;
     gap: 12px;
-
-    button {
-      padding: 6px 12px;
-      color: ${({ theme }) => theme.color.primary};
-      background-color: ${({ theme }) => theme.color.grey4};
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all linear 0.15s;
-
-      &:hover {
-        background-color: ${({ theme }) => theme.color.grey2};
-        transition: all linear 0.15s;
-      }
-    }
   }
 `;
 
