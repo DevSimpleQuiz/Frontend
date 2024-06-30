@@ -20,7 +20,7 @@ const LayoutWrapper = styled.main`
   margin: 0 auto;
   padding: 0;
   width: 100%;
-  height: calc(100vh - 64px);
+  height: 100%;
   max-width: 1200px;
 `;
 
