@@ -22,7 +22,6 @@ const LayoutWrapper = styled.main`
   width: 100%;
   height: calc(100vh - 64px);
   max-width: 1200px;
-  border: 1px solid red;
 `;
 
 export default Layout;
