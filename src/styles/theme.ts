@@ -13,17 +13,19 @@ export type ColorKey =
   | "border"
   | "text";
 export type HeadingSize = "title1" | "title2" | "title3" | "title4";
+export type TextSize = "text1" | "text2" | "text3";
 // export type ButtonSize = "large" | "medium" | "small";
 export type ButtonScheme = "primary" | "normal";
 export type LayoutWidth = "large" | "medium" | "small";
 export type MediaQuery = "mobile" | "tablet" | "desktop";
 
-interface Theme {
+export interface Theme {
   color: Record<ColorKey, string>;
   heading: {
-    [key in HeadingSize]: {
-      fontSize: string;
-    };
+    [key in HeadingSize]: string
+  };
+  text: {
+    [key in TextSize]: string
   };
   //   button: {
   //     [key in ButtonSize]: {
@@ -59,18 +61,15 @@ export const theme: Theme = {
     text: "black",
   },
   heading: {
-    title1: {
-      fontSize: "40px",
-    },
-    title2: {
-      fontSize: "32px",
-    },
-    title3: {
-      fontSize: "26px",
-    },
-    title4: {
-      fontSize: "20px",
-    },
+    title1: "40px",
+    title2: "32px",
+    title3: "26px",
+    title4: "20px",
+  },
+  text: {
+    text1: "18px",
+    text2: "16px",
+    text3: "14px",
   },
   //   button: {
   //     large: {
