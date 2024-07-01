@@ -1,9 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-import Home from "./pages/Home";
 import Quiz from "./pages/Quiz";
 import InfiniteQuiz from "./pages/InfiniteQuiz";
 import Ranking from "./pages/Ranking";
+import Home from "./pages/Home";
 
 const routeList = [
   {
