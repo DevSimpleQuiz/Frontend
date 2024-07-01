@@ -57,40 +57,33 @@ const HomeStyle = styled.div`
   }
 
   .banner {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
     position: relative;
+    margin-left: calc(-50vw + 50%);
+    width: 100vw;
   }
 
   .title {
-    /* color: ${({ theme }) => theme.color.text}; */
-    font-size: ${({ theme }) => theme.heading.title4.fontSize};
-    font-weight: 650;
     margin: 20px 0;
-  }
-
-  .btnSection {
-    /* margin: 10px 50px; */
+    font-size: ${({ theme }) => theme.heading.title4};
+    font-weight: 650;
   }
 
   .card {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* justify-content: center;
-    gap: 100px; */
     margin-bottom: 120px;
   }
 
   .iconCard {
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    width: 240px;
-    height: 250px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    width: 240px;
+    height: 250px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   .quizIcon, .infiniteIcon, .rankingIcon {
@@ -101,7 +94,6 @@ const HomeStyle = styled.div`
     height: 150px;
     svg {
       width: 120px;
-      /* height: 100px; */
     }
   }
   .quizIcon {
@@ -116,20 +108,19 @@ const HomeStyle = styled.div`
 
   .cardTitle {
     align-self: flex-start;
-    text-align: left;
     margin-left: 20px;
-    /* font-size: ${({ theme }) => theme.heading.title4.fontSize}; */
-    font-size: 18px;
-    font-weight: bold;
     margin-top: 20px;
     margin-bottom: 10px;
-  }
+    text-align: left;
+    font-size: ${({ theme }) => theme.text.text2};
+    font-weight: bold;
+   }
 
   .cardDescription {
     align-self: flex-start;
-    text-align: left;
     margin-left: 20px;
-    font-size: 13px;
+    text-align: left;
+    font-size: ${({ theme }) => theme.text.text3};
   }
 `;
 export default Home;
