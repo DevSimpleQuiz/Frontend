@@ -94,6 +94,7 @@ function Quiz(){
     setInputText(event.target.value);
   }
   const [isCorrect, setIsCorrect] = useState<string>(theme.color.grey4);
+  const [resultText, setResultText]= useState<string>("");
 
   //퀴즈 관련
   const [quizAnswer, setquizAnswer] = useState<string>("가로등");
@@ -106,8 +107,10 @@ function Quiz(){
     if(event.key === 'Enter'){
         if (value === '가로등') { //문제의 정답이 들어갈 자리
             setIsCorrect(theme.color.green);
+            setResultText("정답!");
           } else {
             setIsCorrect(theme.color.red);
+            setResultText("오답!");
           }
     }
   };
@@ -134,12 +137,12 @@ function Quiz(){
           <div className="nextButton"><img src={next} alt="next button"/></div>
         </div>
         
-        { (isCorrect === "#F44336" ) && (
-          <div className='resultBox'>
-            오답!<br/>
-            답 : {quizAnswer}
-          </div>
-        )}
+        <div className='resultBox'>
+            {resultText}<br/>
+            {(resultText === "오답!") && (<>답 : {quizAnswer}</>)}
+            
+        </div>
+        
     </QuizWrapper>
   );
 }
