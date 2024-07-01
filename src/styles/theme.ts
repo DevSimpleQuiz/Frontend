@@ -14,8 +14,8 @@ export type ColorKey =
   | "text";
 export type HeadingSize = "title1" | "title2" | "title3" | "title4";
 export type TextSize = "text1" | "text2" | "text3";
-// export type ButtonSize = "large" | "medium" | "small";
-export type ButtonScheme = "primary" | "normal";
+export type ButtonSize = "short" | "long";
+export type ButtonSchema = "primary" | "normal";
 export type LayoutWidth = "large" | "medium" | "small";
 export type MediaQuery = "mobile" | "tablet" | "desktop";
 
@@ -27,14 +27,14 @@ export interface Theme {
   text: {
     [key in TextSize]: string
   };
-  //   button: {
-  //     [key in ButtonSize]: {
-  //       fontSize: string;
-  //       padding: string;
-  //     };
-  //   };
-  buttonScheme: {
-    [key in ButtonScheme]: {
+  button: {
+    [key in ButtonSize]: {
+      padding: string;
+      fontSize: string;
+    };
+  };
+  buttonSchema: {
+    [key in ButtonSchema]: {
       color: string;
       backgroundColor: string;
     };
@@ -61,31 +61,27 @@ export const theme: Theme = {
     text: "black",
   },
   heading: {
-    title1: "40px",
-    title2: "32px",
-    title3: "26px",
-    title4: "20px",
+    title1: "2.5rem",
+    title2: "2rem",
+    title3: "1.625rem",
+    title4: "1.25rem",
   },
   text: {
-    text1: "18px",
-    text2: "16px",
-    text3: "14px",
+    text1: "1.125rem",
+    text2: "1rem",
+    text3: ".875rem",
   },
-  //   button: {
-  //     large: {
-  //       fontSize: "1.5rem",
-  //       padding: "1rem 2rem",
-  //     },
-  //     medium: {
-  //       fontSize: "1rem",
-  //       padding: "0.5rem 1rem",
-  //     },
-  //     small: {
-  //       fontSize: "0.75rem",
-  //       padding: "0.25rem 0.5rem",
-  //     },
-  //   },
-  buttonScheme: {
+  button: {
+    short: {
+      padding: ".375rem .75rem",
+      fontSize: ".875rem",
+    },
+    long: {
+      padding: "0.5rem 1rem",
+      fontSize: "1rem",
+    },
+  },
+  buttonSchema: {
     primary: {
       color: "white",
       backgroundColor: "#202B3D",
@@ -96,8 +92,8 @@ export const theme: Theme = {
     },
   },
   mediaQuery: {
-    mobile: "(max-width: 760px)",
-    tablet: "(max-width: 1020px)",
-    desktop: "(min-width: 1020px)",
+    desktop: "(min-width: 1024px)",
+    tablet: "(min-width: 768px) and (max-width: 1023px)",
+    mobile: "(max-width: 767px)",
   },
 };
