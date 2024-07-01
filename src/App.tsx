@@ -1,38 +1,48 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Layout from './components/layout/Layout';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Home from "./pages/Home";
+import Quiz from "./pages/Quiz";
+import InfiniteQuiz from "./pages/InfiniteQuiz";
+import Ranking from "./pages/Ranking";
 
 const routeList = [
   {
-    path: '/',
-    element: <h1>Home Component</h1>
+    path: "/",
+    element: <Home />,
   },
   {
-    path: '/login',
-    element: <h1>Login Component</h1>
+    path: "/login",
+    element: <h1>Login Component</h1>,
   },
   {
-    path: '/join',
-    element: <h1>Join Component</h1>
+    path: "/join",
+    element: <h1>Join Component</h1>,
   },
   {
-    path: '/quiz',
-    element: <h1>Quiz Component</h1>
+    path: "/quiz",
+    element: <Quiz />,
   },
-]
+  {
+    path: "/infiniteQuiz",
+    element: <InfiniteQuiz />,
+  },
+  {
+    path: "/ranking",
+    element: <Ranking />,
+  },
+];
 
 const rotuer = createBrowserRouter(
   routeList.map((item) => {
     return {
       ...item,
-      element: <Layout>{item.element}</Layout>
-    }
+      element: <Layout>{item.element}</Layout>,
+    };
   })
 );
 
 const App = () => {
-  return (
-    <RouterProvider router={rotuer} />
-  )
+  return <RouterProvider router={rotuer} />;
 };
 
 export default App;
