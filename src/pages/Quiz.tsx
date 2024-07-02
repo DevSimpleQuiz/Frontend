@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import next from '../assets/images/next.png'
+import hint from '../assets/images/hintH.png'
 import { theme } from '../styles/theme';
 
 
@@ -54,13 +55,14 @@ function Quiz(){
           {quizQuestion}
         </div>
         <div className='answerBox'>
+        <div className="nextButton"><img className="imgH" src={hint} alt="hint button"/></div>
           <QuizInput 
             onChange={onChangeInput}
             value={inputText} 
             isCorrect={isCorrect} 
             onKeyDown={onSubmitAnswer}
           />
-          <div className="nextButton"><img src={next} alt="next button"/></div>
+          <div className="nextButton"><img className="imgN" src={next} alt="next button"/></div>
         </div>
         
         <div className='resultBox'>
@@ -86,11 +88,16 @@ const QuizWrapper = styled.div`
     img{
         position: absolute; 
         top: 50%; 
-        left: 50%; 
-        width: 17px;
+        left: 50%;   
         transform: translate(-50%, -50%);
-    }
+    } 
   }
+  .imgH{
+        width: 20px;   
+    }
+  .imgN{
+        width: 17px;   
+    }
   .answerBox{
     display: flex;
     margin-bottom: 1rem;
@@ -102,12 +109,12 @@ const QuizWrapper = styled.div`
     height: 16px;
     background-color: ${({theme}) => theme.color.grey3};
     border-radius: 10px;
-    margin: 100px 178px 50px;
+    margin: 100px 0px 50px;
   }
   .questionBox{
     display : flex;
-    width: 60%;
-    height: 200px;
+    width: 70%;
+    height: 300px;
     margin-bottom: 1rem;
     margin: auto;
     padding: 2rem;
@@ -129,6 +136,7 @@ const QuizWrapper = styled.div`
   .resultBox{
     margin-top: 1rem;
     font-size: ${({theme}) => theme.heading.title2};
+    justify-content: center;
   }
 `;
 
