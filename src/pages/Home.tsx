@@ -1,11 +1,12 @@
+import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-
 import { ReactComponent as QuizIcon } from "../assets/btnImg/quiz 1.svg";
 import { ReactComponent as InfiniteIcon } from "../assets/btnImg/infinite 1.svg";
 import { ReactComponent as RankIcon } from "../assets/btnImg/ranking 1.svg";
 import Banner from "../components/common/banner/Banner";
-function Home() {
+import IconCard from "../components/common/IconCard";
+
+const Home: React.FC = () => {
   return (
     <HomeStyle>
       <div className="banner">
@@ -14,33 +15,27 @@ function Home() {
       <section className="btnSection">
         <p className="title">Simple Quiz 풀러가기</p>
         <div className="card">
-          <div className="iconCard">
-            <Link to="/quiz">
-              <div className="quizIcon">
-                <QuizIcon />
-              </div>
-              <p className="cardTitle">퀴즈 풀러 가기 🌈</p>
-              <p className="cardDescription">#단어 #10문제 #초성힌트</p>
-            </Link>
-          </div>
-          <div className="iconCard">
-            <Link to="/infiniteQuiz">
-              <div className="infiniteIcon">
-                <InfiniteIcon />
-              </div>
-              <p className="cardTitle">무한 퀴즈 챌린지 🔥</p>
-              <p className="cardDescription">#단어 #점수도전 #초성힌트</p>
-            </Link>
-          </div>
-          <div className="iconCard">
-            <Link to="/ranking">
-              <div className="rankingIcon">
-                <RankIcon />
-              </div>
-              <p className="cardTitle">랭킹 확인 🥇</p>
-              <p className="cardDescription">#1위부터 #5위까지</p>
-            </Link>
-          </div>
+          <IconCard 
+            to="/quiz" 
+            bgColor="green" 
+            Icon={QuizIcon} 
+            title="퀴즈 풀러 가기 🌈" 
+            description="#단어 #10문제 #초성힌트"
+          />
+          <IconCard 
+            to="/infinite-quiz" 
+            bgColor="yellow" 
+            Icon={InfiniteIcon} 
+            title="무한 퀴즈 챌린지 🔥" 
+            description="#단어 #점수도전 #초성힌트"
+          />
+          <IconCard 
+            to="/rank" 
+            bgColor="blue" 
+            Icon={RankIcon} 
+            title="랭킹 확인 🥇" 
+            description="#1위부터 #5위까지"
+          />
         </div>
       </section>
     </HomeStyle>
@@ -74,53 +69,6 @@ const HomeStyle = styled.div`
     justify-content: space-between;
     margin: 20px;
   }
-
-  .iconCard {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    width: 240px;
-    height: 250px;
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  .quizIcon, .infiniteIcon, .rankingIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 150px;
-    svg {
-      width: 120px;
-    }
-  }
-  .quizIcon {
-    background-color: ${({ theme }) => theme.color.green};
-  }
-  .infiniteIcon {
-    background-color: ${({ theme }) => theme.color.yellow};
-  }
-  .rankingIcon {
-    background-color: ${({ theme }) => theme.color.blue};
-  }
-
-  .cardTitle {
-    align-self: flex-start;
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    text-align: left;
-    font-size: ${({ theme }) => theme.text.text2};
-    font-weight: bold;
-   }
-
-  .cardDescription {
-    align-self: flex-start;
-    margin-left: 20px;
-    text-align: left;
-    font-size: ${({ theme }) => theme.text.text3};
-  }
 `;
+
 export default Home;
