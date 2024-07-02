@@ -4,6 +4,7 @@ import Quiz from "./pages/Quiz";
 import InfiniteQuiz from "./pages/InfiniteQuiz";
 import Ranking from "./pages/Ranking";
 import Home from "./pages/Home";
+import QuizResult from "./pages/QuizResult";
 
 const routeList = [
   {
@@ -29,6 +30,10 @@ const routeList = [
   {
     path: "/ranking",
     element: <Ranking />,
+  },
+  {
+    path: "/quizResult",
+    element: <QuizResult />,
   },
 ];
 
