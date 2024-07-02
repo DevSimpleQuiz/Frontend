@@ -1,5 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import Login from './pages/Login';
+import Join from './pages/Join';
+import { AuthProvider } from './context/AuthContext';
 
 const routeList = [
   {
@@ -8,11 +11,11 @@ const routeList = [
   },
   {
     path: '/login',
-    element: <h1>Login Component</h1>
+    element: <Login />
   },
   {
     path: '/join',
-    element: <h1>Join Component</h1>
+    element: <Join />
   },
   {
     path: '/quiz',
@@ -31,7 +34,9 @@ const rotuer = createBrowserRouter(
 
 const App = () => {
   return (
-    <RouterProvider router={rotuer} />
+    <AuthProvider>
+      <RouterProvider router={rotuer} />
+    </AuthProvider>
   )
 };
 
