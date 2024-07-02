@@ -33,12 +33,12 @@ function Quiz(){
           alert("답 입력 후 엔터를 눌러주세요.");
         }
         else if (value === '가로등') { //문제의 정답이 들어갈 자리
-            setIsCorrect(theme.color.green);
-            setResultText("정답!");
-          } else {
-            setIsCorrect(theme.color.red);
-            setResultText("오답!");
-          }
+          setIsCorrect(theme.color.green);
+          setResultText("정답!");
+        } else {
+          setIsCorrect(theme.color.red);
+          setResultText("오답!");
+        }
     }
   };
 
@@ -55,14 +55,14 @@ function Quiz(){
           {quizQuestion}
         </div>
         <div className='answerBox'>
-        <div className="nextButton"><img className="imgH" src={hint} alt="hint button"/></div>
+        <div className="quizButton"><img className="imgH" src={hint} alt="hint button"/></div>
           <QuizInput 
             onChange={onChangeInput}
             value={inputText} 
             isCorrect={isCorrect} 
             onKeyDown={onSubmitAnswer}
           />
-          <div className="nextButton"><img className="imgN" src={next} alt="next button"/></div>
+          <div className="quizButton"><img className="imgN" src={next} alt="next button"/></div>
         </div>
         
         <div className='resultBox'>
@@ -79,12 +79,13 @@ export default Quiz;
 
 const QuizWrapper = styled.div`
   text-align: center;
-  .nextButton {
+  .quizButton {
     position: relative;
     width: 50px;
     height: 50px;
     border-radius: 50px;
     background-color: ${({theme}) => theme.color.grey3};
+    cursor: pointer;
     img{
         position: absolute; 
         top: 50%; 
