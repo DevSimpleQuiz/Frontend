@@ -28,7 +28,10 @@ function Quiz(){
   const onSubmitAnswer = (event:React.KeyboardEvent<HTMLInputElement>) => {
     const value = inputText;
     if(event.key === 'Enter'){
-        if (value === '가로등') { //문제의 정답이 들어갈 자리
+        if(value === ""){
+          alert("답 입력 후 엔터를 눌러주세요.");
+        }
+        else if (value === '가로등') { //문제의 정답이 들어갈 자리
             setIsCorrect(theme.color.green);
             setResultText("정답!");
           } else {
