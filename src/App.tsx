@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import Quiz from './pages/Quiz';
 
 const routeList = [
   {
@@ -16,7 +17,7 @@ const routeList = [
   },
   {
     path: '/quiz',
-    element: <h1>Quiz Component</h1>
+    element: <Quiz />
   },
 ]
 

@@ -2,83 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import next from '../assets/images/next.png'
 import { theme } from '../styles/theme';
-const QuizWrapper = styled.div`
-  text-align: center;
-  .nextButton {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    background-color: ${({theme}) => theme.color.grey3};
-    border-radius: 50px;
-    img{
-        position: absolute; 
-        left: 50%; 
-        top: 50%; 
-        transform: translate(-50%, -50%);
-        width: 17px;
-        
-    }
-  }
-  .answerBox{
-    display: flex;
-    justify-content: center;
-    align-items : center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  .progressBar {
-    height: 16px;
-    background-color: ${({theme}) => theme.color.grey3};
-    border-radius: 10px;
-    margin: 100px 178px 50px;
-  }
-  .questionBox{
-    border: 8px solid ${({theme}) => theme.color.grey2};
-    border-radius: 5px;
-    width: 60%;
-    height: 200px;
-    padding: 2rem;
-    display : flex;
-    justify-content : center;
-    align-items : center;
-    margin-bottom: 1rem;
-    font-size: ${({theme}) => theme.heading.title2};
-    line-height: 46px;
-    margin: auto;
-  }
-  .scores{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    font-size: ${({theme}) => theme.heading.title4};
-    line-height: 28px;
-  }
-  .resultBox{
-    margin-top: 1rem;
-    font-size: ${({theme}) => theme.heading.title2};
-  }
-`;
-
-
-const Progress = styled.div<{ width: number }>`
-  height: 100%;
-  background-color: #2196F3;
-  border-radius: 5px;
-  width: ${props => props.width}%;
-`;
-
-const QuizInput = styled.input<{ isCorrect: string }>`
-  background: ${props => props.isCorrect};
-  border: 0;
-  border-radius: 5px;
-  margin:45px;
-  padding: 1rem;
-  width: 300px; 
-  cursor: pointer;
-  color: ${props => props.isCorrect === theme.color.grey4  ? 'black' : 'white'};
-`;
-
 
 
 
@@ -148,3 +71,80 @@ function Quiz(){
 }
 
 export default Quiz;
+
+const QuizWrapper = styled.div`
+  text-align: center;
+  .nextButton {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: ${({theme}) => theme.color.grey3};
+    img{
+        position: absolute; 
+        top: 50%; 
+        left: 50%; 
+        width: 17px;
+        transform: translate(-50%, -50%);
+    }
+  }
+  .answerBox{
+    display: flex;
+    margin-bottom: 1rem;
+    justify-content: center;
+    align-items : center;
+    gap: 1rem;
+  }
+  .progressBar {
+    height: 16px;
+    background-color: ${({theme}) => theme.color.grey3};
+    border-radius: 10px;
+    margin: 100px 178px 50px;
+  }
+  .questionBox{
+    display : flex;
+    width: 60%;
+    height: 200px;
+    margin-bottom: 1rem;
+    margin: auto;
+    padding: 2rem;
+    border: 8px solid ${({theme}) => theme.color.grey2};
+    border-radius: 5px;
+    font-size: ${({theme}) => theme.heading.title2};
+    line-height: 46px;
+    justify-content : center;
+    align-items : center;
+  }
+  .scores{
+    display: flex;
+    margin-bottom: 1rem;
+    font-size: ${({theme}) => theme.heading.title4};
+    line-height: 28px;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .resultBox{
+    margin-top: 1rem;
+    font-size: ${({theme}) => theme.heading.title2};
+  }
+`;
+
+
+const Progress = styled.div<{ width: number }>`
+  width: ${props => props.width}%;
+  height: 100%;
+  border-radius: 5px;
+  background-color: #2196F3;
+`;
+
+const QuizInput = styled.input.attrs({readOnly : false })<{ isCorrect :string , value: string }>`
+  width: 300px;
+  margin:45px;
+  padding: 1rem;
+  border: 0;
+  border-radius: 5px;
+  background: ${props => props.isCorrect};
+  cursor: pointer;
+  color: ${props => props.isCorrect === theme.color.grey4  ? 'black' : 'white'};
+`;
+
