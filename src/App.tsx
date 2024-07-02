@@ -1,10 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Quiz from "./pages/Quiz";
-import InfiniteQuiz from "./pages/InfiniteQuiz";
 import Ranking from "./pages/Ranking";
 import Home from "./pages/Home";
-import QuizResult from "./pages/QuizResult";
+import Error from "./components/common/Error";
 
 const routeList = [
   {
@@ -20,20 +19,8 @@ const routeList = [
     element: <h1>Join Component</h1>,
   },
   {
-    path: "/quiz",
-    element: <Quiz />,
-  },
-  {
-    path: "/infiniteQuiz",
-    element: <InfiniteQuiz />,
-  },
-  {
-    path: "/ranking",
-    element: <Ranking />,
-  },
-  {
-    path: "/quizResult",
-    element: <QuizResult />,
+    path: "/error",
+    element: <Error />,
   },
 ];
 
@@ -42,6 +29,7 @@ const rotuer = createBrowserRouter(
     return {
       ...item,
       element: <Layout>{item.element}</Layout>,
+      errorElement: <Layout><Error /></Layout>,
     };
   })
 );
