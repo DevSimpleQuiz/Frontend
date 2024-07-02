@@ -54,8 +54,7 @@ const Join = () => {
               schema='normal'
             >중복 확인</Button>
           </div>
-          <p className={`join-info ${isSubmitted && 
-            (errors.id ? 'invalid' : 'valid')}`}>
+          <p className={`join-info ${isSubmitted && (errors.id ? 'invalid' : 'valid')}`}>
             <FiInfo className='icon-info' />
             5~20자 영문 소문자, 숫자로 입력해주세요.
           </p>
@@ -90,7 +89,7 @@ const Join = () => {
           />
           <p className={`join-info ${isSubmitted && (errors.passwordConfirm !== errors.password ? 'invalid' : 'valid')}`}>
             <FiInfo className='icon-info' />
-            비밀번호 확인
+            비밀번호 확인 여부
           </p>
         </fieldset>
         <Button
@@ -128,11 +127,14 @@ const JoinForm = styled.form`
     margin: 0;
     margin-top: 4px;
     padding-left: 4px;
+    /* height: 34px; */
     color: #333;
     font-size: ${({ theme }) => theme.text.text3};
 
     .icon-info {
+      margin: 0;
       margin-right: 4px;
+      padding: 0;
     }
   }
 
