@@ -51,9 +51,9 @@ const Login = () => {
             placeholder='비밀번호'
             {...register('password', {
               required: true, 
-              minLength: 5, 
+              minLength: 8, 
               maxLength: 20,
-              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{5,20}$/,
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%?])[a-zA-Z0-9!@#$%?]{8,20}$/,
             })}
             inputMode='text'
           />
