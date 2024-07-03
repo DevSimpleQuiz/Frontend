@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import Join from './pages/Join';
 
 const routeList = [
   {
@@ -12,7 +13,7 @@ const routeList = [
   },
   {
     path: '/join',
-    element: <h1>Join Component</h1>
+    element: <Join />
   },
   {
     path: '/quiz',
