@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import next from '../assets/quiz/next.png'
-import hint from '../assets/quiz/hintH.png'
+import next from '../assets/images/next.png'
+import hint from '../assets/images/hintH.png'
 import { theme } from '../styles/theme';
 
 
