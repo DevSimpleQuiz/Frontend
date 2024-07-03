@@ -22,6 +22,10 @@ const routeList = [
     path: "/error",
     element: <Error />,
   },
+  {
+    path: '/quiz',
+    element: <Quiz />
+  },
 ];
 
 const rotuer = createBrowserRouter(
