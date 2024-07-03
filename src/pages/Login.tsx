@@ -38,7 +38,8 @@ const Login = () => {
             {...register('id', {
               required: true, 
               minLength: 5, 
-              maxLength: 20
+              maxLength: 20,
+              pattern: /^[a-z0-9]{5,20}$/,
             })}
             inputMode='text'
           />
@@ -51,11 +52,12 @@ const Login = () => {
             {...register('password', {
               required: true, 
               minLength: 5, 
-              maxLength: 20
+              maxLength: 20,
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{5,20}$/,
             })}
             inputMode='text'
           />
-          {errors.password && <p className='err-text'>비밀번호를 입력해주세요. (5~20자의 영문 대/소문자, 숫자, 특수기호)</p>}
+          {errors.password && <p className='err-text'>비밀번호를 입력해주세요. (8~20자의 영문 대/소문자, 숫자, 특수문자)</p>}
         </fieldset>
         <Button
           className='login-btn'

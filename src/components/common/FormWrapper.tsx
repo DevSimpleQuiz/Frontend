@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  title: string;
   children: React.ReactNode;
 }
 
@@ -71,6 +70,7 @@ export const FormWrapper = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 24px;
+    font-size: ${({ theme }) => theme.text.text3};
 
     span {
       margin-right: 4px;
