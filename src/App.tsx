@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
+import Join from './pages/Join';
 import Quiz from "./pages/Quiz";
 import Ranking from "./pages/Ranking";
 import Home from "./pages/Home";
