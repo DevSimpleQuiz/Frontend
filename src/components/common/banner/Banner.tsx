@@ -4,6 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/swiper-bundle.css";
+
 
 import Banner1 from "../../../assets/bannerImg/Banner1.svg";
 import Banner2 from "../../../assets/bannerImg/Banner2.svg";
@@ -34,21 +36,20 @@ function Banner() {
         slidesPerView={1.35}
         centeredSlides={true}
         loop={true}
-        loopFillGroupWithBlank= {true}
+        // loopFillGroupWithBlank={true}
         autoplay={{
           delay: 4500,
           disableOnInteraction: false,
         }}
         speed={500}
-        pagination={{
-          clickable: true,
-        }}
+        // pagination={{
+        //   clickable: true,
+        // }}
         navigation={{
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         }}
       >
-        <div className="swiper-button-prev"></div>
         {bannerImages.map((image, index) => (
           <SwiperSlide key={index}>
             <SlideContainer>
@@ -58,6 +59,7 @@ function Banner() {
             </SlideContainer>
           </SwiperSlide>
         ))}
+        <div className="swiper-button-prev"></div>
         <div className="swiper-button-next"></div>
       </Swiper>
     </BannerStyle>
@@ -70,15 +72,15 @@ const BannerStyle = styled.div`
 
   .swiper-button-prev,
   .swiper-button-next {
-    color: #000;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: -1% 13%;
+    color: #535353 !important;
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    border-radius: 50% !important;
+    width: 30px !important;
+    height: 30px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: -1% 13.5% !important;
   }
 `;
 
