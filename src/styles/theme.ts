@@ -73,7 +73,7 @@ export const theme: Theme = {
   },
   button: {
     short: {
-      padding: ".375rem .75rem",
+      padding: "8px 12px",
       fontSize: ".875rem",
     },
     long: {
