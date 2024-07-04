@@ -8,7 +8,7 @@ import { theme } from '../styles/theme';
 
 function Quiz(){
   //점수 관련
-  const [currentScore, setCurrentScore] = useState<number>(0);
+  const [currentScore, setCurrentScore] = useState<number>(10);
   const [totalScore, setTotalScore] = useState<number>(0);
   const [progressNum, setProgressNum] =useState<number>(0);
 
@@ -25,9 +25,14 @@ function Quiz(){
   const [quizQuestion, setQuizQuestion] = useState<string>("어둠을 밝히기 위하여 길에 설치한 등.");
 
   const onClickNextBtn = () => {
-    if(progressNum >= 100) return;
+    if(progressNum >= 100){
+      return;
+    }
+    if(resultText === ""){
+      alert("답 입력 후 엔터를 눌러주세요.");
+      return;
+    } 
     setProgressNum(state => state + 10);
-    
   }
 
   const onSubmitAnswer = (event:React.KeyboardEvent<HTMLInputElement>) => {
@@ -39,6 +44,7 @@ function Quiz(){
         else if (value === '가로등') { //문제의 정답이 들어갈 자리
           setIsCorrect(theme.color.green);
           setResultText("정답!");
+          setTotalScore( state => state + currentScore);
         } else {
           setIsCorrect(theme.color.red);
           setResultText("오답!");
@@ -61,6 +67,7 @@ function Quiz(){
         <div className='answerBox'>
         <div className="quizButton"><img className="imgH" src={hint} alt="hint button"/></div>
           <QuizInput 
+            readOnly = {false}
             onChange={onChangeInput}
             value={inputText} 
             isCorrect={isCorrect} 
@@ -153,7 +160,7 @@ const Progress = styled.div<{ width: number }>`
   background-color: #2196F3;
 `;
 
-const QuizInput = styled.input.attrs({readOnly : false })<{ isCorrect :string , value: string }>`
+const QuizInput = styled.input<{ isCorrect :string , value: string }>`
   width: 300px;
   margin:45px;
   padding: 1rem;
