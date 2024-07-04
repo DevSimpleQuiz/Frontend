@@ -3,7 +3,7 @@ import Button from '../components/Button';
 import { FormWrapper } from '../components/common/FormWrapper';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { FiInfo } from "react-icons/fi";
 
 export interface JoinProps {
@@ -65,14 +65,14 @@ const Join = () => {
             placeholder='비밀번호'
             {...register('password', {
               required: true, 
-              minLength: 5, 
+              minLength: 8, 
               maxLength: 20,
-              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{5,20}$/,
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%?])[a-zA-Z0-9!@#$%?]{8,20}$/,
             })}
           />
           <p className={`join-info ${isSubmitted && (errors.password ? 'invalid' : 'valid')}`}>
             <FiInfo className='icon-info' />
-            5~20자 영문 대/소문자, 숫자, 특수문자 (!@#$%)를 혼합하여 입력해주세요.
+            8~20자 영문 대/소문자, 숫자, 특수문자를 혼합하여 입력해주세요.
           </p>
         </fieldset>
         <fieldset>
@@ -81,15 +81,15 @@ const Join = () => {
             placeholder='비밀번호 확인'
             {...register('passwordConfirm', {
               required: true,
-              minLength: 5, 
+              minLength: 8, 
               maxLength: 20,
-              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{5,20}$/,
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%?])[a-zA-Z0-9!@#$%?]{8,20}$/,
               validate: (value) => value === watch('password'),
             })}
           />
           <p className={`join-info ${isSubmitted && (errors.passwordConfirm !== errors.password ? 'invalid' : 'valid')}`}>
             <FiInfo className='icon-info' />
-            비밀번호 확인 여부
+            비밀번호 확인
           </p>
         </fieldset>
         <Button
@@ -127,14 +127,11 @@ const JoinForm = styled.form`
     margin: 0;
     margin-top: 4px;
     padding-left: 4px;
-    /* height: 34px; */
     color: #333;
     font-size: ${({ theme }) => theme.text.text3};
 
     .icon-info {
-      margin: 0;
       margin-right: 4px;
-      padding: 0;
     }
   }
 

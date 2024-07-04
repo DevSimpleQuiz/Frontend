@@ -5,6 +5,9 @@ import Quiz from "./pages/Quiz";
 import Ranking from "./pages/Ranking";
 import Home from "./pages/Home";
 import Error from "./components/common/Error";
+import Login from './pages/Login';
+import Join from './pages/Join';
+import { AuthProvider } from './context/AuthContext';
 
 const routeList = [
   {
@@ -12,8 +15,8 @@ const routeList = [
     element: <Home />,
   },
   {
-    path: "/login",
-    element: <h1>Login Component</h1>,
+    path: '/login',
+    element: <Login />
   },
   {
     path: '/join',
@@ -36,7 +39,11 @@ const rotuer = createBrowserRouter(
 );
 
 const App = () => {
-  return <RouterProvider router={rotuer} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={rotuer} />
+    </AuthProvider>
+  )
 };
 
 export default App;

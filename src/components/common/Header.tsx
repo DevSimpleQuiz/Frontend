@@ -1,8 +1,12 @@
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
+import { useAuth } from '../../context/AuthContext';
 
 const Header = () => {
+  const { isLoggedIn, logout } = useAuth();
+
   return (
     <HeaderWrapper>
       <Content>
@@ -12,22 +16,27 @@ const Header = () => {
           </Link>
         </div>
         <div className="auth">
-          <Link to='/join'>
-            <Button
-              size='short'
-              schema='normal'
-            >JOIN</Button>
-          </Link>
-          <Link to='/login'>
-            <Button
-              size='short'
-              schema='normal'
-            >LOGIN</Button>
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link to='/mypage'>
+                <Button size='short' schema='normal'>MY PAGE</Button>
+              </Link>
+              <Button size='short' schema='normal' onClick={logout}>LOGOUT</Button>
+            </>
+          ) : (
+            <>
+              <Link to='/join'>
+                <Button size='short' schema='normal'>JOIN</Button>
+              </Link>
+              <Link to='/login'>
+                <Button size='short' schema='normal'>LOGIN</Button>
+              </Link>
+            </>
+          )}
         </div>
       </Content>
     </HeaderWrapper>
-  )
+  );
 };
 
 const HeaderWrapper = styled.header`
@@ -56,6 +65,7 @@ const Content = styled.div`
       padding: 0;
       color: white;
       font-size: ${({ theme }) => theme.heading.title3};
+      font-weight: 400;
     }
   }
 
