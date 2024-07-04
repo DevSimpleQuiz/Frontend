@@ -23,7 +23,8 @@ const Login = () => {
   const onSubmit = (data: LoginProps) => {
     console.log(data);
     window.alert('로그인이 완료되었습니다.');
-    login();
+    const userId = data.id;
+    login(userId);
     navigate('/');
   };
 
