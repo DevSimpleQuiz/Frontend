@@ -80,7 +80,7 @@ const BannerStyle = styled.div`
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin: -1% 13.5% !important;
+    margin: -1% 13% !important;
   }
 `;
 
