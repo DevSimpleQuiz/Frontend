@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { FormWrapper } from '../components/common/FormWrapper';
 import Button from '../components/Button';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 export interface LoginProps {
   id: string;
@@ -17,15 +17,10 @@ const Login = () => {
     formState: { errors }
   } = useForm<LoginProps>();
 
-  const navigate = useNavigate();
-  const { login } = useAuth();
+  const { userLogin } = useAuth();
 
   const onSubmit = (data: LoginProps) => {
-    console.log(data);
-    window.alert('로그인이 완료되었습니다.');
-    const userId = data.id;
-    login(userId);
-    navigate('/');
+    userLogin(data);
   };
 
   return (
