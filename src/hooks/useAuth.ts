@@ -10,7 +10,7 @@ export const useAuth = () => {
 
   const userLogin = (data: LoginProps) => {
     login(data).then((res) => {
-      storeLogin(res.token);
+      storeLogin(res.token);;
       window.alert("로그인이 완료되었습니다.");
       navigation("/");
     }, (err) => {

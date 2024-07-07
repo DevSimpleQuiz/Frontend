@@ -4,10 +4,7 @@ import Button from '../Button';
 import { useAuthStore } from '../../store/authStore';
 
 const Header = () => {
-  const { isLoggedIn, storeLogout } = useAuthStore((state) => ({
-    isLoggedIn: state.isLoggedIn,
-    storeLogout: state.storeLogout,
-  }));
+  const { isLoggedIn, storeLogout } = useAuthStore();
 
   return (
     <HeaderWrapper>

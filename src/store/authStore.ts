@@ -13,7 +13,6 @@ export const getToken = () => {
 
 const setToken = (token: string) => {
   localStorage.setItem("token", token);
-  console.log(token);
 };
 
 export const removeToken = () => {
@@ -29,5 +28,5 @@ export const useAuthStore = create<StoreState>((set) => ({
   storeLogout: () => {
     set({ isLoggedIn: false });
     removeToken();
-  },
+  }
 }));
