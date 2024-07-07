@@ -61,7 +61,8 @@ export const FormWrapper = styled.div`
     }
   
     .join-btn,
-    .login-btn {
+    .login-btn,
+    .reset-btn {
       width: 100%;
       font-size: ${({ theme }) => theme.text.text1};
     }
