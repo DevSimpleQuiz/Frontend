@@ -15,7 +15,7 @@ function Quiz() {
   const [hintVisible, setHintVisible] = useState<boolean>(false);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  console.log(quizzes);
+  //console.log(quizzes);
 
   const currentQuiz = quizzes[currentIndex];
 
@@ -115,7 +115,7 @@ function Quiz() {
           </div>
         </HintWrapper>
         <QuizInput
-          readOnly={false}
+          readOnly={resultText === "정답!" || resultText === "오답!"}
           onChange={onChangeInput}
           value={inputText}
           isCorrect={isCorrect}
