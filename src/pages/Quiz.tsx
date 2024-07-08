@@ -193,8 +193,12 @@ const QuizInput = styled.input<{ isCorrect: string, value: string }>`
   border-radius: 5px;
   background: ${props => props.isCorrect};
   cursor: pointer;
+<<<<<<< HEAD
   color: ${props => props.isCorrect === theme.color.grey4 ? 'black' : 'white'};
   text-align: center;
+=======
+  color: ${props => props.isCorrect === theme.color.grey4  ? 'black' : 'white'};
+>>>>>>> 0b8d85b02e64f1c196942a24d942166a331e0286
   outline: none;
 `;
 
