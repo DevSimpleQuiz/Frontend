@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import Error from "./components/common/Error";
 import Login from './pages/Login';
 import Join from './pages/Join';
-import { AuthProvider } from './context/AuthContext';
 
 const routeList = [
   {
@@ -44,9 +43,7 @@ const rotuer = createBrowserRouter(
 
 const App = () => {
   return (
-    <AuthProvider>
-      <RouterProvider router={rotuer} />
-    </AuthProvider>
+    <RouterProvider router={rotuer} />
   )
 };
 

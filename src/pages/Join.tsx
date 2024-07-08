@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import Button from '../components/Button';
 import { FormWrapper } from '../components/common/FormWrapper';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { useRef } from 'react';
 import { FiInfo } from "react-icons/fi";
+import { useAuth } from '../hooks/useAuth';
 
 export interface JoinProps {
   id: string;
@@ -20,15 +21,13 @@ const Join = () => {
     formState: { errors, isSubmitted }
   } = useForm<JoinProps>();
 
-  const navigate = useNavigate();
+  const { userJoin } = useAuth();
 
   const passwordRef = useRef<string | null>(null);
   passwordRef.current = watch("password");
 
-  const onSubmit: SubmitHandler<JoinProps> = (data) => {
-    console.log(data);
-    window.alert('회원가입이 완료되었습니다.');
-    navigate('/login');
+  const onSubmit = (data: JoinProps) => {
+    userJoin(data);
   };
 
   return (
@@ -52,6 +51,7 @@ const Join = () => {
               type='button'
               size='short' 
               schema='normal'
+              onClick={() => onSubmit}
             >중복 확인</Button>
           </div>
           <p className={`join-info ${isSubmitted && (errors.id ? 'invalid' : 'valid')}`}>
