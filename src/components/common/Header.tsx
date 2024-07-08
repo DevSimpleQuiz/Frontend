@@ -1,11 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
-import { useAuth } from '../../context/AuthContext';
+import { useAuthStore } from '../../store/authStore';
 
 const Header = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, storeLogout } = useAuthStore();
 
   return (
     <HeaderWrapper>
@@ -21,7 +20,7 @@ const Header = () => {
               <Link to='/mypage'>
                 <Button size='short' schema='normal'>MY PAGE</Button>
               </Link>
-              <Button size='short' schema='normal' onClick={logout}>LOGOUT</Button>
+              <Button size='short' schema='normal' onClick={storeLogout}>LOGOUT</Button>
             </>
           ) : (
             <>

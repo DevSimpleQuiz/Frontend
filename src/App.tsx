@@ -54,7 +54,7 @@ const App = () => {
     <AuthProvider>
       <RouterProvider router={rotuer} />
     </AuthProvider>
-  );
+  )
 };
 
 export default App;
