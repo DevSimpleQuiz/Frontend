@@ -10,7 +10,7 @@ export const useAuth = () => {
 
   const userLogin = (data: LoginProps) => {
     login(data).then((res) => {
-      storeLogin(res.token);;
+      storeLogin(res.token);
       window.alert("로그인이 완료되었습니다.");
       navigation("/");
     }, (err) => {
@@ -21,7 +21,6 @@ export const useAuth = () => {
 
   const userJoin = (data: JoinProps) => {
     join(data).then((res) => {
-      console.log(data);
       window.alert("회원가입이 완료되었습니다.");
       navigation("/login");
     })
