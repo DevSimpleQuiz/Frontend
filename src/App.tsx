@@ -8,6 +8,7 @@ import Error from "./components/common/Error";
 import Login from './pages/Login';
 import Join from './pages/Join';
 import { AuthProvider } from './context/AuthContext';
+import QuizResult from "./pages/QuizResult";
 
 const routeList = [
   {
@@ -29,6 +30,10 @@ const routeList = [
   {
     path: '/quiz',
     element: <Quiz />
+  },
+  {
+    path: '/quiz-result',
+    element: <QuizResult/>
   },
 ];
 
