@@ -23,7 +23,8 @@ const ModalContent = styled.div`
   top: 100%; 
   left: 50%;
   transform: translateX(-50%);
-  background: white;
+  background: ${({ theme }) => theme.color.primary};
+  color: white;
   padding: 10px 20px;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
