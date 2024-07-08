@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import next from '../assets/quizImg/next.png';
 import hint from '../assets/quizImg/hintH.png';
 import { theme } from '../styles/theme';
 import { useQuizzes } from '../hooks/useQuizzes';
 import HintModal from '../components/quiz/HintModal';
+import { useNavigate } from 'react-router-dom';
 
 function Quiz() {
   const [currentScore, setCurrentScore] = useState<number>(10);
@@ -12,7 +13,7 @@ function Quiz() {
   const [progressNum, setProgressNum] = useState<number>(0);
   const { quizzes } = useQuizzes();
   const [hintVisible, setHintVisible] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   console.log(quizzes);
 
@@ -24,6 +25,25 @@ function Quiz() {
   };
   const [isCorrect, setIsCorrect] = useState<string>(theme.color.grey4);
   const [resultText, setResultText] = useState<string>("");
+
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      navigate('/');
+    };
+
+    const handlePopState = () => {
+      navigate('/');
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [navigate]);
 
   const onClickNextBtn = () => {
     if (progressNum >= 100) {
@@ -53,6 +73,7 @@ function Quiz() {
   };
 
   if (!quizzes || quizzes.length === 0) {
+    //로딩 화면 추가..?
     return <p>퀴즈를 불러오는 중...</p>;
   }
   const onSubmitAnswer = (event: React.KeyboardEvent<HTMLInputElement>) => {

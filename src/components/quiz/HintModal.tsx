@@ -11,7 +11,7 @@ const HintModal: React.FC<HintModalProps> = ({ initialConstant, visible }) => {
 
   return (
     <ModalContent>
-      <p>초성은 {initialConstant} 입니다.</p>
+      <p>초성힌트는 {initialConstant} 입니다.</p>
     </ModalContent>
   );
 };
