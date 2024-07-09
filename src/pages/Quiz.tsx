@@ -27,8 +27,10 @@ function Quiz() {
   const [resultText, setResultText] = useState<string>("");
 
 
+  // 새로고침 및 뒤로가기 시 메인 화면으로 이동
   useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    const handleBeforeUnload = (event: Event) => {
+      sessionStorage.setItem('refreshed', 'true');
       navigate('/');
     };
 
@@ -38,6 +40,11 @@ function Quiz() {
 
     window.addEventListener('beforeunload', handleBeforeUnload);
     window.addEventListener('popstate', handlePopState);
+
+    if (sessionStorage.getItem('refreshed') === 'true') {
+      sessionStorage.removeItem('refreshed');
+      navigate('/');
+    }
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
