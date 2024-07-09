@@ -6,7 +6,7 @@ interface HintModalProps {
   visible: boolean;
 }
 
-const HintModal: React.FC<HintModalProps> = ({ initialConstant, visible }) => {
+function HintModal({ initialConstant, visible }: HintModalProps){
   if (!visible) return null;
 
   return (

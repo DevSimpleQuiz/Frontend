@@ -102,7 +102,12 @@ function Quiz() {
         <span>총 점수: {totalScore}점</span>
       </div>
       <div className='questionBox'>
-        {currentQuiz.definition}
+        {currentQuiz.definition.split('.,').slice(0, 1).map((sentence, index) => (
+          sentence.split('.').map((s, i)=>(
+            
+            <p key={i}>{s}</p>
+          ))
+        ))}
       </div>
       <div className='answerBox'>
         <HintWrapper onMouseEnter={onMouseEnterHint} onMouseLeave={onMouseLeaveHint}>
@@ -170,23 +175,24 @@ const QuizWrapper = styled.div`
   }
   .questionBox {
     display: flex;
-    width: 70%;
-    height: 300px;
+    width: 75%;
+    height: 350px;
     margin-bottom: 1rem;
     margin: auto;
-    padding: 2rem;
+    padding:30px;
     border: 8px solid ${({ theme }) => theme.color.grey2};
     border-radius: 5px;
     font-size: ${({ theme }) => theme.heading.title2};
     line-height: 46px;
     justify-content: center;
+   
     align-items: center;
     flex-direction: column;
     overflow-y: auto;
   }
   .scores {
     display: flex;
-    margin-bottom: 1rem;
+    margin-bottom: 30px;
     font-size: ${({ theme }) => theme.heading.title4};
     line-height: 28px;
     justify-content: center;
