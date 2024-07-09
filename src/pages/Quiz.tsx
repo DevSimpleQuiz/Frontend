@@ -171,4 +171,3 @@ const QuizInput = styled.input<{ isCorrect :string , value: string }>`
   color: ${props => props.isCorrect === theme.color.grey4  ? 'black' : 'white'};
   outline: none;
 `;
-
