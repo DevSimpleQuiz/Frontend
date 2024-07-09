@@ -1,29 +1,41 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios, { AxiosRequestConfig } from "axios";
+//import { getToken, removeToken } from "../store/authStore";
 
-const BASE_URL = "";
+const BASE_URL = "http://localhost:4242";
 const DEFAULT_TIMEOUT = 30000;
 
 export const createClient = (config?: AxiosRequestConfig) => {
-    const axiosInstance = axios.create({
-        baseURL: BASE_URL,
-        timeout: DEFAULT_TIMEOUT,
-        headers: {
-            "content-type": "application/json",
-        },
-        withCredentials: true,
-        ...config,
-    });
+  const axiosInstance = axios.create({
+    baseURL: BASE_URL,
+    timeout: DEFAULT_TIMEOUT,
+    headers: {
+      'Content-Type': 'application/json',
+      //Authorization: getToken() ? getToken() : '',
+    },
+    withCredentials: true,
+    ...config,
+  });
 
-    axiosInstance.interceptors.response.use((response)=>{
-        return response;
+  axiosInstance.interceptors.request.use(
+    (response) => {
+      return response;
     },
     (error) => {
-    });
-    
-    return axiosInstance;
-}
+    //   // 토큰이 만료되었을 때
+    //   if(error.response.status === 401) {
+    //     removeToken();
+    //     window.location.href = '/login';
+    //     return;
+    //   }
+    //   // 로그인 만료 처리
+    //   return Promise.reject(error);
+    }
+  );
+  return axiosInstance;
+};
 
 export const httpClient = createClient();
+
 
 type ReqyestMethod = "get" | "post" | "put" | "delete";
 

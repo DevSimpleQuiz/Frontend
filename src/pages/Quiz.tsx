@@ -94,6 +94,18 @@ function Quiz() {
     setHintVisible(false);
   };
 
+  const renderQuizDefinition = (definition: string) => {
+    const sentences = definition.split('.,');
+    let charCount = 0;
+    return sentences.map((sentence, index) => {
+      charCount += sentence.length;
+      if (index === 0 || charCount <= 40) {
+        return <p key={index}>{sentence}</p>;
+      }
+      return null;
+    });
+  };
+
   if (!quizzes || quizzes.length === 0) {
     //로딩 화면 추가..?
     return <p>퀴즈를 불러오는 중...</p>;
@@ -124,11 +136,7 @@ function Quiz() {
         <span>총 점수: {totalScore}점</span>
       </div>
       <div className='questionBox'>
-        {currentQuiz.definition.split('.,').slice(0, 1).map((sentence, index) => (
-          sentence.split('.').map((s, i)=>(
-            <p key={i}>{s}</p>
-          ))
-        ))}
+        {renderQuizDefinition(currentQuiz.definition)}
       </div>
       <div className='answerBox'>
         <HintWrapper onMouseEnter={onMouseEnterHint} onMouseLeave={onMouseLeaveHint}>
