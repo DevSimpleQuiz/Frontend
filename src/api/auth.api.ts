@@ -21,7 +21,7 @@ export const login = async (data: LoginProps) => {
   return response.data;
 };
 
-
+//비밀번호 재설정
 interface ResetPasswordProps {
   currentPassword: string;
   password: string;
@@ -30,9 +30,9 @@ interface ResetPasswordProps {
 
 export const resetPassword = async (data: ResetPasswordProps) => {
   try {
-    console.log('ResetPassword request data:', data); // 추가된 로그
+    console.log('ResetPassword request data:', data); 
     const response = await httpClient.put('/users/password', data);
-    console.log('ResetPassword response:', response.data); // 추가된 로그
+    console.log('ResetPassword response:', response.data); 
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
