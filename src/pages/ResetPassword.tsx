@@ -2,11 +2,13 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import { FormWrapper } from "../components/common/FormWrapper";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { FiInfo, FiEye, FiEyeOff } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
-export interface JoinProps {
+export interface ResetProps {
   currentPassword: string;
   password: string;
   passwordConfirm: string;
@@ -17,18 +19,31 @@ const ResetPassword = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isSubmitted },
-  } = useForm<JoinProps>();
+    formState: { errors, isValid, isSubmitted },
+  } = useForm<ResetProps>({ mode: "onChange" });
 
-  const navigate = useNavigate();
-
+  const { isLoggedIn } = useAuthStore();
+  const {
+    userResetPassword,
+    userCheckCurrentPassword,
+    userCheckAvailablePassword,
+  } = useAuth();
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      window.alert("로그인이 필요합니다.");
+      navigate("/login");
+    }
+  }, [isLoggedIn, navigate]);
 
   const toggleCurrentPasswordVisibility = () => {
     setShowCurrentPassword(!showCurrentPassword);
   };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -36,11 +51,37 @@ const ResetPassword = () => {
   const togglePasswordConfirmVisibility = () => {
     setShowPasswordConfirm(!showPasswordConfirm);
   };
+  const onSubmit: SubmitHandler<ResetProps> = async (data) => {
+    try {
+      const isCurrentPasswordValid = await userCheckCurrentPassword(
+        data.currentPassword
+      );
+      if (!isCurrentPasswordValid) {
+        window.alert("현재 비밀번호가 틀렸습니다.");
+        return;
+      }
 
-  const onSubmit: SubmitHandler<JoinProps> = (data) => {
-    console.log(data);
-    window.alert("비밀번호가 재설정되었습니다.");
-    navigate("/login");
+      const isAvailablePasswordValid = await userCheckAvailablePassword(
+        data.currentPassword,
+        data.password
+      );
+      if (!isAvailablePasswordValid) {
+        window.alert("현재 비밀번호와 같은 비밀번호는 사용할 수 없습니다.");
+        return;
+      }
+
+      await userResetPassword(data);
+      window.alert("비밀번호가 재설정되었습니다.");
+    } catch (error: any) {
+      if (error.errors) {
+        error.errors.forEach((err: string) => {
+          window.alert(err);
+        });
+      } else {
+        window.alert("비밀번호 재설정에 실패하였습니다.");
+      }
+      console.error("Error in onSubmit:", error);
+    }
   };
 
   return (
@@ -50,7 +91,7 @@ const ResetPassword = () => {
         <fieldset>
           <div className="password-input">
             <input
-              type={showCurrentPassword  ? "text" : "password"}
+              type={showCurrentPassword ? "text" : "password"}
               placeholder="현재 비밀번호 입력"
               {...register("currentPassword", {
                 required: "현재 비밀번호를 입력해주세요.",
@@ -71,21 +112,13 @@ const ResetPassword = () => {
               })}
             />
             <button type="button" onClick={toggleCurrentPasswordVisibility}>
-              {showCurrentPassword  ? <FiEyeOff /> : <FiEye />}
+              {showCurrentPassword ? <FiEyeOff /> : <FiEye />}
             </button>
           </div>
-          <p
-            className={`reset-info ${
-              isSubmitted && !errors.currentPassword
-                ? "valid"
-                : isSubmitted
-                ? "invalid"
-                : ""
-            }`}
-          >
+          <ErrorMessage isValid={isSubmitted && !errors.currentPassword}>
             {errors.currentPassword && <FiInfo className="icon-info" />}
             {errors.currentPassword ? errors.currentPassword.message : ""}
-          </p>
+          </ErrorMessage>
         </fieldset>
         <fieldset>
           <div className="password-input">
@@ -109,26 +142,18 @@ const ResetPassword = () => {
                     "8~20자 영문 대/소문자, 숫자, 특수문자를 혼합하여 입력해주세요.",
                 },
                 validate: (value) =>
-                    value !== watch("currentPassword") ||
-                    "기존 비밀번호와 동일합니다.",
+                  value !== watch("currentPassword") ||
+                  "기존 비밀번호와 동일합니다.",
               })}
             />
             <button type="button" onClick={togglePasswordVisibility}>
               {showPassword ? <FiEyeOff /> : <FiEye />}
             </button>
           </div>
-          <p
-            className={`reset-info ${
-              isSubmitted && !errors.password
-                ? "valid"
-                : isSubmitted
-                ? "invalid"
-                : ""
-            }`}
-          >
+          <ErrorMessage isValid={isSubmitted && !errors.password}>
             {errors.password && <FiInfo className="icon-info" />}
             {errors.password ? errors.password.message : ""}
-          </p>
+          </ErrorMessage>
         </fieldset>
         <fieldset>
           <div className="password-input">
@@ -146,22 +171,20 @@ const ResetPassword = () => {
               {showPasswordConfirm ? <FiEyeOff /> : <FiEye />}
             </button>
           </div>
-          <p
-            className={`reset-info ${
-              isSubmitted && !errors.passwordConfirm
-                ? "valid"
-                : isSubmitted
-                ? "invalid"
-                : ""
-            }`}
-          >
+          <ErrorMessage isValid={isSubmitted && !errors.passwordConfirm}>
             {errors.passwordConfirm && <FiInfo className="icon-info" />}
             {errors.passwordConfirm ? errors.passwordConfirm.message : ""}
-          </p>
+          </ErrorMessage>
         </fieldset>
-        <Button className="reset-btn" type="submit" size="long" schema="primary">
+        <StyledButton
+          className="reset-btn"
+          type="submit"
+          size="long"
+          schema="primary"
+          disabled={!isValid}
+        >
           비밀번호 재설정
-        </Button>
+        </StyledButton>
       </ResetPasswordForm>
     </FormWrapper>
   );
@@ -187,31 +210,24 @@ const ResetPasswordForm = styled.form`
       cursor: pointer;
     }
   }
+`;
 
-  .reset-info {
-    margin: 0;
-    margin-top: 4px;
-    padding-left: 4px;
-    font-size: ${({ theme }) => theme.text.text3};
+const ErrorMessage = styled.p<{ isValid: boolean }>`
+  margin: 0;
+  margin-top: 4px;
+  padding-left: 4px;
+  font-size: ${({ theme }) => theme.text.text3};
+  color: ${({ isValid, theme }) => (isValid ? "green" : "red")};
 
-    .icon-info {
-      margin-right: 4px;
-    }
+  .icon-info {
+    margin-right: 4px;
   }
+`;
 
-  .valid {
-    color: green;
-  }
-
-  .invalid {
-    color: red;
-  }
-
-  .error {
-    color: red;
-    font-size: ${({ theme }) => theme.text.text2};
-    margin-bottom: 16px;
-  }
+const StyledButton = styled(Button)`
+  background-color: ${({ theme, disabled }) =>
+    disabled ? theme.color.grey1 : theme.color.primary};
+  /* cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")}; */
 `;
 
 export default ResetPassword;
