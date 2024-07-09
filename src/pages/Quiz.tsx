@@ -27,30 +27,44 @@ function Quiz() {
   const [resultText, setResultText] = useState<string>("");
 
 
-  // 새로고침 및 뒤로가기 시 메인 화면으로 이동
-  useEffect(() => {
-    const handleBeforeUnload = (event: Event) => {
-      sessionStorage.setItem('refreshed', 'true');
-      navigate('/');
+   // 새로고침 및 뒤로가기 시 메인 화면으로 이동
+   useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+    };
+
+    const handleUnload = () => {
+      if (sessionStorage.getItem('confirmed') !== 'true') {
+        sessionStorage.setItem('refreshed', 'true');
+        navigate('/');
+      }
     };
 
     const handlePopState = () => {
-      navigate('/');
+      if (window.confirm('퀴즈가 종료됩니다. 계속하시겠습니까?')) {
+        navigate('/');
+      } else {
+        window.history.pushState(null, '', window.location.href);
+      }
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('unload', handleUnload);
     window.addEventListener('popstate', handlePopState);
 
     if (sessionStorage.getItem('refreshed') === 'true') {
       sessionStorage.removeItem('refreshed');
+      sessionStorage.removeItem('confirmed');
       navigate('/');
     }
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('unload', handleUnload);
       window.removeEventListener('popstate', handlePopState);
     };
   }, [navigate]);
+
 
   const onClickNextBtn = () => {
     if (progressNum >= 100) {
@@ -111,7 +125,6 @@ function Quiz() {
       <div className='questionBox'>
         {currentQuiz.definition.split('.,').slice(0, 1).map((sentence, index) => (
           sentence.split('.').map((s, i)=>(
-            
             <p key={i}>{s}</p>
           ))
         ))}
