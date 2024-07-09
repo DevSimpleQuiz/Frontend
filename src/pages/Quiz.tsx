@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import next from '../assets/quizImg/next.png';
-import hint from '../assets/quizImg/hintH.png';
+import hintD from '../assets/quizImg/hintD.png';
+import hintH from '../assets/quizImg/hintH.png'; 
 import { theme } from '../styles/theme';
 import { useQuizzes } from '../hooks/useQuizzes';
 import HintModal from '../components/quiz/HintModal';
@@ -132,7 +133,7 @@ function Quiz() {
       <div className='answerBox'>
         <HintWrapper onMouseEnter={onMouseEnterHint} onMouseLeave={onMouseLeaveHint}>
           <div className="quizButton">
-            <img className="imgH" src={hint} alt="hint button" />
+            <img className="imgH" src={hintVisible ? hintH : hintD} alt="hint button" />
             <HintModal
               initialConstant={currentQuiz.initialConstant}
               visible={hintVisible}
