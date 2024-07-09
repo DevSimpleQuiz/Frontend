@@ -2,11 +2,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Quiz from "./pages/Quiz";
-import Ranking from "./pages/Ranking";
 import Home from "./pages/Home";
 import Error from "./components/common/Error";
 import Login from './pages/Login';
 import Join from './pages/Join';
+import Rank from "./pages/Rank";
 
 const routeList = [
   {
@@ -28,6 +28,10 @@ const routeList = [
   {
     path: '/quiz',
     element: <Quiz />
+  },
+  {
+    path: '/rank',
+    element: <Rank />
   },
 ];
 
