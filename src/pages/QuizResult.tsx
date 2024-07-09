@@ -7,7 +7,7 @@ function QuizResult() {
   const location = useLocation();
   const totalScore = location.state?.totalScore || 0;
   const totalQuestions = location.state?.totalQuestions || 0;
-  const correctAnswers = location.state?.currentScore || 0;
+  const correctAnswers = location.state?.correctAnswers || 0;
 
   return (
     <QuizResultStyle>
