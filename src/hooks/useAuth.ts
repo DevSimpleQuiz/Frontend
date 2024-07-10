@@ -1,12 +1,13 @@
-import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/authStore";
-import { LoginProps } from "../pages/Login";
-import { join, login } from "../api/auth.api";
-import { JoinProps } from "../pages/Join";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore, removeToken } from '../store/authStore';
+import { join, login, logout } from '../api/auth.api';
+import { LoginProps } from '../pages/Login';
+import { JoinProps } from '../pages/Join';
 
 export const useAuth = () => {
   const navigation = useNavigate();
-  const { storeLogin } = useAuthStore();
+  const { storeLogin, storeLogout } = useAuthStore();
 
   const userLogin = (data: LoginProps) => {
     login(data).then((res) => {
@@ -26,5 +27,19 @@ export const useAuth = () => {
     })
   };
 
-  return { userLogin, userJoin };
+  const userLogout = async () => {
+    try {
+      await logout();
+      storeLogout();
+      navigation('/login');
+    } catch (err) {
+      console.error('Error logging out:', err);
+    }
+  };
+
+  return {
+    userLogin,
+    userJoin,
+    userLogout
+  };
 };
