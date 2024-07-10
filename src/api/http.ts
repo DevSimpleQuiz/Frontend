@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
-//import { getToken, removeToken } from "../store/authStore";
+import { getToken, removeToken } from "../store/authStore";
 
-const BASE_URL = "http://localhost:4242";
+const BASE_URL = "http://localhost:3333";
 const DEFAULT_TIMEOUT = 30000;
 
 export const createClient = (config?: AxiosRequestConfig) => {
@@ -10,7 +10,7 @@ export const createClient = (config?: AxiosRequestConfig) => {
     timeout: DEFAULT_TIMEOUT,
     headers: {
       'Content-Type': 'application/json',
-      //Authorization: getToken() ? getToken() : '',
+      Authorization: getToken() ? getToken() : '',
     },
     withCredentials: true,
     ...config,
@@ -21,41 +21,17 @@ export const createClient = (config?: AxiosRequestConfig) => {
       return response;
     },
     (error) => {
-    //   // 토큰이 만료되었을 때
-    //   if(error.response.status === 401) {
-    //     removeToken();
-    //     window.location.href = '/login';
-    //     return;
-    //   }
-    //   // 로그인 만료 처리
-    //   return Promise.reject(error);
+      // 토큰이 만료되었을 때
+      if(error.response.status === 401) {
+        removeToken();
+        window.location.href = '/login';
+        return;
+      }
+      // 로그인 만료 처리
+      return Promise.reject(error);
     }
   );
   return axiosInstance;
 };
 
 export const httpClient = createClient();
-
-
-type ReqyestMethod = "get" | "post" | "put" | "delete";
-
-export const requestHandler = async <T>(method: ReqyestMethod, url: string, payload?: T ) => {
-    let response;
-
-    switch(method) {
-        case "post":
-            response = await httpClient.post(url, payload);
-            break;
-        case "get":
-            response = await httpClient.get(url);
-            break;
-        case "put":
-            response = await httpClient.put(url, payload);
-            break;
-        case "delete":
-            response = await httpClient.delete(url);
-            break;
-    }
-
-    return response.data;
-};
