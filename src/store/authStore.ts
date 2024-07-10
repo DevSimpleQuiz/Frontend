@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface StoreState {
   isLoggedIn: boolean;
@@ -17,16 +18,24 @@ const setToken = (token: string) => {
 
 export const removeToken = () => {
   localStorage.removeItem("token");
+  // document.cookie = 'token=; Max-Age=0'; 
 };
 
-export const useAuthStore = create<StoreState>((set) => ({
-  isLoggedIn: getToken() ? true : false,
-  storeLogin: (token) => {
-    set({ isLoggedIn: true });
-    setToken(token);
-  },
-  storeLogout: () => {
-    set({ isLoggedIn: false });
-    removeToken();
-  }
-}));
+export const useAuthStore = create<StoreState>()(
+  persist(
+    (set) => ({
+      isLoggedIn: !!getToken(),
+      storeLogin: (token) => {
+        setToken(token);
+        set({ isLoggedIn: true });
+      },
+      storeLogout: () => {
+        removeToken();
+        set({ isLoggedIn: false });
+      },
+    }),
+    {
+      name: "auth", // localStorage 키
+    }
+  )
+);
