@@ -33,15 +33,12 @@ export const logout = async () => {
 export const resetPassword = async (password: string, newPassword: string) => {
   try {
     const response = await httpClient.put('/users/password', {  password, newPassword  }, { withCredentials: true });
-    console.log('ResetPassword response:', response.data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.error('Axios error resetting password:', error.response?.data || error.message);
       throw error.response?.data || error.message;
     } else {
-      console.error('Unknown error resetting password:', error);
-      throw new Error('Unknown error occurred');
+      throw new Error('알 수 없는 에러 발생');
     }
   }
 };
