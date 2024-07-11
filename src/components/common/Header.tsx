@@ -2,9 +2,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
 import { useAuthStore } from '../../store/authStore';
+import { useAuth } from '../../hooks/useAuth';
 
 const Header = () => {
-  const { isLoggedIn, storeLogout } = useAuthStore();
+  const { isLoggedIn } = useAuthStore();
+  const { userLogout } = useAuth();
 
   return (
     <HeaderWrapper>
@@ -20,14 +22,14 @@ const Header = () => {
               <Link to='/mypage'>
                 <Button size='short' schema='normal'>MY PAGE</Button>
               </Link>
-              <Button size='short' schema='normal' onClick={storeLogout}>LOGOUT</Button>
+              <Button size='short' schema='normal' onClick={userLogout}>LOGOUT</Button>
             </>
           ) : (
             <>
-              <Link to='/join'>
+              <Link to='/users/join'>
                 <Button size='short' schema='normal'>JOIN</Button>
               </Link>
-              <Link to='/login'>
+              <Link to='/users/login'>
                 <Button size='short' schema='normal'>LOGIN</Button>
               </Link>
             </>

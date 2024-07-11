@@ -2,31 +2,18 @@ import { create } from "zustand";
 
 interface StoreState {
   isLoggedIn: boolean;
-  storeLogin: (token: string) => void;
+  isDuplicate: boolean;
+  storeLogin: () => void;
   storeLogout: () => void;
 }
 
-export const getToken = () => {
-  const token = localStorage.getItem("token");
-  return token;
-};
-
-const setToken = (token: string) => {
-  localStorage.setItem("token", token);
-};
-
-export const removeToken = () => {
-  localStorage.removeItem("token");
-};
-
 export const useAuthStore = create<StoreState>((set) => ({
-  isLoggedIn: getToken() ? true : false,
-  storeLogin: (token) => {
+  isLoggedIn: false,
+  isDuplicate: false,
+  storeLogin: () => {
     set({ isLoggedIn: true });
-    setToken(token);
   },
   storeLogout: () => {
     set({ isLoggedIn: false });
-    removeToken();
   }
 }));

@@ -14,11 +14,11 @@ const routeList = [
     element: <Home />,
   },
   {
-    path: '/login',
+    path: '/users/login',
     element: <Login />
   },
   {
-    path: '/join',
+    path: '/users/join',
     element: <Join />
   },
   {
