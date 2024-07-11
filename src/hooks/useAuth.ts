@@ -32,6 +32,21 @@ export const useAuth = () => {
   };
 
 
+  const userLogout = async () => {
+    try {
+      await logout();
+      storeLogout();
+      navigation('/login');
+    } catch (err) {
+      console.error('Error logging out:', err);
+    }
+  };
+
+  return {
+    userLogin,
+    userJoin,
+    userLogout
+  };
   const userResetPassword = (data: ResetProps) => {
     resetPassword(data).then(
       () => {

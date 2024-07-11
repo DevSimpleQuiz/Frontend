@@ -17,8 +17,18 @@ interface LoginResponse {
 
 export const login = async (data: LoginProps) => {
   const response = await httpClient.post<LoginResponse>("/users/login", data);
+  const response = await httpClient.post<LoginResponse>("/users/login", data);
 
   return response.data;
+};
+
+// 로그아웃
+export const logout = async () => {
+  try {
+    await httpClient.post('/users/logout', {});
+  } catch (error) {
+    console.error('로그아웃에 실패하였습니다.', error);
+  }
 };
 
 //비밀번호 재설정
