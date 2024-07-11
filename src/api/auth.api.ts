@@ -32,7 +32,7 @@ export const logout = async () => {
 
 export const resetPassword = async (password: string, newPassword: string) => {
   try {
-    const response = await httpClient.put('/users/password', {  password, newPassword  }, { withCredentials: true });
+    const response = await httpClient.put('/users/password', {  password, newPassword  });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -49,12 +49,12 @@ interface PasswordResponse {
 
 // 현재 비밀번호 확인
 export const checkCurrentPassword = async (password: string): Promise<PasswordResponse> => {
-  const response = await httpClient.post<PasswordResponse>(`/users/action/is-current-password`, { password }, { withCredentials: true });
+  const response = await httpClient.post<PasswordResponse>(`/users/action/is-current-password`, { password });
   return response.data;
 };
 
 // 사용 가능한 비밀번호 확인
 export const checkAvailablePassword = async (password: string, newPassword: string): Promise<PasswordResponse> => {
-  const response = await httpClient.post<PasswordResponse>(`/users/action/is-available-password`, { password, newPassword }, { withCredentials: true });
+  const response = await httpClient.post<PasswordResponse>(`/users/action/is-available-password`, { password, newPassword });
   return response.data;
 };
