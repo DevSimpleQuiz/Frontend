@@ -49,7 +49,7 @@ export const useAuth = () => {
       storeLogout();
       navigation("/login");
     } catch (err) {
-      console.error("Error logging out:", err);
+      console.error(err);
     }
   };
 
