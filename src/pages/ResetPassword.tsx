@@ -2,11 +2,14 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import { FormWrapper } from "../components/common/FormWrapper";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FiInfo, FiEye, FiEyeOff } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import PasswordField, {
+  ErrorMessage,
+} from "../components/common/PasswordField";
+import { FiInfo } from "react-icons/fi";
 
 export interface ResetProps {
   password: string;
@@ -19,7 +22,7 @@ const ResetPassword = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isValid, isSubmitted },
+    formState: { errors, isValid },
   } = useForm<ResetProps>({ mode: "onChange" });
 
   const { isLoggedIn } = useAuthStore();
@@ -27,12 +30,11 @@ const ResetPassword = () => {
     userResetPassword,
     userCheckCurrentPassword,
     userCheckAvailablePassword,
-    userLogout
+    userLogout,
   } = useAuth();
 
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [newApiError, setNewApiError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,132 +43,118 @@ const ResetPassword = () => {
     }
   }, [isLoggedIn, navigate]);
 
-  const toggleCurrentPasswordVisibility = () => {
-    setShowCurrentPassword(!showCurrentPassword);
+  const onBlurCurrentPassword = async () => {
+    const currentPassword = watch("password");
+    if (currentPassword) {
+      const isCurrentPasswordValid = await userCheckCurrentPassword(
+        currentPassword
+      );
+      if (!isCurrentPasswordValid) {
+        setApiError("현재 비밀번호가 틀렸습니다.");
+      } else {
+        setApiError(null);
+      }
+    }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const togglePasswordConfirmVisibility = () => {
-    setShowPasswordConfirm(!showPasswordConfirm);
+  const onBlurNewPassword = async () => {
+    const currentPassword = watch("password");
+    const newPassword = watch("newPassword");
+    if (currentPassword && newPassword) {
+      const isAvailablePasswordValid = await userCheckAvailablePassword(
+        currentPassword,
+        newPassword
+      );
+      if (!isAvailablePasswordValid) {
+        setNewApiError("현재 비밀번호와 같은 비밀번호는 사용할 수 없습니다.");
+      } else {
+        setNewApiError(null);
+      }
+    }
   };
 
   const onSubmit: SubmitHandler<ResetProps> = async (data) => {
     try {
-      const isCurrentPasswordValid = await userCheckCurrentPassword(data.password);
-      if (!isCurrentPasswordValid) {
-        window.alert("현재 비밀번호가 틀렸습니다.");
-        return;
-      }
-
-      const isAvailablePasswordValid = await userCheckAvailablePassword(data.password, data.newPassword);
-      if (!isAvailablePasswordValid) {
-        window.alert("현재 비밀번호와 같은 비밀번호는 사용할 수 없습니다.");
-        return;
-      }
-
       await userResetPassword(data.password, data.newPassword);
-      // window.alert("비밀번호가 재설정되었습니다.");
       userLogout();
-
     } catch (error: any) {
       if (error.message) {
-        window.alert(error.message);
+        console.error(error.message);
       } else {
-        window.alert('비밀번호 재설정에 실패하였습니다.');
+        window.alert("비밀번호 재설정에 실패하였습니다.");
       }
-      console.error('Error in onSubmit:', error);
+      console.error("Error in onSubmit:", error);
     }
   };
 
   return (
     <FormWrapper>
       <h1>비밀번호 재설정</h1>
-      <ResetPasswordForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
-          <div className="password-input">
-            <input
-              type={showCurrentPassword ? "text" : "password"}
-              placeholder="현재 비밀번호 입력"
-              autoComplete="password"
-              {...register("password", {
-                required: "현재 비밀번호를 입력해주세요.",
-                minLength: {
-                  value: 8,
-                  message: "비밀번호는 최소 8자 이상이어야 합니다.",
-                },
-                maxLength: {
-                  value: 20,
-                  message: "비밀번호는 최대 20자까지 가능합니다.",
-                },
-                pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%?])[a-zA-Z0-9!@#$%?]{8,20}$/,
-                  message: "8~20자 영문 대/소문자, 숫자, 특수문자를 혼합하여 입력해주세요.",
-                },
-              })}
-            />
-            <button type="button" onClick={toggleCurrentPasswordVisibility}>
-              {showCurrentPassword ? <FiEyeOff /> : <FiEye />}
-            </button>
-          </div>
-          <ErrorMessage isValid={isSubmitted && !errors.password}>
-            {errors.password && <FiInfo className="icon-info" />}
-            {errors.password ? errors.password.message : ""}
-          </ErrorMessage>
+          <PasswordField
+            placeholder="현재 비밀번호 입력"
+            register={register("password", {
+              required: "현재 비밀번호를 입력해주세요.",
+              minLength: {
+                value: 8,
+                message: "비밀번호는 최소 8자 이상이어야 합니다.",
+              },
+              maxLength: {
+                value: 20,
+                message: "비밀번호는 최대 20자까지 가능합니다.",
+              },
+              pattern: {
+                value:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%?])[a-zA-Z0-9!@#$%?]{8,20}$/,
+                message:
+                  "8~20자 영문 대/소문자, 숫자, 특수문자를 혼합하여 입력해주세요.",
+              },
+            })}
+            error={errors.password}
+            onBlur={onBlurCurrentPassword}
+            
+          />
+          {apiError && <ErrorMessage><FiInfo className="icon-info" />{apiError}</ErrorMessage>}
         </fieldset>
         <fieldset>
-          <div className="password-input">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="신규 비밀번호 입력"
-              autoComplete="new-password"
-              {...register("newPassword", {
-                required: "신규 비밀번호를 입력해주세요.",
-                minLength: {
-                  value: 8,
-                  message: "비밀번호는 최소 8자 이상이어야 합니다.",
-                },
-                maxLength: {
-                  value: 20,
-                  message: "비밀번호는 최대 20자까지 가능합니다.",
-                },
-                pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%?])[a-zA-Z0-9!@#$%?]{8,20}$/,
-                  message: "8~20자 영문 대/소문자, 숫자, 특수문자를 혼합하여 입력해주세요.",
-                },
-                validate: (value) => value !== watch("password") || "기존 비밀번호와 동일합니다.",
-              })}
-            />
-            <button type="button" onClick={togglePasswordVisibility}>
-              {showPassword ? <FiEyeOff /> : <FiEye />}
-            </button>
-          </div>
-          <ErrorMessage isValid={isSubmitted && !errors.newPassword}>
-            {errors.newPassword && <FiInfo className="icon-info" />}
-            {errors.newPassword ? errors.newPassword.message : ""}
-          </ErrorMessage>
+          <PasswordField
+            placeholder="신규 비밀번호 입력"
+            register={register("newPassword", {
+              required: "신규 비밀번호를 입력해주세요.",
+              minLength: {
+                value: 8,
+                message: "비밀번호는 최소 8자 이상이어야 합니다.",
+              },
+              maxLength: {
+                value: 20,
+                message: "비밀번호는 최대 20자까지 가능합니다.",
+              },
+              pattern: {
+                value:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%?])[a-zA-Z0-9!@#$%?]{8,20}$/,
+                message:
+                  "8~20자 영문 대/소문자, 숫자, 특수문자를 혼합하여 입력해주세요.",
+              },
+            })}
+            error={errors.newPassword}
+            onBlur={onBlurNewPassword}
+           
+          />
+          {newApiError && <ErrorMessage><FiInfo className="icon-info" />{newApiError}</ErrorMessage>}
         </fieldset>
         <fieldset>
-          <div className="password-input">
-            <input
-              type={showPasswordConfirm ? "text" : "password"}
-              placeholder="신규 비밀번호 확인"
-              autoComplete="new-password"
-              {...register("passwordConfirm", {
-                required: "비밀번호 확인을 입력해주세요.",
-                validate: (value) => value === watch("newPassword") || "비밀번호가 일치하지 않습니다.",
-              })}
-            />
-            <button type="button" onClick={togglePasswordConfirmVisibility}>
-              {showPasswordConfirm ? <FiEyeOff /> : <FiEye />}
-            </button>
-          </div>
-          <ErrorMessage isValid={isSubmitted && !errors.passwordConfirm}>
-            {errors.passwordConfirm && <FiInfo className="icon-info" />}
-            {errors.passwordConfirm ? errors.passwordConfirm.message : ""}
-          </ErrorMessage>
+          <PasswordField
+            placeholder="신규 비밀번호 확인"
+            register={register("passwordConfirm", {
+              required: "비밀번호 확인을 입력해주세요.",
+              validate: (value) =>
+                value === watch("newPassword") ||
+                "비밀번호가 일치하지 않습니다.",
+            })}
+            error={errors.passwordConfirm}
+            
+          />
         </fieldset>
         <StyledButton
           className="reset-btn"
@@ -177,49 +165,18 @@ const ResetPassword = () => {
         >
           비밀번호 재설정
         </StyledButton>
-      </ResetPasswordForm>
+      </StyledForm>
     </FormWrapper>
   );
 };
 
-const ResetPasswordForm = styled.form`
-  .password-input {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-
-    input {
-      flex: 8;
-    }
-
-    button {
-      margin: 0px;
-      padding: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-  }
-`;
-
-const ErrorMessage = styled.p<{ isValid: boolean }>`
-  margin: 0;
-  margin-top: 4px;
-  padding-left: 4px;
-  font-size: ${({ theme }) => theme.text.text3};
-  color: ${({ isValid, theme }) => (isValid ? "green" : "red")};
-
-  .icon-info {
-    margin-right: 4px;
-  }
+const StyledForm = styled.form`
+  width: 100%;
 `;
 
 const StyledButton = styled(Button)`
   background-color: ${({ theme, disabled }) =>
     disabled ? theme.color.grey1 : theme.color.primary};
-  /* cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")}; */
 `;
 
 export default ResetPassword;
