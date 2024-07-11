@@ -1,7 +1,7 @@
 import { JoinProps } from "../pages/Join";
 import { LoginProps } from "../pages/Login";
 import { httpClient } from "./http";
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 // 회원가입
 export const join = async (data: JoinProps) => {
@@ -17,7 +17,6 @@ interface LoginResponse {
 
 export const login = async (data: LoginProps) => {
   const response = await httpClient.post<LoginResponse>("/users/login", data);
-  const response = await httpClient.post<LoginResponse>("/users/login", data);
 
   return response.data;
 };
@@ -31,25 +30,14 @@ export const logout = async () => {
   }
 };
 
-//비밀번호 재설정
-interface ResetPasswordProps {
-  currentPassword: string;
-  password: string;
-  passwordConfirm: string;
-}
-
-export const resetPassword = async (data: ResetPasswordProps) => {
+export const resetPassword = async (password: string, newPassword: string) => {
   try {
-    console.log('ResetPassword request data:', data); 
-    const response = await httpClient.put('/users/password', data);
-    console.log('ResetPassword response:', response.data); 
+    const response = await httpClient.put('/users/password', {  password, newPassword  }, { withCredentials: true });
+    console.log('ResetPassword response:', response.data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios error resetting password:', error.response?.data || error.message);
-      if (error.response?.data) {
-        console.error('Server error details:', error.response.data);
-      }
       throw error.response?.data || error.message;
     } else {
       console.error('Unknown error resetting password:', error);
@@ -58,22 +46,18 @@ export const resetPassword = async (data: ResetPasswordProps) => {
   }
 };
 
-interface CheckCurrentPasswordResponse {
+interface PasswordResponse {
   success: boolean;
 }
 
 // 현재 비밀번호 확인
-export const checkCurrentPassword = async (password: string): Promise<CheckCurrentPasswordResponse> => {
-  const response = await httpClient.post<CheckCurrentPasswordResponse>(`/users/action/is-current-password`, { password });
+export const checkCurrentPassword = async (password: string): Promise<PasswordResponse> => {
+  const response = await httpClient.post<PasswordResponse>(`/users/action/is-current-password`, { password }, { withCredentials: true });
   return response.data;
 };
 
-interface CheckAvailablePasswordResponse {
-  success: boolean;
-}
-
 // 사용 가능한 비밀번호 확인
-export const checkAvailablePassword = async (password: string, newPassword: string): Promise<CheckAvailablePasswordResponse> => {
-  const response = await httpClient.post<CheckAvailablePasswordResponse>(`/users/action/is-available-password`, { password, newPassword });
+export const checkAvailablePassword = async (password: string, newPassword: string): Promise<PasswordResponse> => {
+  const response = await httpClient.post<PasswordResponse>(`/users/action/is-available-password`, { password, newPassword }, { withCredentials: true });
   return response.data;
 };
