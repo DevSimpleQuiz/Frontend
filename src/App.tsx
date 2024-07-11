@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Error from "./components/common/Error";
 import Login from './pages/Login';
 import Join from './pages/Join';
+import MyPage from "./pages/MyPage";
 
 const routeList = [
   {
@@ -28,6 +29,10 @@ const routeList = [
   {
     path: '/quiz',
     element: <Quiz />
+  },
+  {
+    path: '/myPage',
+    element: <MyPage />
   },
 ];
 
