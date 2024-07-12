@@ -3,7 +3,8 @@ import { persist } from "zustand/middleware";
 
 interface StoreState {
   isLoggedIn: boolean;
-  storeLogin: (token: string) => void;
+  isDuplicate: boolean;
+  storeLogin: () => void;
   storeLogout: () => void;
 }
 
