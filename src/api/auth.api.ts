@@ -36,13 +36,6 @@ export const login = async (data: LoginProps) => {
 
 // 로그아웃
 export const logout = async () => {
-  const response = await httpClient.post("/users/logout");
-  
-  return response.data;
-};
-
-// 로그아웃
-export const logout = async () => {
   try {
     await httpClient.post('/users/logout', {});
   } catch (error) {
