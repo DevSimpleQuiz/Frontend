@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Join from "./pages/Join";
 import { AuthProvider } from "./context/AuthContext";
 import ResetPassword from "./pages/ResetPassword";
+import Rank from "./pages/Rank";
 
 const routeList = [
   {
@@ -14,12 +15,12 @@ const routeList = [
     element: <Home />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: '/users/login',
+    element: <Login />
   },
   {
-    path: "/join",
-    element: <Join />,
+    path: '/users/join',
+    element: <Join />
   },
   {
     path: "/quiz",
@@ -32,6 +33,14 @@ const routeList = [
   {
     path: "/error",
     element: <Error />,
+  },
+  {
+    path: '/quiz',
+    element: <Quiz />
+  },
+  {
+    path: '/rank',
+    element: <Rank />
   },
 ];
 

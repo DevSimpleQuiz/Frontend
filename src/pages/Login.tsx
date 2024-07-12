@@ -10,6 +10,10 @@ export interface LoginProps {
   password: string;
 }
 
+export interface LoginToken extends LoginProps {
+  token: string;
+}
+
 const Login = () => {
   const {
     register,

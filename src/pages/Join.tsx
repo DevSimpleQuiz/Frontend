@@ -3,7 +3,7 @@ import Button from '../components/Button';
 import { FormWrapper } from '../components/common/FormWrapper';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { FiInfo } from "react-icons/fi";
 import { useAuth } from '../hooks/useAuth';
 
@@ -21,13 +21,39 @@ const Join = () => {
     formState: { errors, isSubmitted }
   } = useForm<JoinProps>();
 
-  const { userJoin } = useAuth();
+  const { userJoin, checkIdDuplication } = useAuth();
+  const [isIdChecked, setIsIdChecked] = useState<boolean | null>(null);
 
   const passwordRef = useRef<string | null>(null);
   passwordRef.current = watch("password");
 
   const onSubmit = (data: JoinProps) => {
+    if (isIdChecked === false) {
+      window.alert("아이디 중복을 확인해주세요.");
+      return;
+    }
+    
     userJoin(data);
+  };
+
+  const onCheckId = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    
+    const id = watch("id");
+    if (!id) {
+      window.alert("아이디를 입력해주세요.");
+      return;
+    }
+
+    const isDuplicated = await checkIdDuplication(id);
+    console.log(isDuplicated);
+    setIsIdChecked(!isDuplicated);
+  
+    if (isDuplicated) {
+      window.alert("이미 사용 중인 아이디입니다.");
+    } else {
+      window.alert("사용 가능한 아이디입니다.");
+    }
   };
 
   return (
@@ -51,7 +77,7 @@ const Join = () => {
               type='button'
               size='short' 
               schema='normal'
-              onClick={() => onSubmit}
+              onClick={onCheckId}
             >중복 확인</Button>
           </div>
           <p className={`join-info ${isSubmitted && (errors.id ? 'invalid' : 'valid')}`}>
@@ -99,7 +125,7 @@ const Join = () => {
           schema='primary'>회원가입</Button>
         <div className="go-to-link">
           <span>이미 회원이신가요?</span>
-          <Link to='/login'>로그인</Link>
+          <Link to='/users/login'>로그인</Link>
         </div>
       </JoinForm>
     </FormWrapper>

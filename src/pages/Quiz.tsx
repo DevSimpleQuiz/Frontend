@@ -16,7 +16,6 @@ function Quiz() {
   const [hintVisible, setHintVisible] = useState<boolean>(false);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  //console.log(quizzes);
 
   const currentQuiz = quizzes[currentIndex];
 
@@ -112,7 +111,7 @@ function Quiz() {
   }
   const onSubmitAnswer = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const value = inputText;
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter'&& resultText === "") {
       if (value === "") {
         alert("답 입력 후 엔터를 눌러주세요.");
       } else if (value === currentQuiz.word) {
