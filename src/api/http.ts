@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig } from 'axios';
 
 const BASE_URL = "http://localhost:4242";
 const DEFAULT_TIMEOUT = 30000;
@@ -10,7 +10,7 @@ export const createClient = (config?: AxiosRequestConfig) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    withCredentials: true,
+    withCredentials: true, // 여기에 withCredentials 설정
     ...config,
   });
 
@@ -20,8 +20,8 @@ export const createClient = (config?: AxiosRequestConfig) => {
     },
     (error) => {
       // 토큰이 만료되었을 때
-      if(error.response.status === 401) {
-        window.location.href = '/login';
+      if (error.response && error.response.status === 401) {
+        window.location.href = '/users/login';
         return;
       }
       // 로그인 만료 처리

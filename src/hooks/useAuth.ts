@@ -37,14 +37,11 @@ export const useAuth = () => {
     });
   };
 
-  const checkIdDuplication = async (id: string) => {
+  const checkIdDuplication = async (id: string): Promise<boolean> => {
     try {
       const res = await checkId(id);
-      if (res.isDuplicated) {
-        return true;
-      } else {
-        return false;
-      }
+      console.log(res);
+      return res.isDuplicated;
     } catch (err) {
       console.error("아이디 중복체크에 실패하였습니다.", err);
       window.alert("아이디 중복체크에 실패하였습니다.");

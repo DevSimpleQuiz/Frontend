@@ -32,13 +32,23 @@ const Join = () => {
       window.alert("아이디 중복을 확인해주세요.");
       return;
     }
+    
     userJoin(data);
   };
 
-  const onCheckId = async () => {
+  const onCheckId = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    
     const id = watch("id");
+    if (!id) {
+      window.alert("아이디를 입력해주세요.");
+      return;
+    }
+
     const isDuplicated = await checkIdDuplication(id);
+    console.log(isDuplicated);
     setIsIdChecked(!isDuplicated);
+  
     if (isDuplicated) {
       window.alert("이미 사용 중인 아이디입니다.");
     } else {
