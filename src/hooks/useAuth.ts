@@ -16,7 +16,6 @@ export const useAuth = () => {
       window.alert("회원가입에 실패하였습니다.");
     });
   };
-  
   const userLogin = (data: LoginProps) => {
     login(data).then(() => {
       storeLogin();
@@ -50,4 +49,5 @@ export const useAuth = () => {
   };
 
   return { userJoin, userLogin, userLogout, checkIdDuplication };
+  
 };

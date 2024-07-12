@@ -1,6 +1,7 @@
 import { JoinProps } from "../pages/Join";
 import { LoginProps, LoginToken } from "../pages/Login";
 import { httpClient } from "./http";
+import axios from 'axios';
 
 // 회원가입
 export const join = async (data: JoinProps) => {
@@ -38,4 +39,13 @@ export const logout = async () => {
   const response = await httpClient.post("/users/logout");
   
   return response.data;
+};
+
+// 로그아웃
+export const logout = async () => {
+  try {
+    await httpClient.post('/users/logout', {});
+  } catch (error) {
+    console.error('로그아웃에 실패하였습니다.', error);
+  }
 };

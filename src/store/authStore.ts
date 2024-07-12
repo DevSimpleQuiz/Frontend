@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface StoreState {
   isLoggedIn: boolean;
@@ -7,13 +8,35 @@ interface StoreState {
   storeLogout: () => void;
 }
 
-export const useAuthStore = create<StoreState>((set) => ({
-  isLoggedIn: false,
-  isDuplicate: false,
-  storeLogin: () => {
-    set({ isLoggedIn: true });
-  },
-  storeLogout: () => {
-    set({ isLoggedIn: false });
-  }
-}));
+export const getToken = () => {
+  const token = localStorage.getItem("token");
+  return token;
+};
+
+const setToken = (token: string) => {
+  localStorage.setItem("token", token);
+};
+
+export const removeToken = () => {
+  localStorage.removeItem("token");
+  // document.cookie = 'token=; Max-Age=0'; 
+};
+
+export const useAuthStore = create<StoreState>()(
+  persist(
+    (set) => ({
+      isLoggedIn: !!getToken(),
+      storeLogin: (token) => {
+        setToken(token);
+        set({ isLoggedIn: true });
+      },
+      storeLogout: () => {
+        removeToken();
+        set({ isLoggedIn: false });
+      },
+    }),
+    {
+      name: "auth", // localStorage 키
+    }
+  )
+);
