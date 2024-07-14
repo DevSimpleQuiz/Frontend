@@ -41,7 +41,7 @@ export const useAuth = () => {
       window.location.reload();
     });
   };
-
+  
   const userLogout = async () => {
     try {
       await logout();
