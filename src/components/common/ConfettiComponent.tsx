@@ -3,7 +3,7 @@ import confetti from "canvas-confetti";
 
 const ConfettiComponent: React.FC = () => {
   useEffect(() => {
-    const duration = 2 * 1000; // 5초 동안 폭죽 효과
+    const duration = 2 * 1000;
     const end = Date.now() + duration;
 
     const frame = () => {
