@@ -34,7 +34,6 @@ export const login = async (data: LoginProps) => {
   return response.data;
 };
 
-
 // 로그아웃
 export const logout = async () => {
   try {

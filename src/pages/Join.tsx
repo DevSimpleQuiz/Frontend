@@ -18,7 +18,7 @@ const Join = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isSubmitted }
+    formState: { errors, isSubmitted },
   } = useForm<JoinProps>();
 
   const { userJoin, checkIdDuplication } = useAuth();
@@ -27,13 +27,18 @@ const Join = () => {
   const passwordRef = useRef<string | null>(null);
   passwordRef.current = watch("password");
 
-  const onSubmit = (data: JoinProps) => {
-    if (isIdChecked === false) {
+  const onSubmit = async(data: JoinProps) => {
+    if (isIdChecked !== true) {
       window.alert("아이디 중복을 확인해주세요.");
       return;
     }
-    
-    userJoin(data);
+
+    try {
+      await userJoin(data);
+    } catch (err) {
+      setIsIdChecked(null);
+      throw err;
+    }
   };
 
   const onCheckId = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -46,9 +51,9 @@ const Join = () => {
     }
 
     const isDuplicated = await checkIdDuplication(id);
-    console.log(isDuplicated);
+    // 중복일 경우 true, 중복 아닐 경우 false
     setIsIdChecked(!isDuplicated);
-  
+    
     if (isDuplicated) {
       window.alert("이미 사용 중인 아이디입니다.");
     } else {
