@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Button from "../components/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
-import axios from "axios";
 import { useSaveQuizResult } from "../hooks/useSaveQuizResult";
+import ConfettiComponent from "../components/common/ConfettiComponent";
 
 function QuizResult() {
   const location = useLocation();
@@ -26,6 +26,7 @@ function QuizResult() {
 
   return (
     <QuizResultStyle>
+      <ConfettiComponent />
       <div className="header"> 총 점수는 </div>
       <div className="score">🎉 {totalScore}점 🎉</div>
       <div className="details">
@@ -76,6 +77,7 @@ const QuizResultStyle = styled.div`
 
   .details {
     margin-bottom: 50px;
+    text-align: center;
     font-size: ${({ theme }) => theme.heading.title4};
   }
 
