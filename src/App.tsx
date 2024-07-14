@@ -7,6 +7,7 @@ import Error from "./components/common/Error";
 import Login from './pages/Login';
 import Join from './pages/Join';
 import Rank from "./pages/Rank";
+import MyPage from "./pages/myPage";
 
 const routeList = [
   {
@@ -32,6 +33,10 @@ const routeList = [
   {
     path: '/rank',
     element: <Rank />
+  },
+  {
+    path: '/myPage',
+    element: <MyPage />
   },
 ];
 
