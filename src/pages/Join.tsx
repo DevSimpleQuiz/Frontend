@@ -37,6 +37,7 @@ const Join = () => {
       await userJoin(data);
     } catch (err) {
       setIsIdChecked(null);
+      throw err;
     }
   };
 
