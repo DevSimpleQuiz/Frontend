@@ -2,7 +2,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Quiz from "./pages/Quiz";
-import Ranking from "./pages/Ranking";
 import Home from "./pages/Home";
 import Error from "./components/common/Error";
 import Login from './pages/Login';
@@ -16,11 +15,11 @@ const routeList = [
     element: <Home />,
   },
   {
-    path: '/login',
+    path: '/users/login',
     element: <Login />
   },
   {
-    path: '/join',
+    path: '/users/join',
     element: <Join />
   },
   {
@@ -49,9 +48,7 @@ const rotuer = createBrowserRouter(
 
 const App = () => {
   return (
-    <AuthProvider>
-      <RouterProvider router={rotuer} />
-    </AuthProvider>
+    <RouterProvider router={rotuer} />
   )
 };
 
