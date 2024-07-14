@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import profile from '../assets/images/profile.png'
 import { useUsers } from '../hooks/useUsers';
+import { useAuthStore } from '../store/authStore';
+import { useNavigate } from 'react-router-dom';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -131,8 +133,13 @@ const Link = styled.a`
 
 const MyPage = () => {
     const {users} = useUsers();
-
+    const { isLoggedIn } = useAuthStore();
+    const navigate = useNavigate();
     
+    if(!isLoggedIn){
+      console.log(isLoggedIn);
+      navigate("/users/login");
+    }
   return (
     <Container>
       <Content>
