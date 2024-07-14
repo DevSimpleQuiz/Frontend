@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Button from "../components/Button";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
+import axios from "axios";
+import { useSaveQuizResult } from "../hooks/useSaveQuizResult";
 
 function QuizResult() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isLoggedIn } = useAuthStore();
   const totalScore = location.state?.totalScore || 0;
   const totalQuestions = location.state?.totalQuestions || 0;
-  const correctAnswers = location.state?.correctAnswers || 0;
+
+  useSaveQuizResult(totalQuestions, totalScore);
+
+  const handleRankButtonClick = () => {
+    if (isLoggedIn) {
+      navigate("/rank");
+    } else {
+      window.alert("로그인이 필요한 서비스입니다.");
+      navigate("/users/login");
+    }
+  };
 
   return (
     <QuizResultStyle>
@@ -15,7 +30,7 @@ function QuizResult() {
       <div className="score">🎉 {totalScore}점 🎉</div>
       <div className="details">
         <div>총 문제 수: {totalQuestions}</div>
-        <div>맞춘 문제 수: {correctAnswers}</div>
+        <div>맞춘 문제 수: {totalScore / 10}</div>
       </div>
       <div className="buttons">
         <div className="btn">
@@ -33,11 +48,9 @@ function QuizResult() {
           </Link>
         </div>
         <div className="btn">
-          <Link to="/rank">
-            <Button size="long" schema="normal">
-              랭킹 확인 - 과연 나의 랭킹은❓
-            </Button>
-          </Link>
+          <Button size="long" schema="normal" onClick={handleRankButtonClick}>
+            랭킹 확인 - 과연 나의 랭킹은❓
+          </Button>
         </div>
       </div>
     </QuizResultStyle>
