@@ -19,10 +19,9 @@ export const useAuth = () => {
 
   const handle401Error = () => {
     window.alert("토큰이 만료되었습니다. 다시 로그인 해주세요.");
-    storeLogout();
-    navigate("/login");
+    userLogout();
   };
-  
+
   const userJoin = (data: JoinProps) => {
     join(data).then((res) => {
       window.alert("회원가입이 완료되었습니다.");
@@ -31,7 +30,7 @@ export const useAuth = () => {
       window.alert("회원가입에 실패하였습니다.");
     });
   };
-
+  
   const userLogin = (data: LoginProps) => {
     login(data).then((res) => {
       storeLogin(res.token);
