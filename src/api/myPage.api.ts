@@ -13,8 +13,12 @@ export const fetchUsers = async () => {
             if (error.response && error.response.status === 401) {
                 console.log('Unauthorized access - 401 error');
                 removeToken();
-                window.location.href = '/login';
-                return;
+                //window.location.href = 'users/login';
+                //return;
+            }else if (error.response && error.response.status === 403){
+                console.log('Unauthorized access - 403 error');
+                removeToken();
+                //window.location.href = 'users/login';
             }
         } else {
             console.log('Unexpected error:', error);
