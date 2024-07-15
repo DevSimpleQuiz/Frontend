@@ -143,7 +143,7 @@ const MyPage = () => {
     
     if(!isLoggedIn){
       console.log(isLoggedIn);
-      navigate("/users/login");
+      navigate("/login");
     }
   return (
     <Container>

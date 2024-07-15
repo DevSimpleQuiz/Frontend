@@ -17,7 +17,7 @@ export const useUsers = () => {
         }else{
           logout();
           storeLogout();
-          navigate("/users/login");
+          navigate("/login");
         }
       }
     );
