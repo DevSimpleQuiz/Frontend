@@ -1,3 +1,4 @@
+import axios from "axios";
 import { JoinProps } from "../pages/Join";
 import { LoginProps, LoginToken } from "../pages/Login";
 import { httpClient } from "./http";
