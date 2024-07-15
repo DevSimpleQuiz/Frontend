@@ -161,7 +161,7 @@ const MyPage = () => {
         <div className="profile-right">
           <div className="quiz-info">
             <div className="quiz-title">퀴즈에 관심이 있는 당신...</div>
-            <div className="quiz-details">지금까지 푼 문제 수 : {(users?.solvedCount) ? users?.solvedCount : 0}개</div>
+            <div className="quiz-details">지금까지 푼 문제 수 : {(users?.totalSolvedCount) ? users?.totalSolvedCount : 0}개</div>
           </div>
           <div className="personal-info">
             <div className="personal-title">개인정보 보호</div>
