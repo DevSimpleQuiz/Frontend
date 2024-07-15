@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import RankCard from '../components/common/rank/RankCard';
 import NearRank from '../components/common/rank/NearRank';
 import { useRank } from '../hooks/useRank';
+import UnAuthorizedRank from '../components/common/rank/UnAuthorizedRank';
 
 const Rank = () => {
   const { userRank, topRank } = useRank();
 
   if (!userRank) {
-    return <div>Loading...</div>;
+    return <UnAuthorizedRank />;
   }
 
   return (
@@ -53,7 +54,7 @@ const Rank = () => {
   );
 };
 
-const RankWrapper = styled.div`
+export const RankWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -66,13 +67,13 @@ const RankWrapper = styled.div`
   }
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
 `;
 
-const MyRank = styled.div`
+export const MyRank = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -180,10 +181,18 @@ const MyRank = styled.div`
   }
 `;
 
-const HighRank = styled.div`
+export const HighRank = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6%;
+
+  div {
+    padding: 16px 28px;
+    width: 100%;
+    height: 100px;
+    border: 1px solid ${({ theme }) => theme.color.grey3};
+    border-radius: 8px;
+  }
 `;
 
 export default Rank;
