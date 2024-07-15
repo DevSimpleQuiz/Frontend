@@ -1,70 +1,17 @@
 import styled from 'styled-components';
-import RankCard from '../components/common/rank/RankCard';
 import { Link } from 'react-router-dom';
+import RankCard from '../components/common/rank/RankCard';
 import NearRank from '../components/common/rank/NearRank';
-
-const allRank = [
-  {
-    id: '김머쓱',
-    rank: 1,
-    score: 1040,
-  },
-  {
-    id: '이머쓱',
-    rank: 2,
-    score: 980,
-  },
-  {
-    id: '박머쓱',
-    rank: 3,
-    score: 760,
-  },
-  {
-    id: '최머쓱',
-    rank: 4,
-    score: 500,
-  },
-  {
-    id: '정머쓱',
-    rank: 5,
-    score: 460,
-  },
-  {
-    id: '하머쓱',
-    rank: 6,
-    score: 400,
-  },
-  {
-    id: '고머쓱',
-    rank: 7,
-    score: 240,
-  },
-  {
-    id: '황머쓱',
-    rank: 8,
-    score: 210,
-  },
-  {
-    id: '양머쓱',
-    rank: 9,
-    score: 110,
-  },
-  {
-    id: '권머쓱',
-    rank: 10,
-    score: 80,
-  },
-];
-
-const myRank = {
-  id: '고머쓱',
-  rank: 7,
-  score: 240,
-  questionNum: 50,
-  correctNum: 24,
-};
+import { useRank } from '../hooks/useRank';
+import UnAuthorizedRank from '../components/common/rank/UnAuthorizedRank';
 
 const Rank = () => {
+  const { userRank, topRank } = useRank();
+
+  if (!userRank) {
+    return <UnAuthorizedRank />;
+  }
+
   return (
     <RankWrapper>
       <h1 className="title">나의 랭킹</h1>
@@ -73,7 +20,7 @@ const Rank = () => {
           <div className="rank-box">
             <div className="rank-zone">
               <h1>RANK</h1>
-              <span>{myRank.rank}</span>
+              <span>{userRank.rank}</span>
             </div>
             <div className="line"></div>
             <div className="go-page">
@@ -83,29 +30,31 @@ const Rank = () => {
             </div>
           </div>
           <div className="score-box">
-            <h2>나의 점수는 <span className="blue">{myRank.score}</span>점</h2>
+            <h2>나의 점수는 <span className="blue">{userRank.totalQuizScore}</span>점</h2>
             <h3>
-              <span className="blue">{myRank.questionNum}</span>문제 중 <span className="blue">{myRank.correctNum}</span>문제를 맞췄네요!
+              <span className="blue">{userRank.totalQuizCount}</span>문제 중 <span className="blue">{userRank.totalSolvedQuizCount}</span>문제를 맞췄네요!
             </h3>
           </div>
         </MyRank>
         <HighRank>
-          {allRank.slice(0, 3).map((data, idx) => (
+        {topRank && topRank.topRankers && 
+          topRank.topRankers.map((data, idx) => (
             <RankCard
               key={idx}
               id={data.id}
               rank={data.rank}
-              score={data.score}
+              totalQuizScore={data.totalScore}
             />
-          ))}
+          ))
+        }
         </HighRank>
-        <NearRank myRank={myRank} nearRank={allRank}/>
+        <NearRank id={userRank.id} />
       </Content>
     </RankWrapper>
   );
 };
 
-const RankWrapper = styled.div`
+export const RankWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -118,13 +67,13 @@ const RankWrapper = styled.div`
   }
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
 `;
 
-const MyRank = styled.div`
+export const MyRank = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -226,13 +175,18 @@ const MyRank = styled.div`
       font-weight: 400;
     }
 
+    a {
+      color: ${({ theme }) => theme.color.primary};
+      text-decoration: underline;
+    }
+
     .blue {
       color: ${({ theme }) => theme.color.blue};
     }
   }
 `;
 
-const HighRank = styled.div`
+export const HighRank = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6%;
