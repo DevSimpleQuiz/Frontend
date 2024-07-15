@@ -8,23 +8,28 @@ export const useAuth = () => {
   const navigate = useNavigate();
   const { storeLogin, storeLogout } = useAuthStore();
   
-  const userJoin = (data: JoinProps) => {
-    join(data).then(() => {
+  const userJoin = async (data: JoinProps) => {
+    try {
+      await join(data);
       window.alert("회원가입이 완료되었습니다.");
       navigate("/users/login");
-    }).catch((err) => {
-      window.alert("회원가입에 실패하였습니다.");
-    });
+    } catch (err) {
+      window.alert("이미 존재하는 유저입니다.");
+      throw err;
+    }
   };
-  const userLogin = (data: LoginProps) => {
-    login(data).then((res) => {
+  
+  const userLogin = async (data: LoginProps) => {
+    try {
+      const res = await login(data);
       storeLogin(res.token);
-      window.alert("로그인이 완료되었습니다.");
+      window.alert(`${data.id}님, 반갑습니다.`);
       navigate("/");
-    }).catch((err) => {
-      window.alert("로그인에 실패하였습니다.");
+    } catch (err) {
+      window.alert("존재하지 않는 유저입니다.");
       window.location.reload();
-    });
+      throw err;
+    }
   };
   
   const userLogout = async () => {
@@ -34,6 +39,7 @@ export const useAuth = () => {
       navigate("/users/login");
     } catch (err) {
       console.error(err);
+      throw err;
     }
   };
 
@@ -43,12 +49,10 @@ export const useAuth = () => {
       console.log(res);
       return res.isDuplicated;
     } catch (err) {
-      console.error("아이디 중복체크에 실패하였습니다.", err);
       window.alert("아이디 중복체크에 실패하였습니다.");
-      return false;
+      throw err;
     }
   };
 
   return { userJoin, userLogin, userLogout, checkIdDuplication };
-  
 };
