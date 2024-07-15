@@ -32,19 +32,16 @@ function Banner() {
     <BannerStyle>
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
-        spaceBetween={50}
-        slidesPerView={1.35}
+        spaceBetween={0} 
+        slidesPerView={1} 
+
         centeredSlides={true}
         loop={true}
-        // loopFillGroupWithBlank={true}
         autoplay={{
           delay: 4500,
           disableOnInteraction: false,
         }}
         speed={500}
-        // pagination={{
-        //   clickable: true,
-        // }}
         navigation={{
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
@@ -68,7 +65,6 @@ function Banner() {
 
 const BannerStyle = styled.div`
   padding-top: 50px;
-  position: relative;
 
   .swiper-button-prev,
   .swiper-button-next {
@@ -80,9 +76,11 @@ const BannerStyle = styled.div`
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin: -1% 13% !important;
+    margin: -1% 15% !important;
   }
+
 `;
+
 
 const SlideContainer = styled.div`
   display: flex;
@@ -101,9 +99,10 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  object-fit: cover;
 `;
 
 export default Banner;

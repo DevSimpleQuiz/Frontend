@@ -15,25 +15,25 @@ const Home: React.FC = () => {
       <section className="btnSection">
         <p className="title">Simple Quiz 풀러가기</p>
         <div className="card">
-          <IconCard 
-            to="/quiz" 
-            bgColor="green" 
-            Icon={QuizIcon} 
-            title="퀴즈 풀러 가기 🌈" 
+          <IconCard
+            to="/quiz"
+            bgColor="green"
+            Icon={QuizIcon}
+            title="퀴즈 풀러 가기 🌈"
             description="#단어 #10문제 #초성힌트"
           />
-          <IconCard 
-            to="/infinite-quiz" 
-            bgColor="yellow" 
-            Icon={InfiniteIcon} 
-            title="무한 퀴즈 챌린지 🔥" 
+          {/* <IconCard
+            to="/infinite-quiz"
+            bgColor="yellow"
+            Icon={InfiniteIcon}
+            title="무한 퀴즈 챌린지 🔥"
             description="#단어 #점수도전 #초성힌트"
-          />
-          <IconCard 
-            to="/rank" 
-            bgColor="blue" 
-            Icon={RankIcon} 
-            title="랭킹 확인 🥇" 
+          /> */}
+          <IconCard
+            to="/rank"
+            bgColor="blue"
+            Icon={RankIcon}
+            title="랭킹 확인 🥇"
             description="#1위부터 #5위까지"
           />
         </div>
@@ -55,19 +55,34 @@ const HomeStyle = styled.div`
     position: relative;
     margin-left: calc(-50vw + 50%);
     width: 100vw;
+    height: 80%;
   }
 
   .title {
     margin: 20px 0;
     font-size: ${({ theme }) => theme.heading.title4};
-    font-weight: 650;
+    font-weight: bold;
   }
 
   .card {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 60px;
+    padding: 0 60px;
+
+    @media (max-width: 1024px) {
+      gap: 60px; 
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 40px; 
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 40px;
+    }
   }
 `;
 
