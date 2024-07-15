@@ -11,6 +11,7 @@ import MyPage from "./pages/myPage";
 import { AuthProvider } from './context/AuthContext';
 import QuizResult from "./pages/QuizResult";
 
+
 const routeList = [
   {
     path: "/",
@@ -41,6 +42,7 @@ const routeList = [
     element: <Quiz />
   },
   {
+
     path: '/rank',
     element: <Rank />
   },
@@ -52,6 +54,7 @@ const routeList = [
     path: '/quiz-result',
     element: <QuizResult/>
   },
+
 ];
 
 const rotuer = createBrowserRouter(
