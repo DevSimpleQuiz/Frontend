@@ -175,6 +175,11 @@ export const MyRank = styled.div`
       font-weight: 400;
     }
 
+    a {
+      color: ${({ theme }) => theme.color.primary};
+      text-decoration: underline;
+    }
+
     .blue {
       color: ${({ theme }) => theme.color.blue};
     }
@@ -185,14 +190,6 @@ export const HighRank = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6%;
-
-  div {
-    padding: 16px 28px;
-    width: 100%;
-    height: 100px;
-    border: 1px solid ${({ theme }) => theme.color.grey3};
-    border-radius: 8px;
-  }
 `;
 
 export default Rank;
