@@ -8,6 +8,8 @@ import Join from "./pages/Join";
 import { AuthProvider } from "./context/AuthContext";
 import ResetPassword from "./pages/ResetPassword";
 import Rank from "./pages/Rank";
+import { AuthProvider } from './context/AuthContext';
+import QuizResult from "./pages/QuizResult";
 
 const routeList = [
   {
@@ -41,6 +43,10 @@ const routeList = [
   {
     path: '/rank',
     element: <Rank />
+  },
+  {
+    path: '/quiz-result',
+    element: <QuizResult/>
   },
 ];
 
