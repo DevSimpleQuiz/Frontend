@@ -6,41 +6,42 @@ import { useAuthStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 const Container = styled.div`
   display: flex;
+  background-color: white;
   flex-direction: column;
   align-items: center;
-  background-color: white;
   .profileImg{
     width:190px;
     }
   .profile-left, .profile-right {
-    flex: 1;
     padding: 10px;
+    flex: 1;
    }
   .profile-right{
     display: flex;
     width: 70%;
-    flex-direction: column;
-    justify-content: center;
     padding: 5% 80px;
     border-left: 1px solid ${({theme}) => theme.color.grey3};;
+    flex-direction: column;
+    justify-content: center; 
     }
 
 .profile-pic {
   display: flex;
-  justify-content: center;
-  align-items: center;
   width: 150px;
   height: 150px;
-  background-color: #edf2f7;
-  border-radius: 50%;
   margin-bottom: 20px;
+  border-radius: 50%;
+  background-color: #edf2f7;
+  justify-content: center;
+  align-items: center;
+  
 }
 
 .pic-placeholder {
   width: 80%;
   height: 80%;
-  background-color: #cbd5e0;
   border-radius: 50%;
+  background-color: #cbd5e0;
 }
 
 .profile-info .info-item {
@@ -53,14 +54,14 @@ const Container = styled.div`
 }
 
 .quiz-title{
-  font-size: ${({theme}) => theme.heading.title3};
   margin-bottom: 20px;
+  font-size: ${({theme}) => theme.heading.title3};
   font-weight: bold;
 }
 .personal-title {
+  margin-bottom: 20px;
   font-weight: bold;
   font-size: ${({theme}) => theme.heading.title3};
-  margin-bottom: 20px;
 }
 
 .quiz-details {
@@ -82,8 +83,8 @@ const Profile = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
-  align-items: center;
   padding: 16px;
+  align-items: center;
 `;
 
 const Avatar = styled.div`
@@ -97,10 +98,10 @@ const Avatar = styled.div`
 `;
 
 const Info = styled.div`
+  width: 100%;
   margin-top: 25px;
   padding-left: 50px;
   font-size: ${({theme}) => theme.text.text1};
-  width: 100%;
   div {
     display: flex;
     justify-content: space-between;
@@ -121,12 +122,14 @@ const Info = styled.div`
 `;
 
 const Link = styled.a`
-  color: ${({theme}) => theme.color.primary};;
-  cursor: pointer;
   margin-top: 8px;
   font-size: ${({theme}) => theme.text.text1};
   text-decoration: underline;
+  color: ${({theme}) => theme.color.primary};;
+  cursor: pointer
 `;
+
+
 
 
 
