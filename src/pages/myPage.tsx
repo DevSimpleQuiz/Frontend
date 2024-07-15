@@ -133,9 +133,6 @@ const Info = styled.div`
 
 
 
-
-
-
 const MyPage = () => {
     const {users} = useUsers();
     const { isLoggedIn } = useAuthStore();
