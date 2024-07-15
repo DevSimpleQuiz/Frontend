@@ -1,24 +1,3 @@
-// import { useEffect, useState } from "react";
-// import { Rank } from "../models/rank.model";
-// import { fetchRank } from "../api/rank.api";
-
-// export const useRank = () => {
-//   const [userRank, setUserRank] = useState<Rank>();
-
-//   useEffect(() => {
-//     fetchRank().then((data) => {
-//       setUserRank(data);
-//     })
-//   }, []);
-  
-//   console.log(userRank);
-
-//   return { userRank };
-// };
-
-
-// useRank.ts
-
 import { useEffect, useState } from "react";
 import { NearRank, Rank, TopRank } from "../models/rank.model";
 import { fetchNearRank, fetchRank, fetchTopRank } from "../api/rank.api";
