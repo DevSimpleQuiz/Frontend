@@ -4,3 +4,10 @@ export interface QuizItem{
     initialConstant: string;
     wordLength: number;
 }
+
+export interface QuizResult {
+    totalQuizCount: number;
+    solvedQuizCount: number;
+    totalQuizScore: number;
+  }
+  

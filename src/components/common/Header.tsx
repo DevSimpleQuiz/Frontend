@@ -26,10 +26,10 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link to='/join'>
+              <Link to='/users/join'>
                 <Button size='short' schema='normal'>JOIN</Button>
               </Link>
-              <Link to='/login'>
+              <Link to='/users/login'>
                 <Button size='short' schema='normal'>LOGIN</Button>
               </Link>
             </>

@@ -1,13 +1,16 @@
-
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Quiz from "./pages/Quiz";
-import Ranking from "./pages/Ranking";
 import Home from "./pages/Home";
 import Error from "./components/common/Error";
-import Login from './pages/Login';
-import Join from './pages/Join';
-import MyPage from "./pages/MyPage";
+import Login from "./pages/Login";
+import Join from "./pages/Join";
+import ResetPassword from "./pages/ResetPassword";
+import Rank from "./pages/Rank";
+import MyPage from "./pages/myPage";
+import { AuthProvider } from './context/AuthContext';
+import QuizResult from "./pages/QuizResult";
+
 
 const routeList = [
   {
@@ -15,12 +18,20 @@ const routeList = [
     element: <Home />,
   },
   {
-    path: '/login',
+    path: '/users/login',
     element: <Login />
   },
   {
-    path: '/join',
+    path: '/users/join',
     element: <Join />
+  },
+  {
+    path: "/quiz",
+    element: <Quiz />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
   },
   {
     path: "/error",
@@ -31,9 +42,19 @@ const routeList = [
     element: <Quiz />
   },
   {
+
+    path: '/rank',
+    element: <Rank />
+  },
+  {
     path: '/myPage',
     element: <MyPage />
   },
+  {
+    path: '/quiz-result',
+    element: <QuizResult/>
+  },
+
 ];
 
 const rotuer = createBrowserRouter(
@@ -41,14 +62,20 @@ const rotuer = createBrowserRouter(
     return {
       ...item,
       element: <Layout>{item.element}</Layout>,
-      errorElement: <Layout><Error /></Layout>,
+      errorElement: (
+        <Layout>
+          <Error />
+        </Layout>
+      ),
     };
   })
 );
 
 const App = () => {
   return (
-    <RouterProvider router={rotuer} />
+    <AuthProvider>
+      <RouterProvider router={rotuer} />
+    </AuthProvider>
   )
 };
 

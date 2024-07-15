@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 
 interface StoreState {
   isLoggedIn: boolean;
+  isDuplicate: boolean;
   storeLogin: (token: string) => void;
   storeLogout: () => void;
 }
@@ -24,6 +25,7 @@ export const removeToken = () => {
 export const useAuthStore = create<StoreState>()(
   persist(
     (set) => ({
+      isDuplicate: false,
       isLoggedIn: !!getToken(),
       storeLogin: (token) => {
         setToken(token);
