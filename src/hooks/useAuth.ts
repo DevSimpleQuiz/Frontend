@@ -17,20 +17,14 @@ export const useAuth = () => {
   const navigate = useNavigate();
   const { storeLogin, storeLogout } = useAuthStore();
 
-
   const handle401Error = () => {
     window.alert("토큰이 만료되었습니다. 다시 로그인 해주세요.");
     userLogout();
   };
 
-  const userJoin = (data: JoinProps) => {
-    join(data).then((res) => {
-
-  
   const userJoin = async (data: JoinProps) => {
     try {
       await join(data);
-
       window.alert("회원가입이 완료되었습니다.");
       navigate("/users/login");
     } catch (err) {
@@ -38,15 +32,10 @@ export const useAuth = () => {
       throw err;
     }
   };
-  
-
-  const userLogin = (data: LoginProps) => {
-    login(data).then((res) => {
 
   const userLogin = async (data: LoginProps) => {
     try {
       const res = await login(data);
-
       storeLogin(res.token);
       window.alert(`${data.id}님, 반갑습니다.`);
       navigate("/");
@@ -56,7 +45,7 @@ export const useAuth = () => {
       throw err;
     }
   };
-  
+
   const userLogout = async () => {
     try {
       await logout();
@@ -79,7 +68,6 @@ export const useAuth = () => {
     }
   };
 
-
   const userResetPassword = async (
     currentPassword: string,
     password: string
@@ -88,7 +76,7 @@ export const useAuth = () => {
       await resetPassword(currentPassword, password);
       window.alert("비밀번호가 재설정되었습니다.");
       storeLogout();
-      navigate("/login");
+      navigate("/users/login");
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
@@ -138,7 +126,6 @@ export const useAuth = () => {
     }
   };
 
-  
   return {
     userLogin,
     userJoin,
@@ -148,7 +135,4 @@ export const useAuth = () => {
     userCheckCurrentPassword,
     userCheckAvailablePassword,
   };
-
-  return { userJoin, userLogin, userLogout, checkIdDuplication };
-
 };

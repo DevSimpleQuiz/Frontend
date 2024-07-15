@@ -5,7 +5,6 @@ import Home from "./pages/Home";
 import Error from "./components/common/Error";
 import Login from "./pages/Login";
 import Join from "./pages/Join";
-import { AuthProvider } from "./context/AuthContext";
 import ResetPassword from "./pages/ResetPassword";
 import Rank from "./pages/Rank";
 import { AuthProvider } from './context/AuthContext';

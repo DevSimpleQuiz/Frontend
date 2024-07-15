@@ -39,7 +39,7 @@ const ResetPassword = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/login");
+      navigate("/users/login");
     }
   }, [isLoggedIn, navigate]);
 
