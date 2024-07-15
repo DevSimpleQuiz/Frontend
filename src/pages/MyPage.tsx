@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import profile from '../assets/images/profile.png'
 import { useUsers } from '../hooks/useUsers';
 import { useAuthStore } from '../store/authStore';
@@ -9,6 +10,13 @@ const Container = styled.div`
   background-color: white;
   flex-direction: column;
   align-items: center;
+  .link{
+    margin-top: 8px;
+    font-size: ${({theme}) => theme.text.text1};
+    text-decoration: underline;
+    color: ${({theme}) => theme.color.primary};;
+    cursor: pointer
+  }
   .profileImg{
     width:190px;
     }
@@ -121,13 +129,7 @@ const Info = styled.div`
 
 `;
 
-const Link = styled.a`
-  margin-top: 8px;
-  font-size: ${({theme}) => theme.text.text1};
-  text-decoration: underline;
-  color: ${({theme}) => theme.color.primary};;
-  cursor: pointer
-`;
+
 
 
 
@@ -168,7 +170,7 @@ const MyPage = () => {
           </div>
           <div className="personal-info">
             <div className="personal-title">개인정보 보호</div>
-            <Link>비밀번호 재설정</Link>
+            <Link className="link" to='/reset-password'>비밀번호 재설정</Link>
           </div>
         </div>
       </Content>
