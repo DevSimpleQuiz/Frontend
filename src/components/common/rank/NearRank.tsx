@@ -1,15 +1,10 @@
 import styled from 'styled-components';
 import { Rank } from '../../../models/rank.model';
+import { useRank } from '../../../hooks/useRank';
 
-interface NearRankProps {
-  myRank: Rank;
-  nearRank: Rank[];
-}
-
-const NearRank = ({ myRank, nearRank }: NearRankProps) => {
-  const startIndex = nearRank.findIndex(data => data.id === myRank.id);
-  const nearRankData = nearRank.slice(startIndex - 1, startIndex + 2);
-
+const NearRank = ({ id }: Rank) => {
+  const { nearRank } = useRank();
+  
   return (
     <NearRankWrapper>
       <table>
@@ -21,11 +16,14 @@ const NearRank = ({ myRank, nearRank }: NearRankProps) => {
           </tr>
         </thead>
         <tbody>
-          {nearRankData.map((data, idx) => (
-            <tr key={idx} className={data.id === myRank.id ? "highlight" : ''}>
+          {nearRank?.nearRankers.map((data, idx) => (
+            <tr
+              key={idx} 
+              className={data.id === id ? "highlight" : ''}
+            >
               <td>{data.rank}</td>
               <td>{data.id}</td>
-              <td>{data.score}점</td>
+              <td>{data.totalScore}점</td>
             </tr>
           ))}
         </tbody>
