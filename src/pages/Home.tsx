@@ -103,7 +103,8 @@ const HomeStyle = styled.div`
   gap: 20px;
 
   p{
-    color:black;
+    color: ${({ theme }) => theme.color.primary};
+
   }
 
   .banner {

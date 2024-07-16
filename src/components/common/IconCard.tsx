@@ -95,8 +95,8 @@ const TextWrapper = styled.div`
 `;
 
 const CardTitle = styled.p`
-  font-size: ${({ theme }) => theme.heading.title3};
-  /* font-weight: bold; */
+  font-size: ${({ theme }) => theme.heading.title4};
+  font-weight: bold;
   margin: 0;
 
   @media (max-width: 768px) {
