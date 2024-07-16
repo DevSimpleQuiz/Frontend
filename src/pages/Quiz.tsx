@@ -181,6 +181,7 @@ function Quiz() {
 export default Quiz;
 
 const QuizWrapper = styled.div`
+  
   text-align: center;
   .quizButton {
     position: relative;
@@ -204,22 +205,24 @@ const QuizWrapper = styled.div`
   }
   .answerBox {
     display: flex;
-    margin-bottom: 1rem;
+    
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
   }
   .progressBar {
+    width: 100%;
     height: 16px;
     background-color: ${({ theme }) => theme.color.grey3};
     border-radius: 10px;
-    margin: 100px 0px 50px;
+    margin: 5rem 0 2rem;
   }
   .questionBox {
     display: flex;
     width: 75%;
-    height: 350px;
-    margin-bottom: 1rem;
+    height: 35vh;
+    
     margin: auto;
     padding: 30px;
     border: 8px solid ${({ theme }) => theme.color.grey2};
@@ -241,7 +244,7 @@ const QuizWrapper = styled.div`
     flex-direction: column;
   }
   .resultBox {
-    margin-top: 1rem;
+    margin-top: 0rem;
     font-size: ${({ theme }) => theme.heading.title2};
     justify-content: center;
   }
@@ -255,13 +258,13 @@ const Progress = styled.div<{ width: number }>`
 `;
 
 const QuizInput = styled.input<{ isCorrect: string; value: string }>`
-  width: 300px;
+  width: 30%;
   margin: 45px;
   padding: 1rem;
   border: 0;
   border-radius: 5px;
   background: ${(props) => props.isCorrect};
-  cursor: pointer;
+  cursor: text;
   color: ${(props) =>
     props.isCorrect === theme.color.grey4 ? "black" : "white"};
   text-align: center;
