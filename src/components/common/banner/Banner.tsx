@@ -12,19 +12,14 @@ import Banner2 from "../../../assets/bannerImg/Banner2.svg";
 import Banner3 from "../../../assets/bannerImg/Banner3.svg";
 import Banner4 from "../../../assets/bannerImg/Banner4.svg";
 import Banner5 from "../../../assets/bannerImg/Banner5.svg";
-import Banner6 from "../../../assets/bannerImg/Banner6.svg";
-import Banner7 from "../../../assets/bannerImg/Banner7.svg";
-import Banner8 from "../../../assets/bannerImg/Banner8.svg";
+
 
 const bannerImages = [
-  Banner8,
   Banner2,
   Banner3,
-  Banner5,
   Banner4,
-  Banner6,
   Banner1,
-  Banner7,
+  Banner5
 ];
 
 function Banner() {
@@ -64,23 +59,22 @@ function Banner() {
 }
 
 const BannerStyle = styled.div`
-  padding-top: 50px;
+  padding-top: 30px;
 
   .swiper-button-prev,
   .swiper-button-next {
-    color: #535353 !important;
-    background-color: rgba(255, 255, 255, 0.5) !important;
+    color: #706f6f !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
     border-radius: 50% !important;
     width: 30px !important;
     height: 30px !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin: -1% 15% !important;
+    margin: -1% 8% !important;
   }
 
 `;
-
 
 const SlideContainer = styled.div`
   display: flex;

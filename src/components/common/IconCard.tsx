@@ -34,21 +34,31 @@ const IconCard: React.FC<IconCardProps> = ({
 const StyledLink = styled(Link)`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   width: 100%;
-  aspect-ratio: 280 / 300;
+  max-width: 400px;
+  max-height: 500px;
+  aspect-ratio: 2 / 3;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
 
   @media (max-width: 768px) {
-    aspect-ratio: 200 / 250; 
-  
+    max-width: 300px;
+    max-height: 400px;
   }
 
   @media (max-width: 480px) {
-    aspect-ratio: 150 / 200; 
-    width: 80%;
+    max-width: 200px;
+    max-height: 300px;
   }
 `;
 
@@ -57,11 +67,20 @@ const IconWrapper = styled.div<{ bgColor: keyof typeof theme.color }>`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 66.67%;
+  height: 60%;
   background-color: ${(props) => props.theme.color[props.bgColor]};
 
   svg {
     width: 50%;
+    height: 50%;
+  }
+
+  @media (max-width: 768px) {
+    height: 60%;
+  }
+
+  @media (max-width: 480px) {
+    height: 60%;
   }
 `;
 
@@ -69,20 +88,37 @@ const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 20px;
+  padding: 10px;
+  text-align: center;
   gap: 10px;
-  height: 33.33%;
+  height: 40%;
 `;
 
 const CardTitle = styled.p`
-  font-size: ${({ theme }) => theme.text.text1};
-  font-weight: bold;
+  font-size: ${({ theme }) => theme.heading.title3};
+  /* font-weight: bold; */
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: ${({ theme }) => theme.text.text2};
+  }
+
+  @media (max-width: 480px) {
+    font-size: ${({ theme }) => theme.text.text3};
+  }
 `;
 
 const CardDescription = styled.p`
   font-size: ${({ theme }) => theme.text.text2};
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: ${({ theme }) => theme.text.text3};
+  }
+
+  @media (max-width: 480px) {
+    font-size: ${({ theme }) => theme.text.text4};
+  }
 `;
 
 export default IconCard;
