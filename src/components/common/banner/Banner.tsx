@@ -12,19 +12,14 @@ import Banner2 from "../../../assets/bannerImg/Banner2.svg";
 import Banner3 from "../../../assets/bannerImg/Banner3.svg";
 import Banner4 from "../../../assets/bannerImg/Banner4.svg";
 import Banner5 from "../../../assets/bannerImg/Banner5.svg";
-import Banner6 from "../../../assets/bannerImg/Banner6.svg";
-import Banner7 from "../../../assets/bannerImg/Banner7.svg";
-import Banner8 from "../../../assets/bannerImg/Banner8.svg";
+
 
 const bannerImages = [
-  Banner8,
   Banner2,
   Banner3,
-  Banner5,
   Banner4,
-  Banner6,
   Banner1,
-  Banner7,
+  Banner5
 ];
 
 function Banner() {
@@ -32,19 +27,16 @@ function Banner() {
     <BannerStyle>
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
-        spaceBetween={50}
-        slidesPerView={1.35}
+        spaceBetween={0} 
+        slidesPerView={1} 
+
         centeredSlides={true}
         loop={true}
-        // loopFillGroupWithBlank={true}
         autoplay={{
           delay: 4500,
           disableOnInteraction: false,
         }}
         speed={500}
-        // pagination={{
-        //   clickable: true,
-        // }}
         navigation={{
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
@@ -67,21 +59,21 @@ function Banner() {
 }
 
 const BannerStyle = styled.div`
-  padding-top: 50px;
-  position: relative;
+  padding-top: 30px;
 
   .swiper-button-prev,
   .swiper-button-next {
-    color: #535353 !important;
-    background-color: rgba(255, 255, 255, 0.5) !important;
+    color: #706f6f !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
     border-radius: 50% !important;
     width: 30px !important;
     height: 30px !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin: -1% 13% !important;
+    margin: -1% 8% !important;
   }
+
 `;
 
 const SlideContainer = styled.div`
@@ -101,9 +93,10 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  object-fit: cover;
 `;
 
 export default Banner;
