@@ -42,7 +42,6 @@ export const useAuth = () => {
     } catch (err) {
       window.alert("존재하지 않는 유저입니다.");
       window.location.reload();
-      throw err;
     }
   };
 

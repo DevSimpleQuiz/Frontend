@@ -111,7 +111,6 @@ function Quiz() {
   };
 
   if (!quizzes || quizzes.length === 0) {
-    //로딩 화면 추가..?
     return <p>퀴즈를 불러오는 중...</p>;
   }
   const onSubmitAnswer = (event: React.KeyboardEvent<HTMLInputElement>) => {

@@ -1,7 +1,7 @@
+import axios from "axios";
 import { JoinProps } from "../pages/Join";
 import { LoginProps, LoginToken } from "../pages/Login";
 import { httpClient } from "./http";
-import axios from 'axios';
 
 // 회원가입
 export const join = async (data: JoinProps) => {

@@ -7,9 +7,10 @@ import Login from "./pages/Login";
 import Join from "./pages/Join";
 import ResetPassword from "./pages/ResetPassword";
 import Rank from "./pages/Rank";
-import MyPage from "./pages/myPage";
+import MyPage from "./pages/MyPage";
 import { AuthProvider } from './context/AuthContext';
 import QuizResult from "./pages/QuizResult";
+
 
 const routeList = [
   {
@@ -41,6 +42,7 @@ const routeList = [
     element: <Quiz />
   },
   {
+
     path: '/rank',
     element: <Rank />
   },
@@ -52,6 +54,7 @@ const routeList = [
     path: '/quiz-result',
     element: <QuizResult/>
   },
+
 ];
 
 const rotuer = createBrowserRouter(

@@ -27,10 +27,13 @@ export const createClient = (config?: AxiosRequestConfig) => {
     },
     (error) => {
       // 토큰이 만료되었을 때
-      if (error.response && error.response.status === 401) {
+      if (error.response && 
+        error.response.status === 401 || error.response.status === 403
+      ) {
+        window.alert("일정시간이 지나 로그아웃 되었습니다.");
         window.location.href = "/users/login";
         return;
-      }
+      } 
       // 로그인 만료 처리
       return Promise.reject(error);
     }
