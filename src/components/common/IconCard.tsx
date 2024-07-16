@@ -42,7 +42,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   width: 100%;
   max-width: 400px;
-  max-height: 500px;
+  max-height: 450px;
   aspect-ratio: 2 / 3;
   transition: transform 0.3s, box-shadow 0.3s;
 
@@ -53,12 +53,12 @@ const StyledLink = styled(Link)`
 
   @media (max-width: 768px) {
     max-width: 300px;
-    max-height: 400px;
+    max-height: 350px;
   }
 
   @media (max-width: 480px) {
     max-width: 200px;
-    max-height: 300px;
+    max-height: 250px;
   }
 `;
 
