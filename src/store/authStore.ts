@@ -19,14 +19,13 @@ const setToken = (token: string) => {
 
 export const removeToken = () => {
   localStorage.removeItem("token");
-  // document.cookie = 'token=; Max-Age=0'; 
 };
 
 export const useAuthStore = create<StoreState>()(
   persist(
     (set) => ({
       isDuplicate: false,
-      isLoggedIn: !!getToken(),
+      isLoggedIn: false, // 초기 상태를 false로 설정
       storeLogin: (token) => {
         setToken(token);
         set({ isLoggedIn: true });

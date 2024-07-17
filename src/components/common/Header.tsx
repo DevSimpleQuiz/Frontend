@@ -1,12 +1,22 @@
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore, getToken } from '../../store/authStore';
 import { useAuth } from '../../hooks/useAuth';
 
 const Header = () => {
-  const { isLoggedIn } = useAuthStore();
+  const { isLoggedIn, storeLogin, storeLogout } = useAuthStore();
   const { userLogout } = useAuth();
+
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      storeLogin(token);
+    } else {
+      storeLogout();
+    }
+  }, [storeLogin, storeLogout]);
 
   return (
     <HeaderWrapper>
