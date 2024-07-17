@@ -181,6 +181,7 @@ function Quiz() {
 export default Quiz;
 
 const QuizWrapper = styled.div`
+  height: 80%;
   text-align: center;
   .quizButton {
     position: relative;
