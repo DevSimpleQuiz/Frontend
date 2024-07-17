@@ -66,7 +66,7 @@ const Login = () => {
           schema='primary'>로그인</Button>
         <div className="go-to-link">
           <span>아직 회원이 아니신가요?</span>
-          <Link to='/join'>회원가입</Link>
+          <Link to='/users/join'>회원가입</Link>
         </div>
       </LoginForm>
     </FormWrapper>
