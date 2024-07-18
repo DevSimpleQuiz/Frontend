@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { Rank } from '../../../models/rank.model';
-import { useRank } from '../../../hooks/useRank';
 
-const NearRank = ({ id }: Rank) => {
-  const { nearRank } = useRank();
+const NearRank = ({ id, nearRankers }: Rank) => {
+
   
   return (
     <NearRankWrapper>
@@ -16,7 +15,7 @@ const NearRank = ({ id }: Rank) => {
           </tr>
         </thead>
         <tbody>
-          {nearRank?.nearRankers.map((data, idx) => (
+          {nearRankers?.map((data, idx) => (
             <tr
               key={idx} 
               className={data.id === id ? "highlight" : ''}

@@ -4,12 +4,21 @@ import RankCard from '../components/common/rank/RankCard';
 import NearRank from '../components/common/rank/NearRank';
 import { useRank } from '../hooks/useRank';
 import UnAuthorizedRank from '../components/common/rank/UnAuthorizedRank';
+import RankError from '../components/common/rank/RankError';
 
 const Rank = () => {
-  const { userRank, topRank } = useRank();
+  const { userRank } = useRank();
 
   if (!userRank) {
     return <UnAuthorizedRank />;
+  }
+  
+  if (!userRank.topRankers) {
+    return <RankError message="1 ~ 3위 사용자 조회를 실패하였습니다." />;
+  }
+
+  if (!userRank.nearRankers) {
+    return <RankError message="내 주변 사용자의 순위 조회를 실패하였습니다." />;
   }
 
   return (
@@ -37,18 +46,17 @@ const Rank = () => {
           </div>
         </MyRank>
         <HighRank>
-        {topRank && topRank.topRankers && 
-          topRank.topRankers.map((data, idx) => (
+        {userRank && userRank.topRankers.map((data, idx) => (
             <RankCard
               key={idx}
               id={data.id}
               rank={data.rank}
-              totalQuizScore={data.totalScore}
+              totalScore={data.totalScore}
             />
           ))
         }
         </HighRank>
-        <NearRank id={userRank.id} />
+        <NearRank id={userRank.id} nearRankers={userRank.nearRankers} />
       </Content>
     </RankWrapper>
   );

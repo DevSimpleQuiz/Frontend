@@ -40,7 +40,7 @@ export const useAuth = () => {
       window.alert(`${data.id}님, 반갑습니다.`);
       navigate("/");
     } catch (err) {
-      window.alert("존재하지 않는 유저입니다.");
+      window.alert("아이디 또는 비밀번호가 맞지 않습니다.");
       window.location.reload();
     }
   };

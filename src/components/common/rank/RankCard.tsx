@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import { FaUser } from "react-icons/fa";
-import { Rank } from '../../../models/rank.model';
+import { Ranker } from '../../../models/rank.model';
 
-const RankCard = ({ id, rank, totalQuizScore }: Rank) => {
+const RankCard = ({ id, rank, totalScore }: Ranker) => {
   return (
     <RankCardWrapper rank={rank}>
       <h1 className="rank">{rank}</h1>
       <div className="user">
         <div className="profile"><FaUser /></div>
         <div className="id">{id}</div>
-        <div className="score">{totalQuizScore}점</div>
+        <div className="score">{totalScore}점</div>
       </div>
     </RankCardWrapper>
   )
