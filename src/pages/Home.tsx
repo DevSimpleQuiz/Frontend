@@ -68,8 +68,8 @@ const Home: React.FC = () => {
             to="/rank"
             bgColor="blue"
             Icon={RankIcon}
-            title="랭킹 확인 🥇"
-            description="#1위부터 #3위 #나의 랭크"
+            title="전체 랭킹 확인 🥇"
+            description="#전체 #나의랭킹 #점수확인"
           />
         </div>
       </StyledSection>
