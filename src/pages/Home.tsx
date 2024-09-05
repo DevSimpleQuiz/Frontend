@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { ReactComponent as QuizIcon } from "../assets/btnImg/quiz 1.svg";
+import { ReactComponent as InfiniteIcon } from "../assets/btnImg/infinite 1.svg";
 import { ReactComponent as RankIcon } from "../assets/btnImg/ranking 1.svg";
 import Banner from "../components/common/banner/Banner";
 import IconCard from "../components/common/IconCard";
@@ -55,6 +56,13 @@ const Home: React.FC = () => {
             Icon={QuizIcon}
             title="퀴즈 풀러 가기 🌈"
             description="#단어 #10문제 #초성힌트"
+          />
+          <IconCard
+            to="/infinite-quiz"
+            bgColor="yellow"
+            Icon={InfiniteIcon}
+            title="무한 퀴즈 챌린지 🔥"
+            description="#단어 #점수도전 #초성힌트"
           />
           <IconCard
             to="/rank"
@@ -117,7 +125,7 @@ const HomeStyle = styled.div`
   .card {
     display: flex;
     justify-content: center;
-    gap: 160px;
+    gap: 40px;
     /* padding: 10px 0; */
     @media (max-width: 1024px) {
       gap: 20px;
