@@ -10,6 +10,7 @@ import Rank from "./pages/Rank";
 import MyPage from "./pages/MyPage";
 import { AuthProvider } from './context/AuthContext';
 import QuizResult from "./pages/QuizResult";
+import InfiniteQuiz from "./pages/InfiniteQuiz";
 
 
 const routeList = [
@@ -30,16 +31,16 @@ const routeList = [
     element: <Quiz />,
   },
   {
+    path: "/infinite-quiz",
+    element: <InfiniteQuiz />,
+  },
+  {
     path: "/reset-password",
     element: <ResetPassword />,
   },
   {
     path: "/error",
     element: <Error />,
-  },
-  {
-    path: '/quiz',
-    element: <Quiz />
   },
   {
 

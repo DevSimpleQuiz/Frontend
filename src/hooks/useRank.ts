@@ -7,21 +7,37 @@ export const useRank = () => {
   const [topRank, setTopRank] = useState<TopRank | null>(null);
   const [nearRank, setNearRank] = useState<NearRank | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userRankData = await fetchRank();
-        const topRankData = await fetchTopRank();
-        const nearRankData = await fetchNearRank();
-        setUserRank(userRankData);
-        setTopRank(topRankData);
-        setNearRank(nearRankData);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const fetchUserData = async () => {
+    try {
+      const userRankData = await fetchRank();
+      setUserRank(userRankData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    fetchData();
+  const fetchTopRankData = async () => {
+    try {
+      const topRankData = await fetchTopRank();
+      setTopRank(topRankData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchNearRankData = async () => {
+    try {
+      const nearRankData = await fetchNearRank();
+      setNearRank(nearRankData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+    fetchTopRankData();
+    fetchNearRankData();
   }, []);
 
   return { userRank, topRank, nearRank };
