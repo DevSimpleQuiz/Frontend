@@ -22,8 +22,7 @@ const Home: React.FC = () => {
 
   const { userRank, topRank } = useRank();
   const topRankers = topRank?.topRankers;
-  console.log(topRankers);
-
+  
   useEffect(() => {
     if (showLastMessage) return;
 
@@ -137,7 +136,6 @@ const HomeStyle = styled.div`
 
   p{
     color: ${({ theme }) => theme.color.primary};
-
   }
 
   .banner {
