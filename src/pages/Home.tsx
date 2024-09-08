@@ -5,6 +5,9 @@ import { ReactComponent as InfiniteIcon } from "../assets/btnImg/infinite 1.svg"
 import { ReactComponent as RankIcon } from "../assets/btnImg/ranking 1.svg";
 import Banner from "../components/common/banner/Banner";
 import IconCard from "../components/common/IconCard";
+import { useRank } from "../hooks/useRank";
+import RankCard from '../components/common/rank/RankCard';
+import NearRank from '../components/common/rank/NearRank';
 
 const messages = [
   "Welcome to the Simple Quiz! 🎉",
@@ -16,6 +19,10 @@ const messages = [
 const Home: React.FC = () => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [showLastMessage, setShowLastMessage] = useState(false);
+
+  const { userRank, topRank } = useRank();
+  const topRankers = topRank?.topRankers;
+  console.log(topRankers);
 
   useEffect(() => {
     if (showLastMessage) return;
@@ -49,6 +56,7 @@ const Home: React.FC = () => {
         </WelcomeMessage>
       )}
       <StyledSection className="btnSection">
+        <Title>SimpleQuiz 풀러가기</Title>
         <div className="card">
           <IconCard
             to="/quiz"
@@ -73,6 +81,22 @@ const Home: React.FC = () => {
           />
         </div>
       </StyledSection>
+      <RankSection>
+        <Title>순위 확인</Title>
+        <HighRank>
+          {topRankers && 
+            topRankers.map((data, idx) => (
+              <RankCard
+                key={idx}
+                id={data.id}
+                rank={data.rank}
+                score={data.score}
+              />
+            ))
+          }
+        </HighRank>
+        <NearRank id={userRank?.id!} />
+      </RankSection>
     </HomeStyle>
   );
 };
@@ -109,6 +133,7 @@ const HomeStyle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding-bottom: 120px;
 
   p{
     color: ${({ theme }) => theme.color.primary};
@@ -126,7 +151,6 @@ const HomeStyle = styled.div`
     display: flex;
     justify-content: center;
     gap: 40px;
-    /* padding: 10px 0; */
     @media (max-width: 1024px) {
       gap: 20px;
     }
@@ -143,13 +167,33 @@ const HomeStyle = styled.div`
   }
 `;
 
+const Title = styled.h1`
+  margin-bottom: 24px;
+  color: ${({ theme }) => theme.color.primary};
+  font-size: ${({ theme }) => theme.heading.title3};
+  font-weight: 600;
+`;
+
 const StyledSection = styled.section`
-  padding: 20px 20px;
+  margin-bottom: 80px;
   background: ${({ theme }) => theme.color.background};
 
   .title {
     font-size: ${({ theme }) => theme.heading.title2};
   }
+`;
+
+const RankSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const HighRank = styled.section`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6%;
+  margin-bottom: 40px;
 `;
 
 export default Home;

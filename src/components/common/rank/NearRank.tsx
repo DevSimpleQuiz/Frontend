@@ -1,41 +1,54 @@
 import styled from 'styled-components';
 import { Rank } from '../../../models/rank.model';
 import { useRank } from '../../../hooks/useRank';
+import { useAuthStore } from '../../../store/authStore';
 
 const NearRank = ({ id }: Rank) => {
   const { nearRank } = useRank();
+  const { isLoggedIn } = useAuthStore();
   
   return (
     <NearRankWrapper>
-      <table>
-        <thead>
-          <tr>
-            <th>순위</th>
-            <th>이름</th>
-            <th>점수</th>
-          </tr>
-        </thead>
-        <tbody>
-          {nearRank?.nearRankers.map((data, idx) => (
-            <tr
-              key={idx} 
-              className={data.id === id ? "highlight" : ''}
-            >
-              <td>{data.rank}</td>
-              <td>{data.id}</td>
-              <td>{data.totalScore}점</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {isLoggedIn ? (
+        <NearRankLogin>
+          <table>
+            <thead>
+              <tr>
+                <th>순위</th>
+                <th>이름</th>
+                <th>점수</th>
+              </tr>
+            </thead>
+            <tbody>
+              {nearRank?.nearRankers.map((data, idx) => (
+                <tr
+                  key={idx} 
+                  className={data.id === id ? "highlight" : ''}
+                >
+                  <td>{data.rank}</td>
+                  <td>{data.id}</td>
+                  <td>{data.score}점</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </NearRankLogin>
+      ) : (
+        <NearRankLogout>
+          로그인 후 이용 가능합니다.
+        </NearRankLogout>
+      )}
     </NearRankWrapper>
   )
 };
 
 const NearRankWrapper = styled.div`
-  border: 1px solid ${({ theme }) => theme.color.grey4};
+  border: 1px solid ${({ theme }) => theme.color.grey2};
   border-radius: 8px;
+  /* filter: blur(10px); */
+`;
 
+const NearRankLogin = styled.div`
   table {
     display: table;
     table-layout: fixed;
@@ -68,6 +81,16 @@ const NearRankWrapper = styled.div`
       font-weight: 600;
     }
   }
+`;
+
+const NearRankLogout = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 242px;
+  color: ${({ theme }) => theme.color.primary};
+  font-size: ${({ theme }) => theme.text.text1};
 `;
 
 export default NearRank;
