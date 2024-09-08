@@ -19,7 +19,7 @@ const RankCardWrapper = styled.div<{ rank: number | undefined }>`
   padding: 16px 28px;
   padding-bottom: 40px;
   height: 100%;
-  border: 1px solid ${({ theme }) => theme.color.grey2};
+  border: 1px solid ${({ theme }) => theme.color.grey3};
   /* border: 1px solid ${({ rank, theme }) => 
     rank === 1 ? theme.color.yellow :
     rank === 2 ? theme.color.green :

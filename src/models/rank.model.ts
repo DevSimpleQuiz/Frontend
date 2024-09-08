@@ -14,6 +14,10 @@ export interface NearRank {
   nearRankers: Ranker[];
 }
 
+export interface AllRank {
+  allRankers: Ranker[];
+}
+
 export interface Ranker {
   id: string;
   rank: number;

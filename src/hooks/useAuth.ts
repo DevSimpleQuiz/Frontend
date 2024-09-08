@@ -46,15 +46,19 @@ export const useAuth = () => {
   };
 
   const userLogout = async () => {
+    const isConfirmed = window.confirm("정말 로그아웃하시겠습니까?"); // 확인 창
+    if (!isConfirmed) return; // 취소를 누르면 함수 종료
+  
     try {
       await logout();
       storeLogout();
-      navigate("/users/login");
+      navigate("/");
     } catch (err) {
       console.error(err);
       throw err;
     }
   };
+  
 
   const checkIdDuplication = async (id: string): Promise<boolean> => {
     try {
