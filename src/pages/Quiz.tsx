@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import next from "../assets/quizImg/next.png";
 import hintD from "../assets/quizImg/hintD.png";
 import hintH from "../assets/quizImg/hintH.png";
+import { CiClock2 } from "react-icons/ci";
 import { theme } from "../styles/theme";
 import { useQuizzes } from "../hooks/useQuizzes";
 import HintModal from "../components/quiz/HintModal";
@@ -16,6 +17,8 @@ function Quiz() {
   const [hintVisible, setHintVisible] = useState<boolean>(false);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [timeLeft, setTimeLeft] = useState<number>(15);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const currentQuiz = quizzes[currentIndex];
 
@@ -25,6 +28,31 @@ function Quiz() {
   };
   const [isCorrect, setIsCorrect] = useState<string>(theme.color.grey4);
   const [resultText, setResultText] = useState<string>("");
+
+  // 타이머 시작
+  useEffect(() => {
+    if (timeLeft > 0) {
+      timerRef.current = setTimeout(() => {
+        if(resultText){
+          return;
+        }
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+    } else {
+      handleTimeOut(); // 시간이 0이 되었을 때 처리
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [timeLeft]);
+
+  const handleTimeOut = () => {
+    setIsCorrect(theme.color.red);
+    setResultText("오답!");
+  };
 
   // 새로고침 및 뒤로가기 시 메인 화면으로 이동
   useEffect(() => {
@@ -80,6 +108,7 @@ function Quiz() {
       return;
     }
     setProgressNum((state) => state + 10);
+    setTimeLeft(15); // 타이머 초기화
     if (currentIndex < quizzes.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setInputText("");
@@ -131,12 +160,22 @@ function Quiz() {
 
   return (
     <QuizWrapper>
-      <div className="progressBar">
-        <Progress width={progressNum} />
+      <div className="progressContainer">
+        <div className="progressBar">
+          <Progress width={progressNum} />
+        </div>
+        <div className="progressText">
+          <span></span>
+          <span>{currentIndex + 1}/10</span>
+        </div>
       </div>
-      <div className="scores">
-        <span>현재 문제 점수: {currentScore}점</span>
-        <span>총 점수: {totalScore}점</span>
+      <div className="infoContainer">
+        <span>정답률: {65}%</span>
+        <TimeContainer>
+          <StyledClockIcon />
+          <span>{timeLeft}</span>
+        </TimeContainer>
+        <span>{totalScore}점</span>
       </div>
       <div className="questionBox">
         {renderQuizDefinition(currentQuiz.definition)}
@@ -169,11 +208,11 @@ function Quiz() {
           <img className="imgN" src={next} alt="next button" />
         </div>
       </div>
-      <div className="resultBox">
-        {resultText}
-        <br />
-        {resultText === "오답!" && <>답 : {currentQuiz.word}</>}
-      </div>
+      {resultText && (
+        <ResultBox isCorrect={isCorrect === theme.color.green}>
+          {resultText === "오답!" ? `답 : ${currentQuiz.word}` : "정답"}
+        </ResultBox>
+      )}
     </QuizWrapper>
   );
 }
@@ -210,11 +249,35 @@ const QuizWrapper = styled.div`
     align-items: center;
     gap: 1rem;
   }
+  .progressContainer {
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .progressBar {
+    width: 80%;
     height: 16px;
     background-color: ${({ theme }) => theme.color.grey3};
     border-radius: 10px;
-    margin: 100px 0px 50px;
+    margin-bottom: 10px;
+  }
+  .infoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+    margin: 10px auto 10px;
+    padding:0px 5px 0px 5px;
+    font-size: ${({ theme }) => theme.heading.text3};
+    line-height: 28px;
+  }
+  .progressText {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    padding-right:5px;
+    color: ${({ theme }) => theme.color.blue};
   }
   .questionBox {
     display: flex;
@@ -228,7 +291,6 @@ const QuizWrapper = styled.div`
     font-size: ${({ theme }) => theme.heading.title2};
     line-height: 46px;
     justify-content: center;
-
     align-items: center;
     flex-direction: column;
     overflow-y: auto;
@@ -246,6 +308,25 @@ const QuizWrapper = styled.div`
     font-size: ${({ theme }) => theme.heading.title2};
     justify-content: center;
   }
+`;
+const TimeContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+  border: 1px solid ${({ theme }) => theme.color.grey2}; 
+  border-radius: 8px;
+  padding: 5px 10px;
+  span {
+    font-size: ${({ theme }) => theme.heading.text2};
+    font-weight: bold;
+  }
+`;
+
+const StyledClockIcon = styled(CiClock2)`
+  width: 23px;
+  height: 23px;
+  margin-right: 7px;
+  color: ${({ theme }) => theme.color.blue};
 `;
 
 const Progress = styled.div<{ width: number }>`
@@ -268,7 +349,22 @@ const QuizInput = styled.input<{ isCorrect: string; value: string }>`
   text-align: center;
   outline: none;
 `;
-
+const ResultBox = styled.div<{ isCorrect: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: ${({ theme }) => theme.heading.title3};
+  width: 500px;
+  height: 130px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.color.grey2};
+  background-color: ${({ isCorrect, theme }) => (isCorrect ? '#d4f5d3' : '#fdecea')};
+  color: ${({ theme }) => theme.color.text};
+  border-color: ${({ isCorrect, theme }) => (isCorrect ? theme.color.green : theme.color.red)};
+  margin: 0 auto; /* 가운데 정렬 */
+  margin-top: 1rem; /* 상단 여백 추가 */
+`;
 const HintWrapper = styled.div`
   position: relative;
 `;
