@@ -1,5 +1,5 @@
 import { httpClient } from "./http";
-import { Rank } from "../models/rank.model";
+import { NearRank, Rank, TopRank } from "../models/rank.model";
 
 export const fetchRank = async () => {
   const response = await httpClient.get<Rank>("/rank/my");

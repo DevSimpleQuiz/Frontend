@@ -4,8 +4,14 @@ export interface Rank {
   totalQuizScore?: number;
   totalQuizCount?: number;
   totalSolvedQuizCount?: number;
-  topRankers?: Ranker[];
-  nearRankers?: Ranker[];
+}
+
+export interface TopRank {
+  topRankers: Ranker[];
+}
+
+export interface NearRank {
+  nearRankers: Ranker[];
 }
 
 export interface Ranker {

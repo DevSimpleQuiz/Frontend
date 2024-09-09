@@ -2,21 +2,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRank } from '../hooks/useRank';
 import UnAuthorizedRank from '../components/common/rank/UnAuthorizedRank';
-import RankError from '../components/common/rank/RankError';
 
 const Rank = () => {
   const { userRank } = useRank();
 
   if (!userRank) {
     return <UnAuthorizedRank />;
-  }
-  
-  if (!userRank.topRankers) {
-    return <RankError message="1 ~ 3위 사용자 조회를 실패하였습니다." />;
-  }
-
-  if (!userRank.nearRankers) {
-    return <RankError message="내 주변 사용자의 순위 조회를 실패하였습니다." />;
   }
 
   return (

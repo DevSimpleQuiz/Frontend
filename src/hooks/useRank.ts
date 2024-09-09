@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Rank } from "../models/rank.model";
-import { fetchRank } from "../api/rank.api";
+import { NearRank, Rank, TopRank } from "../models/rank.model";
+import { fetchNearRank, fetchRank, fetchTopRank } from "../api/rank.api";
 
 export const useRank = () => {
   const [userRank, setUserRank] = useState<Rank | null>(null);
+  const [topRank, setTopRank] = useState<TopRank | null>(null);
+  const [nearRank, setNearRank] = useState<NearRank | null>(null);
 
   const fetchUserData = async () => {
     try {
@@ -38,6 +40,5 @@ export const useRank = () => {
     fetchNearRankData();
   }, []);
 
-  return { userRank };
+  return { userRank, topRank, nearRank };
 };
-
