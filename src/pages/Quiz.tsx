@@ -309,6 +309,7 @@ const QuizWrapper = styled.div`
     justify-content: center;
   }
 `;
+
 const TimeContainer = styled.div`
   display: flex;
   align-items: center;
@@ -349,6 +350,7 @@ const QuizInput = styled.input<{ isCorrect: string; value: string }>`
   text-align: center;
   outline: none;
 `;
+
 const ResultBox = styled.div<{ isCorrect: boolean }>`
   display: flex;
   justify-content: center;
@@ -365,6 +367,7 @@ const ResultBox = styled.div<{ isCorrect: boolean }>`
   margin: 0 auto; /* 가운데 정렬 */
   margin-top: 1rem; /* 상단 여백 추가 */
 `;
+
 const HintWrapper = styled.div`
   position: relative;
 `;
