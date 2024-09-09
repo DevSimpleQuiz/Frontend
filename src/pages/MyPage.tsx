@@ -9,9 +9,13 @@ import { ReactComponent as Quiz } from "../assets/myPageImg/Vector.svg";
 import { ReactComponent as Challenge } from "../assets/myPageImg/Vector-1.svg";
 import { ReactComponent as Correct } from "../assets/myPageImg/Vector-2.svg";
 import { ReactComponent as Score } from "../assets/myPageImg/Vector-3.svg";
+import { useRank } from "../hooks/useRank";
+import { Link } from "react-router-dom";
 
 const MyPage = () => {
   const { users } = useUsers();
+  const { userRank } = useRank();
+
   const { isLoggedIn } = useAuthStore();
   const navigate = useNavigate();
 
@@ -29,9 +33,11 @@ const MyPage = () => {
               <Button size="short" schema="normal">
                 프로필 수정
               </Button>
-              <Button size="short" schema="normal">
-                비밀번호 재설정
-              </Button>
+              <Link to="/reset-password">
+                <Button size="short" schema="normal">
+                  비밀번호 재설정
+                </Button>
+              </Link>
               <Button size="short" schema="normal">
                 회원 탈퇴
               </Button>
@@ -42,9 +48,11 @@ const MyPage = () => {
           <p>나의 랭킹</p>
           <RankBox>
             <p>{users?.myRank}위</p>
-            <Button size="short" schema="normal">
-              랭킹 확인하러 가기
-            </Button>
+            <Link to="/rank">
+              <Button size="short" schema="normal">
+                랭킹 확인하러 가기
+              </Button>
+            </Link>
           </RankBox>
         </Rank>
       </Top>
@@ -56,28 +64,28 @@ const MyPage = () => {
               <Quiz className="Quiz" />
               <p>Total Quiz</p>
             </BoxText>
-            <h1>{users?.solvedCount} 문제</h1>
+            <h1>{userRank?.totalQuizCount} 문제</h1>
           </Box>
           <Box>
             <BoxText>
               <Challenge className="Challenge" />
               <p>Challenge</p>
             </BoxText>
-            <h1>{users?.solvedCount} 회</h1>
+            <h1>{userRank?.totalQuizCount} 회</h1>
           </Box>
           <Box>
             <BoxText>
               <Correct className="Correct" />
               <p>Correct Question</p>
             </BoxText>
-            <h1>{users?.solvedCount} 문제</h1>
+            <h1>{userRank?.totalSolvedQuizCount} 문제</h1>
           </Box>
           <Box>
             <BoxText>
               <Score className="Score" />
               <p>Score</p>
             </BoxText>
-            <h1>{users?.solvedCount} 점</h1>
+            <h1>{userRank?.totalQuizScore} 점</h1>
           </Box>
         </BottomBoxes>
       </Bottom>
@@ -106,7 +114,7 @@ const Profile = styled.div`
   border: 1px solid ${({ theme }) => theme.color.grey1};
   border-radius: 10px;
   flex-grow: 1;
-  margin-right: 10px; 
+  margin-right: 10px;
   align-items: center;
   justify-content: center;
   width: 150px;
@@ -184,10 +192,10 @@ const Box = styled.div`
   border-radius: 10px;
   padding: 20px;
   flex-direction: column;
-  justify-content: space-between; 
-  align-items: center; 
+  justify-content: space-between;
+  align-items: center;
   height: 300px;
-  
+
   h1 {
     display: flex;
     justify-content: center;
@@ -206,7 +214,10 @@ const BoxText = styled.div`
   width: 100%;
   margin-top: 10px;
 
-  svg.Quiz, svg.Challenge, svg.Correct, svg.Score {
+  svg.Quiz,
+  svg.Challenge,
+  svg.Correct,
+  svg.Score {
     position: absolute;
     z-index: 1;
     padding: 5px;
