@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import RankCard from '../components/common/rank/RankCard';
-import NearRank from '../components/common/rank/NearRank';
 import { useRank } from '../hooks/useRank';
 import UnAuthorizedRank from '../components/common/rank/UnAuthorizedRank';
 import RankError from '../components/common/rank/RankError';
@@ -45,18 +43,6 @@ const Rank = () => {
             </h3>
           </div>
         </MyRank>
-        <HighRank>
-        {userRank && userRank.topRankers.map((data, idx) => (
-            <RankCard
-              key={idx}
-              id={data.id}
-              rank={data.rank}
-              totalScore={data.totalScore}
-            />
-          ))
-        }
-        </HighRank>
-        <NearRank id={userRank.id} nearRankers={userRank.nearRankers} />
       </Content>
     </RankWrapper>
   );

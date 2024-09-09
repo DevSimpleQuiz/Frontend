@@ -5,16 +5,37 @@ import { fetchRank } from "../api/rank.api";
 export const useRank = () => {
   const [userRank, setUserRank] = useState<Rank | null>(null);
 
+  const fetchUserData = async () => {
+    try {
+      const userRankData = await fetchRank();
+      setUserRank(userRankData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchTopRankData = async () => {
+    try {
+      const topRankData = await fetchTopRank();
+      setTopRank(topRankData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchNearRankData = async () => {
+    try {
+      const nearRankData = await fetchNearRank();
+      setNearRank(nearRankData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userRankData = await fetchRank();
-        setUserRank(userRankData);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
+    fetchUserData();
+    fetchTopRankData();
+    fetchNearRankData();
   }, []);
 
   return { userRank };

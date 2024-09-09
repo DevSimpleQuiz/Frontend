@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import { FaUser } from "react-icons/fa";
-import { Ranker } from '../../../models/rank.model';
+import { Rank, Ranker } from '../../../models/rank.model';
 
-const RankCard = ({ id, rank, totalScore }: Ranker) => {
+const RankCard = ({ id, rank, score }: Ranker) => {
   return (
     <RankCardWrapper rank={rank}>
       <h1 className="rank">{rank}</h1>
       <div className="user">
         <div className="profile"><FaUser /></div>
         <div className="id">{id}</div>
-        <div className="score">{totalScore}점</div>
+        <div className="score">{score}점</div>
       </div>
     </RankCardWrapper>
   )
@@ -19,7 +19,7 @@ const RankCardWrapper = styled.div<{ rank: number | undefined }>`
   padding: 16px 28px;
   padding-bottom: 40px;
   height: 100%;
-  border: 1px solid ${({ theme }) => theme.color.grey3};
+  border: 1px solid ${({ theme }) => theme.color.grey2};
   /* border: 1px solid ${({ rank, theme }) => 
     rank === 1 ? theme.color.yellow :
     rank === 2 ? theme.color.green :

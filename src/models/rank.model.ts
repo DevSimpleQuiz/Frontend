@@ -11,5 +11,5 @@ export interface Rank {
 export interface Ranker {
   id: string;
   rank: number;
-  totalScore: number;
+  score: number;
 }
