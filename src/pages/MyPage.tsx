@@ -30,9 +30,9 @@ const MyPage = () => {
           <ProfileText>
             <h2>{users?.id}</h2>
             <div className="buttons">
-              <Button size="short" schema="normal">
+              {/* <Button size="short" schema="normal">
                 프로필 수정
-              </Button>
+              </Button> */}
               <Link to="/reset-password">
                 <Button size="short" schema="normal">
                   비밀번호 재설정
@@ -45,7 +45,7 @@ const MyPage = () => {
           </ProfileText>
         </Profile>
         <Rank>
-          <p>나의 랭킹</p>
+          <h2>나의 랭킹</h2>
           <RankBox>
             <p>{users?.myRank}위</p>
             <Link to="/rank">
@@ -57,7 +57,7 @@ const MyPage = () => {
         </Rank>
       </Top>
       <Bottom>
-        <p>나의 활동</p>
+        <h2>나의 활동</h2>
         <BottomBoxes>
           <Box>
             <BoxText>
@@ -139,20 +139,21 @@ const ProfileText = styled.div`
     flex-direction: column;
     align-items: center;
     Button {
-      width: 120px;
-      margin: 5px;
-      font-size: 12px;
+      width: 130px;
+      margin: 8px;
+      font-size: 13px;
     }
   }
 `;
 
 const Rank = styled.div`
   display: flex;
-  flex-grow: 1; /* Rank 박스도 가용 공간을 균등하게 차지 */
+  flex-grow: 1;
   flex-direction: column;
   gap: 20px;
-  p {
+  h2 {
     font-size: 16px;
+    font-weight: bold;
   }
 `;
 
@@ -170,7 +171,8 @@ const RankBox = styled.div`
     font-weight: bold;
   }
   Button {
-    font-size: 12px;
+    margin: 10px;
+    font-size: 13px;
   }
 `;
 
@@ -178,6 +180,10 @@ const Bottom = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+  }
 `;
 
 const BottomBoxes = styled.div`
@@ -185,6 +191,7 @@ const BottomBoxes = styled.div`
   justify-content: space-between;
   gap: 50px;
 `;
+
 const Box = styled.div`
   display: flex;
   flex-grow: 1;
