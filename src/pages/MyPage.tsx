@@ -1,177 +1,286 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import profile from '../assets/images/profile.png'
-import { useUsers } from '../hooks/useUsers';
-import { useAuthStore } from '../store/authStore';
-import { useNavigate } from 'react-router-dom';
-const Container = styled.div`
-  display: flex;
-  background-color: white;
-  flex-direction: column;
-  align-items: center;
-  .link{
-    margin-top: 8px;
-    font-size: ${({theme}) => theme.text.text1};
-    text-decoration: underline;
-    color: ${({theme}) => theme.color.primary};;
-    cursor: pointer
-  }
-  .profileImg{
-    width:190px;
-    }
-  .profile-left, .profile-right {
-    padding: 10px;
-    flex: 1;
-   }
-  .profile-right{
-    display: flex;
-    width: 70%;
-    padding: 5% 80px;
-    border-left: 1px solid ${({theme}) => theme.color.grey3};;
-    flex-direction: column;
-    justify-content: center; 
-    }
-
-.profile-pic {
-  display: flex;
-  width: 150px;
-  height: 150px;
-  margin-bottom: 20px;
-  border-radius: 50%;
-  background-color: #edf2f7;
-  justify-content: center;
-  align-items: center;
-  
-}
-
-.pic-placeholder {
-  width: 80%;
-  height: 80%;
-  border-radius: 50%;
-  background-color: #cbd5e0;
-}
-
-.profile-info .info-item {
-  margin-bottom: 10px;
-  font-size: 18px;
-}
-
-.quiz-info, .personal-info {
-  margin-bottom: 100px;
-}
-
-.quiz-title{
-  margin-bottom: 20px;
-  font-size: ${({theme}) => theme.heading.title3};
-  font-weight: bold;
-}
-.personal-title {
-  margin-bottom: 20px;
-  font-weight: bold;
-  font-size: ${({theme}) => theme.heading.title3};
-}
-
-.quiz-details {
-  font-size: ${({theme}) => theme.text.text1};
-  color: #4a5568;
-}
-
-
-`;
-
-const Content = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin: 80px 0;
-`;
-
-const Profile = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  padding: 16px;
-  align-items: center;
-`;
-
-const Avatar = styled.div`
-  width: 250px;
-  height: 250px;
-  padding:28px;
-  border-radius: 50%;
-  background-color: ${({theme}) => theme.color.grey2};
-  background-size: cover;
-  background-position: center;
-`;
-
-const Info = styled.div`
-  width: 100%;
-  margin-top: 25px;
-  padding-left: 50px;
-  font-size: ${({theme}) => theme.text.text1};
-  div {
-    display: flex;
-    justify-content: space-between;
-    width: 70%;
-    margin-bottom: 8px;
-    span {
-      flex: 1;
-      text-align: left;
-    }
-      span:nth-child(2) {
-      flex: 0 0 auto; /* Ensure | takes its intrinsic width */
-      width: auto;
-      margin-right:30px; /* Space around the | character */
-    }
-  }
-
-
-`;
-
-
-
-
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useUsers } from "../hooks/useUsers";
+import { useAuthStore } from "../store/authStore";
+import { useNavigate } from "react-router-dom";
+import { IoPersonCircle } from "react-icons/io5";
+import Button from "../components/Button";
+import { ReactComponent as Quiz } from "../assets/myPageImg/Vector.svg";
+import { ReactComponent as Challenge } from "../assets/myPageImg/Vector-1.svg";
+import { ReactComponent as Correct } from "../assets/myPageImg/Vector-2.svg";
+import { ReactComponent as Score } from "../assets/myPageImg/Vector-3.svg";
+import { useRank } from "../hooks/useRank";
+import { Link } from "react-router-dom";
 
 const MyPage = () => {
-    const {users} = useUsers();
-    const { isLoggedIn } = useAuthStore();
-    const navigate = useNavigate();
-    
-    if(!isLoggedIn){
-      navigate("/users/login");
-    }
+  const { users } = useUsers();
+  const { userRank } = useRank();
+
+  const { isLoggedIn } = useAuthStore();
+  const navigate = useNavigate();
+
+  if (!isLoggedIn) {
+    navigate("/users/login");
+  }
   return (
     <Container>
-      <Content>
-        <Profile>
-          <Avatar><img className="profileImg" src={profile} alt="profle"/></Avatar>
-          <Info>
-            <div>
-              <span>ID</span>
-              <span>|</span>
-              <span> {users?.id}</span>
-            </div>
-            <div>
-              <span>RANK</span>
-              <span>|</span>
-              <span>{users?.myRank}</span>
-            </div>
-          </Info>
-        </Profile>
-        <div className="profile-right">
-          <div className="quiz-info">
-            <div className="quiz-title">퀴즈에 관심이 있는 당신...</div>
-            <div className="quiz-details">지금까지 푼 문제 수 : {(users?.solvedCount) ? users?.solvedCount : 0}개</div>
-          </div>
-          <div className="personal-info">
-            <div className="personal-title">개인정보 보호</div>
-            <Link className="link" to='/reset-password'>비밀번호 재설정</Link>
-          </div>
-        </div>
-      </Content>
+      <Top>
+        <Pro>
+          <h2>나의 정보</h2>
+          <Profile>
+            <IoPersonCircle size={200} />
+            <ProfileText>
+              <h2>{users?.id}</h2>
+              <div className="buttons">
+                {/* <Button size="short" schema="normal">
+                프로필 수정
+              </Button> */}
+                <Link to="/reset-password">
+                  <Button size="short" schema="normal">
+                    비밀번호 재설정
+                  </Button>
+                </Link>
+                <Button size="short" schema="normal">
+                  회원 탈퇴
+                </Button>
+              </div>
+            </ProfileText>
+          </Profile>
+        </Pro>
+        <Rank>
+          <h2>나의 랭킹</h2>
+          <RankBox>
+            <p>{users?.myRank}위</p>
+            <Link to="/rank">
+              <Button size="short" schema="normal">
+                랭킹 확인하러 가기
+              </Button>
+            </Link>
+          </RankBox>
+        </Rank>
+      </Top>
+      <Bottom>
+        <h2>나의 활동</h2>
+        <BottomBoxes>
+          <Box>
+            <BoxText>
+              <Quiz className="Quiz" />
+              <p>Total Quiz</p>
+            </BoxText>
+            <h1>{userRank?.totalQuizCount} 문제</h1>
+          </Box>
+          <Box>
+            <BoxText>
+              <Challenge className="Challenge" />
+              <p>Challenge</p>
+            </BoxText>
+            <h1>{userRank?.totalQuizCount} 회</h1>
+          </Box>
+          <Box>
+            <BoxText>
+              <Correct className="Correct" />
+              <p>Correct Question</p>
+            </BoxText>
+            <h1>{userRank?.totalSolvedQuizCount} 문제</h1>
+          </Box>
+          <Box>
+            <BoxText>
+              <Score className="Score" />
+              <p>Score</p>
+            </BoxText>
+            <h1>{userRank?.totalQuizScore} 점</h1>
+          </Box>
+        </BottomBoxes>
+      </Bottom>
     </Container>
   );
 };
 
 export default MyPage;
+
+const Container = styled.div`
+  display: flex;
+  background-color: white;
+  padding: 60px;
+  flex-direction: column;
+  gap: 70px;
+`;
+
+const Top = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  padding: 0 30px;
+`;
+
+const Pro = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 20px;
+
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+`;
+
+const Profile = styled.div`
+  display: flex;
+  border: 1px solid ${({ theme }) => theme.color.grey1};
+  border-radius: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  gap: 5px;
+
+  p {
+    font-size: 30px;
+    font-weight: bold;
+  }
+  Button {
+    margin: 10px;
+    font-size: 13px;
+  }
+
+  svg {
+    color: ${({ theme }) => theme.color.grey1};
+  }
+`;
+
+const ProfileText = styled.div`
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    Button {
+      width: 130px;
+      margin: 8px;
+      font-size: 13px;
+    }
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+`;
+
+const Rank = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 20px;
+
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+`;
+
+const RankBox = styled.div`
+  display: flex;
+  border: 1px solid ${({ theme }) => theme.color.grey1};
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+
+  p {
+    font-size: 30px;
+    font-weight: bold;
+  }
+  Button {
+    margin: 10px;
+    font-size: 13px;
+  }
+`;
+
+const Bottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 30px;
+
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+`;
+
+const BottomBoxes = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+`;
+
+const Box = styled.div`
+  display: flex;
+  flex-grow: 1;
+  border: 1px solid ${({ theme }) => theme.color.grey1};
+  border-radius: 10px;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 300px;
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 100px;
+  }
+`;
+
+const BoxText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+
+  svg.Quiz,
+  svg.Challenge,
+  svg.Correct,
+  svg.Score {
+    position: absolute;
+    z-index: 1;
+    padding: 5px;
+  }
+
+  svg.Quiz {
+    margin: 10px 80px 0 0;
+  }
+
+  svg.Challenge {
+    margin: 10px 80px 0 0;
+  }
+
+  svg.Correct {
+    margin: 10px 120px 0 0;
+  }
+
+  svg.Score {
+    margin: 10px 40px 0 0;
+  }
+
+  p {
+    position: absolute;
+    z-index: 2;
+    margin-top: 10px;
+    color: #000000;
+  }
+`;
