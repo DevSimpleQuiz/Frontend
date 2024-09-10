@@ -46,13 +46,18 @@ function Banner() {
           <SwiperSlide key={index}>
             <SlideContainer>
               <ImageContainer>
-                <Image src={image} alt={`Banner ${index + 1}`} />
+              <Image 
+                  src={image} 
+                  alt={`Banner ${index + 1}`} 
+                  loading={index === 0 ? "eager" : "lazy"} 
+                  // 첫 번째 이미지는 eager, 나머지는 lazy 로딩
+                />
               </ImageContainer>
             </SlideContainer>
           </SwiperSlide>
         ))}
-        <div className="swiper-button-prev"></div>
-        <div className="swiper-button-next"></div>
+        {/* <div className="swiper-button-prev"></div>
+        <div className="swiper-button-next"></div> */}
       </Swiper>
     </BannerStyle>
   );
@@ -60,7 +65,7 @@ function Banner() {
 
 const BannerStyle = styled.div`
   padding-top: 30px;
-
+/* 
   .swiper-button-prev,
   .swiper-button-next {
     color: #706f6f !important;
@@ -72,7 +77,7 @@ const BannerStyle = styled.div`
     justify-content: center !important;
     align-items: center !important;
     margin: -1% 8% !important;
-  }
+  } */
 
 `;
 
@@ -94,9 +99,10 @@ const ImageContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: 100%;
+  height: auto; 
   max-width: 1200px;
   object-fit: cover;
 `;
+
 
 export default Banner;
