@@ -25,25 +25,28 @@ const MyPage = () => {
   return (
     <Container>
       <Top>
-        <Profile>
-          <IoPersonCircle size={200} />
-          <ProfileText>
-            <h2>{users?.id}</h2>
-            <div className="buttons">
-              {/* <Button size="short" schema="normal">
+        <Pro>
+          <h2>나의 정보</h2>
+          <Profile>
+            <IoPersonCircle size={200} />
+            <ProfileText>
+              <h2>{users?.id}</h2>
+              <div className="buttons">
+                {/* <Button size="short" schema="normal">
                 프로필 수정
               </Button> */}
-              <Link to="/reset-password">
+                <Link to="/reset-password">
+                  <Button size="short" schema="normal">
+                    비밀번호 재설정
+                  </Button>
+                </Link>
                 <Button size="short" schema="normal">
-                  비밀번호 재설정
+                  회원 탈퇴
                 </Button>
-              </Link>
-              <Button size="short" schema="normal">
-                회원 탈퇴
-              </Button>
-            </div>
-          </ProfileText>
-        </Profile>
+              </div>
+            </ProfileText>
+          </Profile>
+        </Pro>
         <Rank>
           <h2>나의 랭킹</h2>
           <RankBox>
@@ -106,20 +109,40 @@ const Container = styled.div`
 const Top = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 60px;
+  padding: 0 30px;
+`;
+
+const Pro = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
   gap: 20px;
+  
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+  }
 `;
 
 const Profile = styled.div`
   display: flex;
   border: 1px solid ${({ theme }) => theme.color.grey1};
   border-radius: 10px;
-  flex-grow: 1;
-  margin-right: 10px;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 150px;
   height: 220px;
-  gap: 20px;
+  gap: 5px;
+
+  p {
+    font-size: 30px;
+    font-weight: bold;
+  }
+  Button {
+    margin: 10px;
+    font-size: 13px;
+  }
 
   svg {
     color: ${({ theme }) => theme.color.grey1};
@@ -151,6 +174,7 @@ const Rank = styled.div`
   flex-grow: 1;
   flex-direction: column;
   gap: 20px;
+  
   h2 {
     font-size: 16px;
     font-weight: bold;
@@ -164,8 +188,8 @@ const RankBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 176px;
-  gap: 5px;
+  height: 220px;
+
   p {
     font-size: 30px;
     font-weight: bold;
@@ -180,6 +204,8 @@ const Bottom = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 0 30px;
+
   h2 {
     font-size: 16px;
     font-weight: bold;
