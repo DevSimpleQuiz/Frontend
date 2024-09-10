@@ -118,7 +118,7 @@ const Pro = styled.div`
   flex-grow: 1;
   flex-direction: column;
   gap: 20px;
-  
+
   h2 {
     font-size: 16px;
     font-weight: bold;
@@ -167,6 +167,11 @@ const ProfileText = styled.div`
       font-size: 13px;
     }
   }
+
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
 `;
 
 const Rank = styled.div`
@@ -174,7 +179,7 @@ const Rank = styled.div`
   flex-grow: 1;
   flex-direction: column;
   gap: 20px;
-  
+
   h2 {
     font-size: 16px;
     font-weight: bold;
