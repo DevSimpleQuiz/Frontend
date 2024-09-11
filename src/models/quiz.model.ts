@@ -13,6 +13,11 @@ export interface IquizAnswerStats{
 
 }
 
+export interface quizAnswer{
+    isCorrectAnswer : boolean;
+    correctAnswer : string;
+}
+
 export interface QuizResult {
     totalQuizCount: number;
     solvedQuizCount: number;

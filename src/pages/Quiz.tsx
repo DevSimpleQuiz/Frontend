@@ -8,6 +8,7 @@ import { theme } from "../styles/theme";
 import { useQuizzes } from "../hooks/useQuizzes";
 import HintModal from "../components/quiz/HintModal";
 import { useNavigate } from "react-router-dom";
+import { useAnswer } from "../hooks/useAnswer";
 
 function Quiz() {
   const [currentScore, setCurrentScore] = useState<number>(10);
@@ -19,6 +20,8 @@ function Quiz() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState<number>(15);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [answer, setAnswer] = useState("");
+  const { loading, error, isCorrectAnswer, correctAnswer, submitAnswer } = useAnswer();
 
   const currentQuiz = quizzes[currentIndex];
 
@@ -31,8 +34,8 @@ function Quiz() {
   const [correctRate, setCorrectRate] = useState<number>(0);
  
   useEffect(() => {
-    const correctAnswersCount = currentQuiz.quizAnswerStats.correctAnswersCount;
-    const totalAttempts = currentQuiz.quizAnswerStats.totalAttemptsUntilFirstCorrectAnswer;
+    const correctAnswersCount = 0;
+    const totalAttempts = 0;
 
     if (totalAttempts > 0) {
       setCorrectRate((correctAnswersCount / totalAttempts) * 100);
@@ -65,6 +68,8 @@ function Quiz() {
   const handleTimeOut = () => {
     setIsCorrect(theme.color.red);
     setResultText("오답!");
+    submitAnswer(currentQuiz.quizId, answer);
+
   };
 
   // 새로고침 및 뒤로가기 시 메인 화면으로 이동
@@ -223,7 +228,7 @@ function Quiz() {
       </div>
       {resultText && (
         <ResultBox isCorrect={isCorrect === theme.color.green}>
-          {resultText === "오답!" ? `답 : ${currentQuiz.word}` : "정답"}
+          {resultText === "오답!" ? `답 : ${correctAnswer}` : "정답"}
         </ResultBox>
       )}
     </QuizWrapper>

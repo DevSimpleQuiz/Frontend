@@ -1,4 +1,4 @@
-import { QuizItem, QuizResult } from "../models/quiz.model";
+import { quizAnswer, QuizItem, QuizResult } from "../models/quiz.model";
 import { httpClient } from "./http";
 
 interface FetchQuizzesResponse {
@@ -6,7 +6,6 @@ interface FetchQuizzesResponse {
 }
 
 export const fetchQuizzes = async () => {
-
   try{
     const response = await httpClient.get<FetchQuizzesResponse>("/quizzes");
     return response.data;
@@ -14,6 +13,16 @@ export const fetchQuizzes = async () => {
     return {
       quizzes: [],
     };
+  }   
+};
+
+export const fetchAnswer = async (quizId: number, answer: string) : Promise<quizAnswer>=> {
+  try{
+    const response = await httpClient.get<quizAnswer>(`/quizzes/${quizId}/mark?answer=${answer}`);
+    return response.data;
+  }catch (error) {
+    console.error("API 요청 오류:", error);
+    throw error;
   }   
 };
 
