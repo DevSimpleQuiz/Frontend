@@ -28,6 +28,19 @@ function Quiz() {
   };
   const [isCorrect, setIsCorrect] = useState<string>(theme.color.grey4);
   const [resultText, setResultText] = useState<string>("");
+  const [correctRate, setCorrectRate] = useState<number>(0);
+ 
+  useEffect(() => {
+    const correctAnswersCount = currentQuiz.quizAnswerStats.correctAnswersCount;
+    const totalAttempts = currentQuiz.quizAnswerStats.totalAttemptsUntilFirstCorrectAnswer;
+
+    if (totalAttempts > 0) {
+      setCorrectRate((correctAnswersCount / totalAttempts) * 100);
+    } else {
+      setCorrectRate(0);
+    }
+  }, [currentQuiz]);
+
 
   // 타이머 시작
   useEffect(() => {
@@ -170,7 +183,7 @@ function Quiz() {
         </div>
       </div>
       <div className="infoContainer">
-        <span>정답률: {65}%</span>
+        <span>정답률: {correctRate}%</span>
         <TimeContainer>
           <StyledClockIcon />
           <span>{timeLeft}</span>

@@ -8,7 +8,7 @@ interface FetchQuizzesResponse {
 export const fetchQuizzes = async () => {
 
   try{
-    const response = await httpClient.get<FetchQuizzesResponse>("/quiz");
+    const response = await httpClient.get<FetchQuizzesResponse>("/quizzes");
     return response.data;
   }catch (error) {
     return {
