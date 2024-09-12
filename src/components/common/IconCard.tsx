@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import { theme } from "../../styles/theme";
 
@@ -31,7 +31,11 @@ const IconCard: React.FC<IconCardProps> = ({
   );
 };
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link).attrs((props) => ({
+  role: "button", // role 속성 추가
+  "aria-label": `${props.title} 카드`, // aria-label 속성 추가
+}))`
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,31 +60,26 @@ const StyledLink = styled(Link)`
     max-height: 350px;
   }
 
-  @media (max-width: 480px) {
-    max-width: 200px;
-    max-height: 250px;
-  }
 `;
 
-const IconWrapper = styled.div<{ bgColor: keyof typeof theme.color }>`
+const cardCommonStyles = css`
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 60%;
-  background-color: ${(props) => props.theme.color[props.bgColor]};
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  aspect-ratio: 2 / 3;
+`;
 
+// IconCard의 고정 크기 설정 (아이콘 크기 고정)
+const IconWrapper = styled.div<{ bgColor: keyof typeof theme.color }>`
+  ${cardCommonStyles};
+  width: 100%;
+  height: 300px;
+  background-color: ${({ theme, bgColor }) => theme.color[bgColor]};
   svg {
     width: 50%;
     height: 50%;
-  }
-
-  @media (max-width: 768px) {
-    height: 60%;
-  }
-
-  @media (max-width: 480px) {
-    height: 60%;
   }
 `;
 
@@ -103,9 +102,6 @@ const CardTitle = styled.p`
     font-size: ${({ theme }) => theme.text.text2};
   }
 
-  @media (max-width: 480px) {
-    font-size: ${({ theme }) => theme.text.text3};
-  }
 `;
 
 const CardDescription = styled.p`
@@ -115,10 +111,7 @@ const CardDescription = styled.p`
   @media (max-width: 768px) {
     font-size: ${({ theme }) => theme.text.text3};
   }
-
-  @media (max-width: 480px) {
-    font-size: ${({ theme }) => theme.text.text4};
-  }
 `;
 
-export default IconCard;
+export default React.memo(IconCard);
+// IconCard 컴포넌트는 동일한 props로 리렌더링할 필요가 없으므로 React.memo로 최적화
