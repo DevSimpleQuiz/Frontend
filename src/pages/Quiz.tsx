@@ -69,7 +69,6 @@ function Quiz() {
     setIsCorrect(theme.color.red);
     setResultText("오답!");
     submitAnswer(currentQuiz.quizId, answer);
-
   };
 
   // 새로고침 및 뒤로가기 시 메인 화면으로 이동
@@ -165,14 +164,17 @@ function Quiz() {
     if (event.key === "Enter" && resultText === "") {
       if (value === "") {
         alert("답 입력 후 엔터를 눌러주세요.");
-      } else if (value === currentQuiz.word) {
-        setIsCorrect(theme.color.green);
-        setResultText("정답!");
-        setTotalScore((state) => state + currentScore);
       } else {
-        setIsCorrect(theme.color.red);
-        setResultText("오답!");
-      }
+        submitAnswer(currentQuiz.quizId, value);
+        if(isCorrectAnswer){
+          setIsCorrect(theme.color.green);
+          setResultText("정답!");
+          setTotalScore((state) => state + currentScore);
+        }else{
+          setIsCorrect(theme.color.red);
+          setResultText("오답!");
+        }
+        }
     }
   };
 
