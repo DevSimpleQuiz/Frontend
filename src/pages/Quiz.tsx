@@ -65,10 +65,10 @@ function Quiz() {
     };
   }, [timeLeft]);
 
-  const handleTimeOut = () => {
+  const handleTimeOut = async () => {
     setIsCorrect(theme.color.red);
     setResultText("오답!");
-    submitAnswer(currentQuiz.quizId, answer);
+    await submitAnswer(currentQuiz.quizId, answer);
   };
 
   // 새로고침 및 뒤로가기 시 메인 화면으로 이동
@@ -159,22 +159,26 @@ function Quiz() {
   if (!quizzes || quizzes.length === 0) {
     return <p>퀴즈를 불러오는 중...</p>;
   }
-  const onSubmitAnswer = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const onSubmitAnswer = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     const value = inputText;
     if (event.key === "Enter" && resultText === "") {
       if (value === "") {
         alert("답 입력 후 엔터를 눌러주세요.");
       } else {
-        submitAnswer(currentQuiz.quizId, value);
-        if(isCorrectAnswer){
-          setIsCorrect(theme.color.green);
-          setResultText("정답!");
-          setTotalScore((state) => state + currentScore);
-        }else{
-          setIsCorrect(theme.color.red);
-          setResultText("오답!");
+        const response = await submitAnswer(currentQuiz.quizId, value);
+        if(response){
+          if(response.isCorrectAnswer){
+            console.log(response.isCorrectAnswer);
+            setIsCorrect(theme.color.green);
+            setResultText("정답!");
+            setTotalScore((state) => state + currentScore);
+          }else{
+            console.log(isCorrectAnswer);
+            setIsCorrect(theme.color.red);
+            setResultText("오답!");
+          }
         }
-        }
+      }
     }
   };
 
@@ -240,7 +244,7 @@ function Quiz() {
 export default Quiz;
 
 const QuizWrapper = styled.div`
-  height: 80%;
+  height: 783px;
   text-align: center;
   .quizButton {
     position: relative;

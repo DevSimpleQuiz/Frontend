@@ -17,6 +17,8 @@ export const useAnswer= () => {
       // 서버로부터 받은 응답에서 isCorrectAnswer와 correctAnswer를 저장
       setIsCorrect(response.isCorrectAnswer);
       setCorrectAnswer(response.correctAnswer);
+
+      return response; 
     } catch (err) {
       setError('답안 제출에 실패했습니다.');
     } finally {
