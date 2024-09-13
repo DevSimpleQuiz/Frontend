@@ -3,7 +3,6 @@ import { Content, MyRank, RankBox, RankWrapper, ScoreBox, Title } from '../../..
 import { Link } from 'react-router-dom';
 
 const UnAuthorizedRank = () => {
-
   return (
     <RankWrapper>
       <section>
@@ -30,7 +29,7 @@ const UnAuthorizedRank = () => {
         <Title>전체 랭킹</Title>
         <Content>
           <UnAuthorizedContent>
-            <h2>로그인 후 이용 가능합니다.</h2>
+            <h4>로그인 후 이용 가능합니다.</h4>
             <Link to='/users/login'>
                 <h3>로그인 하러 가기</h3>
               </Link>
@@ -53,12 +52,12 @@ const UnAuthorizedContent = styled.div`
   border: 1px solid ${({ theme }) => theme.color.grey3};
   border-radius: 8px;
 
-  h2 {
+  h3 {
     font-size: ${({ theme }) => theme.heading.title3};
     font-weight: 600;
   }
 
-  h3 {
+  h4 {
     font-size: ${({ theme }) => theme.heading.title4};
     font-weight: 400;
   }
