@@ -13,6 +13,8 @@ const NearRank = ({ id }: Rank) => {
     rank: ranker.rank,
     id: ranker.id,
     score: `${ranker.score}점`,
+    totalQuizCount: `${ranker.totalQuizCount}개`,
+    totalSolvedQuizCount: `${ranker.totalSolvedQuizCount}개`,
   })) || [];
 
   return (

@@ -2,17 +2,57 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRank } from '../hooks/useRank';
 import UnAuthorizedRank from '../components/common/rank/UnAuthorizedRank';
-import { allRankersDummy } from '../constants/allRankersDummy';
 import RankTable from '../components/common/rank/RankTable';
+import { useState, useEffect } from 'react';
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Rank = () => {
-  const { userRank } = useRank();
+  const { 
+    userRank, 
+    allRank, 
+    fetchAllRankData, 
+    page, 
+    setPage, 
+    limit 
+  } = useRank();
 
-  const data = allRankersDummy?.allRankers.map(ranker => ({
-    rank: ranker.rank,
-    id: ranker.id,
-    score: `${ranker.score}점`,
-  })) || [];
+  const totalPages = allRank?.pagination.totalPage || 1;
+  const currentPage = allRank?.pagination.currentPage || 1;
+
+  const data = allRank?.allRankers
+    .map(ranker => ({
+      rank: ranker.rank,
+      id: ranker.id,
+      score: `${ranker.score}점`,
+      totalQuizCount: `${ranker.totalQuizCount}개`,
+      totalSolvedQuizCount: `${ranker.totalSolvedQuizCount}개`,
+    })) || [];
+
+  const getPageRange = () => {
+    const start = Math.floor((currentPage - 1) / 5) * 5 + 1;
+    const end = Math.min(start + 4, totalPages);
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  };
+
+  useEffect(() => {
+    fetchAllRankData(page, limit);
+  }, [page]);
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePageClick = (pageNum: number) => {
+    setPage(pageNum);
+  };
 
   if (!userRank) {
     return <UnAuthorizedRank />;
@@ -56,6 +96,29 @@ const Rank = () => {
             data={data}
             highlightId={userRank.id}
           />
+          <Pagination>
+            <button
+              onClick={handlePrevPage} 
+              disabled={currentPage === 1}
+            >
+              <FaChevronLeft />
+            </button>
+            {getPageRange().map((page) => (
+              <button
+                key={page}
+                onClick={() => handlePageClick(page)}
+                className={page === currentPage ? 'active' : ''}
+              >
+                {page}
+              </button>
+            ))}
+            <button 
+              onClick={handleNextPage} 
+              disabled={currentPage === totalPages}
+            >
+              <FaChevronRight />
+            </button>
+          </Pagination>
         </Content>
       </section>
     </RankWrapper>
@@ -71,7 +134,7 @@ export const RankWrapper = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: ${({ theme }) => theme.heading.title2};
+  font-size: ${({ theme }) => theme.heading.title3};
   font-weight: 600;
   margin-bottom: 8px;
   padding: 4px 0;
@@ -186,20 +249,34 @@ export const ScoreBox = styled.div`
     font-weight: 400;
   }
 
-  a {
-    color: ${({ theme }) => theme.color.primary};
-    text-decoration: underline;
-  }
-
   .blue {
     color: ${({ theme }) => theme.color.blue};
   }
 `;
 
-export const HighRank = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6%;
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  button {
+    padding: 8px 12px;
+    background-color: ${({ theme }) => theme.color.primary};
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:disabled {
+      background-color: ${({ theme }) => theme.color.grey2};
+      cursor: not-allowed;
+    }
+
+    &.active {
+      background-color: ${({ theme }) => theme.color.blue};
+    }
+  }
 `;
 
 export default Rank;

@@ -13,15 +13,22 @@ const RankTable = ({ data, highlightId } : RankTableProps) => {
           <tr>
             <th>순위</th>
             <th>이름</th>
+            <th>도전한 문제</th>
+            <th>해결한 문제</th>
             <th>점수</th>
           </tr>
         </thead>
         <tbody>
           {data.map((row, idx) => (
-            <tr key={idx} className={row.id === highlightId ? "highlight" : ""}>
+            <tr 
+              key={idx} 
+              className={row.id === highlightId ? "highlight" : ""}
+            >
               <td>{row.rank}</td>
               <td>{row.id}</td>
-              <td>{row.score}</td>
+              <td>{row.totalQuizCount}</td>
+              <td>{row.totalSolvedQuizCount}</td>
+              <td className="score">{row.score}</td>
             </tr>
           ))}
         </tbody>
@@ -64,6 +71,11 @@ const RankTableWrapper = styled.div`
 
     .highlight {
       background-color: ${({ theme }) => theme.color.grey5};
+      font-weight: 600;
+    }
+
+    .score {
+      color: ${({ theme }) => theme.color.blue};
       font-weight: 600;
     }
   }
