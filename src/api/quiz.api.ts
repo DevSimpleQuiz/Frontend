@@ -29,7 +29,7 @@ export const fetchAnswer = async (quizId: number, answer: string) : Promise<quiz
 // 퀴즈 결과 저장
 export const result = async (data: QuizResult) => {
   try {
-    await httpClient.post("/quiz/result", data);
+    await httpClient.post("/quizzes/result", data);
   } catch (error) {
     console.error("결과 저장에 실패하였습니다.", error);
   }

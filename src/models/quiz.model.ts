@@ -22,5 +22,6 @@ export interface QuizResult {
     totalQuizCount: number;
     solvedQuizCount: number;
     totalQuizScore: number;
+    quizId: number,
   }
   

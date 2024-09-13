@@ -9,6 +9,7 @@ import { useQuizzes } from "../hooks/useQuizzes";
 import HintModal from "../components/quiz/HintModal";
 import { useNavigate } from "react-router-dom";
 import { useAnswer } from "../hooks/useAnswer";
+import { useSaveQuizResult } from "../hooks/useSaveQuizResult";
 
 function Quiz() {
   const [currentScore, setCurrentScore] = useState<number>(10);
@@ -33,14 +34,21 @@ function Quiz() {
   const [resultText, setResultText] = useState<string>("");
   const [correctRate, setCorrectRate] = useState<number>(0);
  
-  useEffect(() => {
-    const correctAnswersCount = 0;
-    const totalAttempts = 0;
+  const saveQuizResult = useSaveQuizResult(); 
 
-    if (totalAttempts > 0) {
-      setCorrectRate((correctAnswersCount / totalAttempts) * 100);
+  useEffect(() => {
+    if (currentQuiz && currentQuiz.quizAnswerStats) {
+      const correctAnswersCount = currentQuiz.quizAnswerStats.correctAnswersCount;
+      const totalAttempts = currentQuiz.quizAnswerStats.totalAttemptsUntilFirstCorrectAnswer;
+      if (totalAttempts > 0) {
+        setCorrectRate((correctAnswersCount / totalAttempts) * 100);
+      } else {
+        setCorrectRate(0);
+      }
     } else {
+      // currentQuiz나 quizAnswerStats가 없을 때 예외 처리
       setCorrectRate(0);
+      console.warn("currentQuiz 또는 quizAnswerStats가 정의되지 않았습니다.");
     }
   }, [currentQuiz]);
 
@@ -69,6 +77,7 @@ function Quiz() {
     setIsCorrect(theme.color.red);
     setResultText("오답!");
     await submitAnswer(currentQuiz.quizId, answer);
+    saveQuizResult(1, 0, currentQuiz.quizId);
   };
 
   // 새로고침 및 뒤로가기 시 메인 화면으로 이동
@@ -168,12 +177,12 @@ function Quiz() {
         const response = await submitAnswer(currentQuiz.quizId, value);
         if(response){
           if(response.isCorrectAnswer){
-            console.log(response.isCorrectAnswer);
+            saveQuizResult(1, 10, currentQuiz.quizId);
             setIsCorrect(theme.color.green);
             setResultText("정답!");
             setTotalScore((state) => state + currentScore);
           }else{
-            console.log(isCorrectAnswer);
+            saveQuizResult(1, 0, currentQuiz.quizId);
             setIsCorrect(theme.color.red);
             setResultText("오답!");
           }
