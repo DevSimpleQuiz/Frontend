@@ -11,15 +11,26 @@ export interface TopRank {
 }
 
 export interface NearRank {
-  nearRankers: Ranker[];
+  nearRankers: RankerWithDetails[];
 }
 
 export interface AllRank {
-  allRankers: Ranker[];
+  allRankers: RankerWithDetails[];
+  pagination: Pagination;
 }
 
 export interface Ranker {
   id: string;
   rank: number;
   score: number;
+}
+
+export interface RankerWithDetails extends Ranker {
+  totalQuizCount: number;
+  totalSolvedQuizCount: number;
+}
+
+export interface Pagination {
+  currentPage: number;
+  totalPage: number;
 }
