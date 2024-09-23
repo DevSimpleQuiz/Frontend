@@ -61,15 +61,15 @@ export const theme: Theme = {
     text: "black",
   },
   heading: {
-    title1: "2.5rem",
-    title2: "2rem",
-    title3: "1.625rem",
-    title4: "1.25rem",
+    title1: "36px",
+    title2: "32px",
+    title3: "24px",
+    title4: "20px",
   },
   text: {
-    text1: "1.125rem",
-    text2: "1rem",
-    text3: ".875rem",
+    text1: "18px",
+    text2: "16px",
+    text3: "14px",
   },
   button: {
     short: {

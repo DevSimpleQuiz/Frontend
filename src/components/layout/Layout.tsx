@@ -29,7 +29,9 @@ const LayoutWrapper = styled.main`
   margin: 0 auto;
   padding: 0;
   width: 100%;
-  max-width: 1200px;
+  height: 100%;
+  /* max-width: 1200px; */
+  max-width: 1080px;
 `;
 
 export default Layout;

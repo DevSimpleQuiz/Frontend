@@ -40,7 +40,7 @@ const Home: React.FC = () => {
   }, [showLastMessage]);
 
   return (
-    <HomeStyle>
+    <HomeWrapper>
       <div className="banner">
         <Banner />
       </div>
@@ -95,7 +95,7 @@ const Home: React.FC = () => {
         </HighRank>
         <NearRank id={userRank?.id!} />
       </RankSection>
-    </HomeStyle>
+    </HomeWrapper>
   );
 };
 
@@ -129,11 +129,11 @@ const WelcomeMessage = styled.div<{ lastMessage: boolean }>`
         `};
 `;
 
-const HomeStyle = styled.div`
+const HomeWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-bottom: 120px;
+  padding-bottom: 80px;
 
   p {
     color: ${({ theme }) => theme.color.primary};

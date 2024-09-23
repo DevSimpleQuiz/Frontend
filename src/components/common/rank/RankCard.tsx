@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FaUser } from "react-icons/fa";
-import { Rank, Ranker } from '../../../models/rank.model';
+import { Ranker } from '../../../models/rank.model';
 
 const RankCard = ({ id, rank, score }: Ranker) => {
   return (
