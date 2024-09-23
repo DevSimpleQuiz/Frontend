@@ -34,7 +34,7 @@ const Home: React.FC = () => {
         }
         return (prevIndex + 1) % messages.length;
       });
-    }, 3000); // 메시지가 3초마다 변경됩니다
+    }, 3000); 
 
     return () => clearInterval(timer);
   }, [showLastMessage]);
@@ -91,8 +91,7 @@ const Home: React.FC = () => {
                 rank={data.rank}
                 score={data.score}
               />
-            ))
-          }
+            ))}
         </HighRank>
         <NearRank id={userRank?.id!} />
       </RankSection>
@@ -121,10 +120,12 @@ const WelcomeMessage = styled.div<{ lastMessage: boolean }>`
   animation: ${({ lastMessage }) =>
     lastMessage
       ? css`
-          ${fadeIn} 2s ease-in-out
+          ${fadeIn} 2s ease-in-out;
+          will-change: opacity;
         `
       : css`
-          ${fadeInOut} 3s ease-in-out
+          ${fadeInOut} 3s ease-in-out;
+          will-change: opacity;
         `};
 `;
 
@@ -134,7 +135,7 @@ const HomeWrapper = styled.div`
   gap: 20px;
   padding-bottom: 80px;
 
-  p{
+  p {
     color: ${({ theme }) => theme.color.primary};
   }
 
