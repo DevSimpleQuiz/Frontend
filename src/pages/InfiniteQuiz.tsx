@@ -9,6 +9,8 @@ import { theme } from "../styles/theme";
 import { useQuizzes } from "../hooks/useQuizzes";
 import HintModal from "../components/quiz/HintModal";
 import { useNavigate } from "react-router-dom";
+import { useSaveQuizResult } from "../hooks/useSaveQuizResult";
+import { useAnswer } from "../hooks/useAnswer";
 
 
 const InfiniteQuiz = () => {
@@ -21,6 +23,8 @@ const InfiniteQuiz = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState<number>(15);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [answer, setAnswer] = useState("");
+  const { loading, error, isCorrectAnswer, correctAnswer, submitAnswer } = useAnswer();
 
   const currentQuiz = quizzes[currentIndex];
 
@@ -30,6 +34,25 @@ const InfiniteQuiz = () => {
   };
   const [isCorrect, setIsCorrect] = useState<string>(theme.color.grey4);
   const [resultText, setResultText] = useState<string>("");
+  const [correctRate, setCorrectRate] = useState<number>(0);
+ 
+  const saveQuizResult = useSaveQuizResult(); 
+
+  useEffect(() => {
+    if (currentQuiz && currentQuiz.quizAnswerStats) {
+      const correctAnswersCount = currentQuiz.quizAnswerStats.correctAnswersCount;
+      const totalAttempts = currentQuiz.quizAnswerStats.totalAttemptsUntilFirstCorrectAnswer;
+      if (totalAttempts > 0) {
+        setCorrectRate((correctAnswersCount / totalAttempts) * 100);
+      } else {
+        setCorrectRate(0);
+      }
+    } else {
+      // currentQuiz나 quizAnswerStats가 없을 때 예외 처리
+      setCorrectRate(0);
+      console.warn("currentQuiz 또는 quizAnswerStats가 정의되지 않았습니다.");
+    }
+  }, [currentQuiz]);
 
   // 타이머 시작
   useEffect(() => {
@@ -51,10 +74,20 @@ const InfiniteQuiz = () => {
     };
   }, [timeLeft]);
 
-  const handleTimeOut = () => {
+  const handleTimeOut = async () => {
     setIsCorrect(theme.color.red);
     setResultText("오답!");
-  };
+    await submitAnswer(currentQuiz.quizId, answer);
+    saveQuizResult(1, 0, currentQuiz.quizId);
+    setTimeout(() => {
+      navigate("/quiz-result", {
+          state: {
+              totalScore,
+              totalQuestions: progressNum / 10,
+          },
+      });
+  }, 5000);
+  }
 
   // 새로고침 및 뒤로가기 시 메인 화면으로 이동
   useEffect(() => {
@@ -95,20 +128,15 @@ const InfiniteQuiz = () => {
   }, [navigate]);
 
   const onClickExitBtn = () => {
-    return 
+    navigate("/quiz-result", {
+      state: {
+        totalScore,
+        totalQuestions: progressNum / 10,
+      }
+    });
   }
 
   const onClickNextBtn = () => {
-    if (progressNum >= 100) {
-      navigate("/quiz-result", {
-        state: {
-          totalScore,
-          totalQuestions: progressNum / 10,
-        },
-      });
-
-      return;
-    }
     if (resultText === "") {
       alert("답 입력 후 엔터를 눌러주세요.");
       return;
@@ -148,18 +176,25 @@ const InfiniteQuiz = () => {
   if (!quizzes || quizzes.length === 0) {
     return <p>퀴즈를 불러오는 중...</p>;
   }
-  const onSubmitAnswer = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const onSubmitAnswer = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     const value = inputText;
     if (event.key === "Enter" && resultText === "") {
       if (value === "") {
         alert("답 입력 후 엔터를 눌러주세요.");
-      } else if (value === currentQuiz.word) {
-        setIsCorrect(theme.color.green);
-        setResultText("정답!");
-        setTotalScore((state) => state + currentScore);
       } else {
-        setIsCorrect(theme.color.red);
-        setResultText("오답!");
+        const response = await submitAnswer(currentQuiz.quizId, value);
+        if(response){
+          if(response.isCorrectAnswer){
+            saveQuizResult(1, 10, currentQuiz.quizId);
+            setIsCorrect(theme.color.green);
+            setResultText("정답!");
+            setTotalScore((state) => state + currentScore);
+          }else{
+            saveQuizResult(1, 0, currentQuiz.quizId);
+            setIsCorrect(theme.color.red);
+            setResultText("오답!");
+          }
+        }
       }
     }
   };
@@ -213,7 +248,7 @@ const InfiniteQuiz = () => {
       </div>
       {resultText && (
         <ResultBox isCorrect={isCorrect === theme.color.green}>
-          {resultText === "오답!" ? `답 : ${currentQuiz.word}` : "정답"}
+          {resultText === "오답!" ? `답 : ${correctAnswer}` : "정답"}
         </ResultBox>
       )}
     </InfinitQuizWrapper>
@@ -224,7 +259,7 @@ const InfiniteQuiz = () => {
 export default InfiniteQuiz;
 
 const InfinitQuizWrapper = styled.div`
-  height: 80%;
+  height: 800px;
   text-align: center;
   .quizButton {
     position: relative;
