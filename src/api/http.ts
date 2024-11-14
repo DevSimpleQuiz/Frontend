@@ -9,7 +9,7 @@ interface CreateClientConfig extends AxiosRequestConfig {
 
 export const createClient = (config?: AxiosRequestConfig) => {
   const port = DEFAULT_PORT;
-  const BASE_URL = `http://localhost:${port}`;
+  const BASE_URL = `https://api.devsimplequiz.site`;
 
   const axiosInstance = axios.create({
     baseURL: BASE_URL,

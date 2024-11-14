@@ -12,7 +12,7 @@ export const join = async (data: JoinProps) => {
 
 // 회원가입 아이디 중복확인
 export const checkId = async (id: string) => {
-  const response = await fetch("http://localhost:4242/users/join/check-login-id", {
+  const response = await fetch("https://api.devsimplequiz.site/users/join/check-login-id", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
